@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Classes\CalculateFontSize.cs" />
     <Compile Include="Classes\ComboboxItem.cs" />
+    <Compile Include="Classes\ConverFormat.cs" />
     <Compile Include="Classes\Images.cs" />
     <Compile Include="Classes\PhotoEditorRender.cs" />
     <Compile Include="Classes\RotationImage.cs" />

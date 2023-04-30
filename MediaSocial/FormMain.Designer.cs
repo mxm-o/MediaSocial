@@ -913,8 +913,7 @@
             this.cmbBoxSaveFormat.Items.AddRange(new object[] {
             "jpg",
             "png",
-            "bmp",
-            "webp"});
+            "bmp"});
             this.cmbBoxSaveFormat.Location = new System.Drawing.Point(99, 45);
             this.cmbBoxSaveFormat.Name = "cmbBoxSaveFormat";
             this.cmbBoxSaveFormat.Size = new System.Drawing.Size(53, 21);

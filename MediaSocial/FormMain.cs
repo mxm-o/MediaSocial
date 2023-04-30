@@ -6,7 +6,6 @@ using System.Linq;
 using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace MediaSocial
 {
@@ -186,23 +185,25 @@ namespace MediaSocial
                         Global.imagesRender.Add(new Images { Id = i, Pictures = Properties.Resources.PhotoNotExist, Exist = false });
                     }
 
-                    if (selectedPlugin.Instance.SizesList.Count == 0) { 
+                    if (selectedPlugin.Instance.SizesList.Count == 0)
+                    {
                         // Если нет изображений сохраняем только готовое изображение
                         radioButtonDone.Checked = true;
                         Properties.Settings.Default.inputSave = 2;
-                        radioButtonRender.Enabled= false;
-                        radioButtonSouser.Enabled= false;
+                        radioButtonRender.Enabled = false;
+                        radioButtonSouser.Enabled = false;
                         panel1.Enabled = false;
                         tabControlImg.SelectedTab = tabPageDone;
                         panelEditor.Enabled = false;
-                    } else
+                    }
+                    else
                     {
                         radioButtonRender.Enabled = true;
                         radioButtonSouser.Enabled = true;
                         panel1.Enabled = true;
                     }
 
-                    if (selectedPlugin.Instance.SizesList.Count > 0)  comboBoxImg.SelectedIndex = 0;
+                    if (selectedPlugin.Instance.SizesList.Count > 0) comboBoxImg.SelectedIndex = 0;
                 }
 
             }
@@ -222,14 +223,16 @@ namespace MediaSocial
 
         private void openImage()
         {
-            System.Drawing.Image fileImage = null;
             var filePath = string.Empty;
+            Image image = null;
+            string error = string.Empty;
+            Stream fileStream = null;
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 //openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = "txt files (*.jpg)|*.jpg|(*.png)|*.png|All files (*.*)|*.*";
-                openFileDialog.FilterIndex = 3;
+                openFileDialog.Filter = "Images files |*.jpeg;*.jpg;*.png;*.bmp;*.gif;*.tiff;*.webp|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 0;
                 openFileDialog.RestoreDirectory = true;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -239,23 +242,60 @@ namespace MediaSocial
                     //Get the path of specified file
                     filePath = openFileDialog.FileName;
 
-                    //Read the contents of the file into a stream
-                    var fileStream = openFileDialog.OpenFile();
+                    try
+                    {
+                        //Read the contents of the file into a stream
+                        fileStream = openFileDialog.OpenFile();
+                    }
+                    catch { }
 
                     // Поворачиваем изображение
 
                     var rotationImage = new RotationImage();
 
-                    fileImage = rotationImage.RotateImage(System.Drawing.Image.FromStream(fileStream));
-                    toolStripStatusLabel1.Text = "";
+                    try
+                    {
+                        image = System.Drawing.Image.FromStream(fileStream);
+                        image = rotationImage.RotateImage(image);
+                        toolStripStatusLabel1.Text = "";
+                    }
+                    catch (Exception ex)
+                    {
+                        toolStripStatusLabel1.Text = "Ошибка открытия изображения. " + ex.Message;
+                    }
+
                     Application.DoEvents();
                 }
             }
 
-            if (filePath != string.Empty)
+
+            // Конвертируем изображение библиотекой FFMPEG если со стандарным способом что-то не так
+            if (filePath != string.Empty & image == null & fileStream != null)
+            {
+                toolStripStatusLabel1.Text = "Открытие изображения...";
+                try
+                {
+                    ConverFormat converFormat = new ConverFormat();
+                    Image imageFfmpeg = converFormat.readImage(filePath);
+                    if (imageFfmpeg != null) { 
+                        image = imageFfmpeg;
+                    } else
+                    {
+                        toolStripStatusLabel1.Text = "Изображение повреждено или формат не поддерживается.";
+                    }
+
+                }
+                catch
+                {
+                    toolStripStatusLabel1.Text = "Ошибка открытия изображения.";
+                }
+            }
+
+
+            if (filePath != string.Empty && image != null)
             {
 
-                Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures = fileImage;
+                Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures = image;
                 Global.imagesSouser[comboBoxImg.SelectedIndex].Exist = true;
                 pictureBoxSouser.Image = Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures;
 
@@ -551,22 +591,24 @@ namespace MediaSocial
             if (Properties.Settings.Default.inputSave == 1) saveImageFile.image = Global.imagesRender[Global.ImageIndexNow].Pictures;
             if (Properties.Settings.Default.inputSave == 0) saveImageFile.image = Global.imagesSouser[Global.ImageIndexNow].Pictures;
             saveImageFile.saveFormat = Properties.Settings.Default.typeSave;
-            saveImageFile.quality = (int) (Properties.Settings.Default.qualitySave / 4.0 * 100);
+            saveImageFile.quality = (int)(Properties.Settings.Default.qualitySave / 4.0 * 100);
 
             string path = Path.Combine(Properties.Settings.Default.pathSave, textBoxSaveNameFile.Text + "." + Properties.Settings.Default.typeSave);
             bool writeFile = true;
-            if (File.Exists(path) && MessageBox.Show("Файл с указанным именем уже существует. Заменить?", "Замена файла!", MessageBoxButtons.OKCancel,MessageBoxIcon.Warning) == DialogResult.Cancel)
+            if (File.Exists(path) && MessageBox.Show("Файл с указанным именем уже существует. Заменить?", "Замена файла!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.Cancel)
             {
                 writeFile = false;
             }
 
-            if (writeFile) {
+            if (writeFile)
+            {
                 try
                 {
                     saveImageFile.savePath = path;
                     saveImageFile.SaveImage();
-                }  
-                catch {
+                }
+                catch
+                {
                     toolStripStatusLabel1.Text = "Ошибка сохранения файла";
                 }
 
@@ -594,7 +636,7 @@ namespace MediaSocial
                     if (Properties.Settings.Default.inputSave == 0) saveImageFile.image = Global.imagesSouser[Global.ImageIndexNow].Pictures;
                     saveImageFile.saveFormat = Properties.Settings.Default.typeSave;
                     saveImageFile.quality = (int)(Properties.Settings.Default.qualitySave / 4.0 * 100);
-                    
+
                     try
                     {
                         saveImageFile.savePath = path;
