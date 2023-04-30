@@ -11,29 +11,42 @@ namespace MediaSocial.Classes
         public Image readImage(string filePath)
         {
             Image image = null;
+            // Проверяем наличие ffmpeg
+            if (!File.Exists("ffmpeg.exe"))
+            {
+                return image;
+            }
 
-            if (!File.Exists("ffmpeg.exe")) { return image; }
-            string outputFile = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".jpg";
+            // Создаем имя временного файла
+            string outputFile;
+            do
+            {
+                outputFile = Path.GetTempPath() + Guid.NewGuid().ToString() + ".jpg";
+            }
+            while (File.Exists(outputFile));
 
+            // Запускаем FFMPEG с параметрами
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "ffmpeg.exe";
             startInfo.Arguments = "-i \"" + filePath + "\" -q:v 0 \"" + outputFile + "\"";
-            // The -q:v 0 option sets maximum quality for the output JPG file
+            // Параметр -q:v 0 дает максимальное качество jpeg файла
             process.StartInfo = startInfo;
-            
+
             process.Start();
             process.WaitForExit();
             System.Threading.Thread.Sleep(500);
 
+            // Обрабатываем полученное изображение
             try
             {
                 Stream fileStream = new FileStream(outputFile, FileMode.Open);
-                image = System.Drawing.Image.FromStream(fileStream);
+                image = Image.FromStream(fileStream);
                 fileStream.Close();
                 File.Delete(outputFile);
-            } catch
+            }
+            catch
             {
 
             }
