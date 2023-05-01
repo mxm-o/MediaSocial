@@ -223,11 +223,7 @@ namespace MediaSocial
 
         private void openImage()
         {
-            var filePath = string.Empty;
             Image image = null;
-            string error = string.Empty;
-            Stream fileStream = null;
-
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 //openFileDialog.InitialDirectory = "c:\\";
@@ -240,46 +236,95 @@ namespace MediaSocial
                     toolStripStatusLabel1.Text = "Открытие изображения";
                     Application.DoEvents();
                     //Get the path of specified file
-                    filePath = openFileDialog.FileName;
-
-                    try
-                    {
-                        //Read the contents of the file into a stream
-                        fileStream = openFileDialog.OpenFile();
-                    }
-                    catch { }
-
-                    // Поворачиваем изображение
-
-                    var rotationImage = new RotationImage();
-
-                    try
-                    {
-                        image = System.Drawing.Image.FromStream(fileStream);
-                        image = rotationImage.RotateImage(image);
-                        toolStripStatusLabel1.Text = "";
-                    }
-                    catch (Exception ex)
-                    {
-                        toolStripStatusLabel1.Text = "Ошибка открытия изображения. " + ex.Message;
-                    }
-
+                    image = openImage(openFileDialog.FileName);
                     Application.DoEvents();
                 }
             }
 
+            if (image != null) insertImage(image);
+        }
+
+        // Буфер обмена
+        private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsImage())
+            {
+                Image image = Clipboard.GetImage();
+                insertImage(image);
+            }
+        }
+
+        private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Image image = null;
+            try
+            {
+                if (tabControlImg.SelectedTab == tabPageSouser && Global.imagesSouser[comboBoxImg.SelectedIndex].Exist) image = Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures;
+                if (tabControlImg.SelectedTab == tabPageRender && Global.imagesRender[comboBoxImg.SelectedIndex].Exist) image = Global.imagesRender[comboBoxImg.SelectedIndex].Pictures;
+                if (tabControlImg.SelectedTab == tabPageDone) image = Global.ImageOut;
+            } catch { }
+            if (image != null) Clipboard.SetImage(image);
+        }
+
+        // Добавление файла перетаскиванием
+        private void tabControlImg_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop) && ((e.AllowedEffect & DragDropEffects.Move) == DragDropEffects.Move)) e.Effect = DragDropEffects.Move;
+        }
+
+        private void tabControlImg_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop) && e.Effect == DragDropEffects.Move)
+            {
+                toolStripStatusLabel1.Text = "Открытие изображения...";
+                string[] objects = (string[])e.Data.GetData(DataFormats.FileDrop); // В objects хранятся пути к папкам и файлам 
+
+                Image image = openImage(@objects[0]);
+
+                if (image != null) insertImage(image);
+            }
+        }
+
+        private Image openImage(string pathImage)
+        {
+            Image image = null;
+            try
+            {
+                image = Image.FromStream(new MemoryStream(File.ReadAllBytes(pathImage)));
+
+                // Поворачиваем изображение
+                var rotationImage = new RotationImage();
+                try
+                {
+                    image = rotationImage.RotateImage(image);
+                    toolStripStatusLabel1.Text = "";
+                }
+                catch (Exception ex)
+                {
+                    toolStripStatusLabel1.Text = "Ошибка открытия изображения. " + ex.Message;
+                }
+                Application.DoEvents();
+            }
+            catch
+            {
+
+                toolStripStatusLabel1.Text = "Ошибка файла!";
+
+            }
 
             // Конвертируем изображение библиотекой FFMPEG если со стандарным способом что-то не так
-            if (filePath != string.Empty & image == null & fileStream != null)
+            if (image == null)
             {
                 toolStripStatusLabel1.Text = "Открытие изображения...";
                 try
                 {
                     ConverFormat converFormat = new ConverFormat();
-                    Image imageFfmpeg = converFormat.readImage(filePath);
-                    if (imageFfmpeg != null) { 
+                    Image imageFfmpeg = converFormat.readImage(pathImage);
+                    if (imageFfmpeg != null)
+                    {
                         image = imageFfmpeg;
-                    } else
+                    }
+                    else
                     {
                         toolStripStatusLabel1.Text = "Изображение повреждено или формат не поддерживается.";
                     }
@@ -290,19 +335,15 @@ namespace MediaSocial
                     toolStripStatusLabel1.Text = "Ошибка открытия изображения.";
                 }
             }
-
-
-            if (filePath != string.Empty && image != null)
-            {
-                insertImage(image);
-            }
+            return image;
         }
 
+
+        // Добавление изображения в глобальные списки изображения + в pictureBox'ы
         private void insertImage (Image image)
         {
             if (image != null)
             {
-
                 Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures = image;
                 Global.imagesSouser[comboBoxImg.SelectedIndex].Exist = true;
                 pictureBoxSouser.Image = Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures;
@@ -655,16 +696,6 @@ namespace MediaSocial
                         toolStripStatusLabel1.Text = "Ошибка сохранения файла";
                     }
                 }
-            }
-        }
-
-        // Буфер обмена
-        private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (Clipboard.ContainsImage())
-            {
-                Image image = Clipboard.GetImage();
-                insertImage(image);
             }
         }
     }

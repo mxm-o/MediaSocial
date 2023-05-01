@@ -108,7 +108,6 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.QuitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.CutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CopyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
@@ -196,6 +195,7 @@
             // 
             // tabControlImg
             // 
+            this.tabControlImg.AllowDrop = true;
             this.tabControlImg.Controls.Add(this.tabPageSouser);
             this.tabControlImg.Controls.Add(this.tabPageRender);
             this.tabControlImg.Controls.Add(this.tabPageDone);
@@ -206,6 +206,8 @@
             this.tabControlImg.Size = new System.Drawing.Size(467, 540);
             this.tabControlImg.TabIndex = 0;
             this.tabControlImg.SelectedIndexChanged += new System.EventHandler(this.tabControlImg_SelectedIndexChanged);
+            this.tabControlImg.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabControlImg_DragDrop);
+            this.tabControlImg.DragEnter += new System.Windows.Forms.DragEventHandler(this.tabControlImg_DragEnter);
             // 
             // tabPageSouser
             // 
@@ -1029,7 +1031,6 @@
             // EditToolStripMenuItem
             // 
             this.EditToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CutToolStripMenuItem,
             this.CopyToolStripMenuItem,
             this.PasteToolStripMenuItem,
             this.toolStripSeparator6,
@@ -1038,34 +1039,29 @@
             this.EditToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.EditToolStripMenuItem.Text = "&Правка";
             // 
-            // CutToolStripMenuItem
-            // 
-            this.CutToolStripMenuItem.Name = "CutToolStripMenuItem";
-            this.CutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.CutToolStripMenuItem.Text = "Вырезать";
-            // 
             // CopyToolStripMenuItem
             // 
             this.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem";
             this.CopyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.CopyToolStripMenuItem.Text = "Копировать";
+            this.CopyToolStripMenuItem.Click += new System.EventHandler(this.CopyToolStripMenuItem_Click);
             // 
             // PasteToolStripMenuItem
             // 
             this.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem";
-            this.PasteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.PasteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.PasteToolStripMenuItem.Text = "Вставить";
             this.PasteToolStripMenuItem.Click += new System.EventHandler(this.PasteToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(149, 6);
             // 
             // PhotoEditorToolStripMenuItem
             // 
             this.PhotoEditorToolStripMenuItem.Name = "PhotoEditorToolStripMenuItem";
-            this.PhotoEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.PhotoEditorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.PhotoEditorToolStripMenuItem.Text = "ФотоРедактор";
             // 
             // ViewToolStripMenuItem
@@ -1322,7 +1318,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem EditToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem CutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem CopyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem PasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ViewToolStripMenuItem;
