@@ -294,6 +294,14 @@ namespace MediaSocial
 
             if (filePath != string.Empty && image != null)
             {
+                insertImage(image);
+            }
+        }
+
+        private void insertImage (Image image)
+        {
+            if (image != null)
+            {
 
                 Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures = image;
                 Global.imagesSouser[comboBoxImg.SelectedIndex].Exist = true;
@@ -647,6 +655,16 @@ namespace MediaSocial
                         toolStripStatusLabel1.Text = "Ошибка сохранения файла";
                     }
                 }
+            }
+        }
+
+        // Буфер обмена
+        private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsImage())
+            {
+                Image image = Clipboard.GetImage();
+                insertImage(image);
             }
         }
     }
