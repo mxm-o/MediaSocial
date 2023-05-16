@@ -172,7 +172,6 @@ namespace MediaSocial
 
                     panelEditor.Enabled = selectedPlugin.Instance.Editor;
 
-
                     // Заполняем Комбобокс с картинками
                     for (int i = 1; i <= selectedPlugin.Instance.SizesList.Count; i++)
                     {
@@ -205,7 +204,6 @@ namespace MediaSocial
 
                     if (selectedPlugin.Instance.SizesList.Count > 0) comboBoxImg.SelectedIndex = 0;
                 }
-
             }
         }
 
@@ -277,10 +275,8 @@ namespace MediaSocial
             if (e.Data.GetDataPresent(DataFormats.FileDrop) && e.Effect == DragDropEffects.Move)
             {
                 toolStripStatusLabel1.Text = "Открытие изображения...";
-                string[] objects = (string[])e.Data.GetData(DataFormats.FileDrop); // В objects хранятся пути к папкам и файлам 
-
-                Image image = openImage(@objects[0]);
-
+                string[] objects = (string[])e.Data.GetData(DataFormats.FileDrop); // В objects хранятся пути к папкам и файлам
+                Image image = openImage(@objects[0]); // Берем первый файл
                 if (image != null) insertImage(image);
             }
         }
@@ -328,7 +324,6 @@ namespace MediaSocial
                     {
                         toolStripStatusLabel1.Text = "Изображение повреждено или формат не поддерживается.";
                     }
-
                 }
                 catch
                 {
@@ -541,7 +536,6 @@ namespace MediaSocial
 
             // Закончили изменять цвета
             GC.Collect();
-
 
             toolStripStatusLabel1.Text = "";
             Application.DoEvents();

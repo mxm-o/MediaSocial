@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin1D", "Plugin1D\Plugin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoEdit", "PhotoEdit\PhotoEdit.csproj", "{1A561CEE-05DE-4220-86D0-37D694E1F09A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginKirsanov1", "PluginKirsanov1\PluginKirsanov1.csproj", "{14FA76C5-1B4C-4C91-B968-E0F3A3857DC8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{1A561CEE-05DE-4220-86D0-37D694E1F09A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A561CEE-05DE-4220-86D0-37D694E1F09A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A561CEE-05DE-4220-86D0-37D694E1F09A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14FA76C5-1B4C-4C91-B968-E0F3A3857DC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14FA76C5-1B4C-4C91-B968-E0F3A3857DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14FA76C5-1B4C-4C91-B968-E0F3A3857DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14FA76C5-1B4C-4C91-B968-E0F3A3857DC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

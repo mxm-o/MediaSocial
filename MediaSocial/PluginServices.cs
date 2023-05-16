@@ -46,7 +46,7 @@ namespace MediaSocial
             if (Directory.Exists(Path))
             {
                 //Перебираем все файлы в дирректории плагинов
-                foreach (string fileOn in Directory.GetFiles(Path))
+                foreach (string fileOn in Directory.GetFiles(Path, "*.dll", SearchOption.AllDirectories))
                 {
                     FileInfo file = new FileInfo(fileOn);
 
