@@ -56,6 +56,7 @@ namespace Plugin1D
             this.textBoxT2 = new System.Windows.Forms.TextBox();
             this.labelT2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.labelTextLeght = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.textBoxT1 = new System.Windows.Forms.TextBox();
@@ -134,6 +135,7 @@ namespace Plugin1D
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.labelTextLeght);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.numericUpDown1);
             this.panel1.Controls.Add(this.textBoxT1);
@@ -142,6 +144,16 @@ namespace Plugin1D
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(194, 96);
             this.panel1.TabIndex = 8;
+            // 
+            // labelTextLeght
+            // 
+            this.labelTextLeght.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelTextLeght.Location = new System.Drawing.Point(130, 4);
+            this.labelTextLeght.Name = "labelTextLeght";
+            this.labelTextLeght.Size = new System.Drawing.Size(61, 13);
+            this.labelTextLeght.TabIndex = 4;
+            this.labelTextLeght.Text = "0";
+            this.labelTextLeght.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label1
             // 
@@ -155,9 +167,24 @@ namespace Plugin1D
             // numericUpDown1
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(122, 73);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            150,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(69, 20);
             this.numericUpDown1.TabIndex = 2;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            80,
+            0,
+            0,
+            0});
             // 
             // textBoxT1
             // 
@@ -169,6 +196,7 @@ namespace Plugin1D
             this.textBoxT1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxT1.Size = new System.Drawing.Size(184, 48);
             this.textBoxT1.TabIndex = 1;
+            this.textBoxT1.TextChanged += new System.EventHandler(this.textBoxT1_TextChanged);
             // 
             // labelT1
             // 
@@ -193,7 +221,7 @@ namespace Plugin1D
             // 
             // pictureBoxImage
             // 
-            this.pictureBoxImage.BackColor = System.Drawing.Color.RoyalBlue;
+            this.pictureBoxImage.BackColor = System.Drawing.Color.SlateBlue;
             this.pictureBoxImage.Location = new System.Drawing.Point(9, 260);
             this.pictureBoxImage.Name = "pictureBoxImage";
             this.pictureBoxImage.Size = new System.Drawing.Size(188, 107);
@@ -252,6 +280,7 @@ namespace Plugin1D
         private ComboBox comboBoxImages;
         private PictureBox pictureBoxImage;
         private Label label2;
+        private Label labelTextLeght;
         IPlugin myPlugin = null;
 
 		public IPluginHost PluginHost
@@ -291,7 +320,14 @@ namespace Plugin1D
         {
             // Считываем шаблонное изображение
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            Image imageMain = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "main.png"))));
+            Image imageMain = null;
+            try
+            {
+                imageMain = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "main.png"))));
+            } catch
+            {
+
+            }
             // Генерируем новое изображение
             PhotoGenerate photo = new PhotoGenerate();
             photo.height = imageMain.Height;
@@ -308,23 +344,48 @@ namespace Plugin1D
             mergeImage.sourceBottom = imageOut;
             mergeImage.sourceTop = imageMain;
             imageOut = mergeImage.MergeImage(); // Помещаем оформление
+            // Рисуем иконку новости
+            try
+            {
+                mergeImage.sourceBottom = imageOut;
+                mergeImage.sourceTop = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "images", comboBoxImages.SelectedItem.ToString() + ".png"))));
+                mergeImage.top = 1385;
+                mergeImage.left = 85;
+                imageOut = mergeImage.MergeImage();
+            } catch
+            {
 
-
-
-            // Пишем текст
+            }
+            // Пишем текст названия
             TextGenerate textE = new TextGenerate();
             textE.textString = textBoxT1.Text;
-            textE.rectH = 400;
-            textE.rectW = 1400;
-            textE.rectX = 350;
-            textE.rectY = 1330;
+            textE.rectH = 250;
+            textE.rectW = 1380;
+            textE.rectX = 375;
+            textE.rectY = 1395;
             textE.source = imageOut;
-            textE.fontSize = 90;
+            textE.fontSize = (float)numericUpDown1.Value;
             textE.colorText = Color.Black;
             textE.fontName = "Lato";
-
+            //textE.debug = true;
             imageOut = textE.DrawTextWithEffects();
-            
+            // Пишем автора фото (если нужно)
+            if (textBoxT2.Text != "")
+            {
+                TextGenerate textAutor = new TextGenerate();
+                textAutor.textString = "Фото: " + textBoxT2.Text;
+                textAutor.rectH = 100;
+                textAutor.rectW = 920;
+                textAutor.rectX = 820;
+                textAutor.rectY = 1670;
+                textAutor.fontStyle = FontStyle.Bold;
+                textAutor.source = imageOut;
+                textAutor.fontSize = 40;
+                textAutor.colorText = Color.White;
+                textAutor.stringAlignment = StringAlignment.Far;
+                textAutor.fontName = "Lato";
+                imageOut = textAutor.DrawTextWithEffects();
+            }
             myHost.ReciveImage(imageOut);
 
         }
@@ -356,6 +417,18 @@ namespace Plugin1D
             {
 
             }
+        }
+        // Расчет размера шрифта
+        private void textBoxT1_TextChanged(object sender, EventArgs e)
+        {
+            // Расчет размера шрифта
+            CalculateFontSize fontSize = new CalculateFontSize();
+            fontSize.baseFontSize = 105;
+            fontSize.fontSizeRatio = 0.5;
+            numericUpDown1.Value = fontSize.FontSize(textBoxT1.Text);
+            // Отображение длины текста
+            labelTextLeght.Text = textBoxT1.Text.Length.ToString();
+            labelTextLeght.ForeColor = textBoxT1.Text.Length > 60 ? Color.Red : System.Drawing.SystemColors.ControlText;
         }
     }
 }

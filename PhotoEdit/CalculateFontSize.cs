@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MediaSocial.Classes
+namespace PhotoEdit
 {
-    internal class CalculateFontSize
+    public class CalculateFontSize
     {
         // Declare the font size variables
         public int baseFontSize = 14;
@@ -16,7 +16,7 @@ namespace MediaSocial.Classes
         public int FontSize(string text)
         {
             int length = text.Length;
-            int fontSize = baseFontSize + (int)(length * fontSizeRatio);
+            int fontSize = baseFontSize - (int)(length * fontSizeRatio);
 
             return fontSize;
         }

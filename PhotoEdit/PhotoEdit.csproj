@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlurImage.cs" />
+    <Compile Include="CalculateFontSize.cs" />
     <Compile Include="Merge.cs" />
     <Compile Include="ModifyImage.cs" />
     <Compile Include="PhotoEdit.cs" />

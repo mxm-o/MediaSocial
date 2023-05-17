@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhotoEdit
 {
@@ -74,6 +69,10 @@ namespace PhotoEdit
         /// Ширина тень
         /// </summary>
         public int wightShadow = 2;
+        /// <summary>
+        /// Отображение рамки в которой рисуется текст
+        /// </summary>
+        public bool debug = false;
 
 
         public Image DrawTextWithEffects()
@@ -91,6 +90,13 @@ namespace PhotoEdit
             // Отображаем текст с тенью и обводкой в прямоугольнике
             Rectangle rect = new Rectangle(rectX, rectY, rectW, rectH);
 
+            if (debug)
+            {
+                Pen pen = new Pen(Color.Black, 2);
+                pen.Alignment = PenAlignment.Inset; //<-- this
+                e.DrawRectangle(pen, rect);
+            }
+
             DrawTextWithBorderAndShadow(e, textString, rect, font, colorText, colorStroke, colorShadow, wightStroke, wightShadow);
 
             return source;
@@ -101,8 +107,8 @@ namespace PhotoEdit
             using (StringFormat sf = new StringFormat())
             {
                 // Устанавливаем формат отображения текста в центре прямоугольника
-                sf.Alignment = StringAlignment.Center;
-                sf.LineAlignment = StringAlignment.Center;
+                sf.Alignment = stringAlignment;
+                sf.LineAlignment = lineAlignment;
 
                 // Тень
                 if (wightShadow > 0)
