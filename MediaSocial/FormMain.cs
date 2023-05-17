@@ -199,10 +199,10 @@ namespace MediaSocial
                     {
                         radioButtonRender.Enabled = true;
                         radioButtonSouser.Enabled = true;
-                        panel1.Enabled = true;
                     }
 
                     if (selectedPlugin.Instance.SizesList.Count > 0) comboBoxImg.SelectedIndex = 0;
+                    comboBoxImg.Enabled = selectedPlugin.Instance.SizesList.Count > 1;
                 }
             }
         }

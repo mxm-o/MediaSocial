@@ -116,6 +116,7 @@ namespace Plugin1D
             this.textBoxT2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxT2.Location = new System.Drawing.Point(7, 20);
+            this.textBoxT2.MaxLength = 150;
             this.textBoxT2.Multiline = true;
             this.textBoxT2.Name = "textBoxT2";
             this.textBoxT2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -191,6 +192,7 @@ namespace Plugin1D
             this.textBoxT1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxT1.Location = new System.Drawing.Point(7, 20);
+            this.textBoxT1.MaxLength = 300;
             this.textBoxT1.Multiline = true;
             this.textBoxT1.Name = "textBoxT1";
             this.textBoxT1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -221,7 +223,7 @@ namespace Plugin1D
             // 
             // pictureBoxImage
             // 
-            this.pictureBoxImage.BackColor = System.Drawing.Color.SlateBlue;
+            this.pictureBoxImage.BackColor = System.Drawing.Color.Gainsboro;
             this.pictureBoxImage.Location = new System.Drawing.Point(9, 260);
             this.pictureBoxImage.Name = "pictureBoxImage";
             this.pictureBoxImage.Size = new System.Drawing.Size(188, 107);
@@ -379,6 +381,7 @@ namespace Plugin1D
             textE.fontSize = (float)numericUpDown1.Value;
             textE.colorText = Color.Black;
             textE.fontName = "Lato";
+            textE.lineAlignment = StringAlignment.Center;
             //textE.debug = true;
             imageOut = textE.DrawTextWithEffects();
             // Пишем автора фото (если нужно)
@@ -396,6 +399,7 @@ namespace Plugin1D
                 textAutor.colorText = Color.White;
                 textAutor.stringAlignment = StringAlignment.Far;
                 textAutor.fontName = "Lato";
+                //textAutor.debug = true;
                 imageOut = textAutor.DrawTextWithEffects();
             }
             myHost.ReciveImage(imageOut);
@@ -437,7 +441,10 @@ namespace Plugin1D
             CalculateFontSize fontSize = new CalculateFontSize();
             fontSize.baseFontSize = 105;
             fontSize.fontSizeRatio = 0.5;
-            numericUpDown1.Value = fontSize.FontSize(textBoxT1.Text);
+            decimal fontsize = (decimal)fontSize.CalcMaxFontSize(textBoxT1.Text, "Lato", fontSize.FontSize(textBoxT1.Text), FontStyle.Regular, 1380, 250) * 2;
+            if (fontsize < numericUpDown1.Minimum) fontsize = numericUpDown1.Minimum;
+            if (fontsize > numericUpDown1.Maximum) fontsize = numericUpDown1.Maximum;
+            numericUpDown1.Value = fontsize;
             // Отображение длины текста
             labelTextLeght.Text = textBoxT1.Text.Length.ToString();
             labelTextLeght.ForeColor = textBoxT1.Text.Length > 60 ? Color.Red : System.Drawing.SystemColors.ControlText;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,10 +18,45 @@ namespace PhotoEdit
         {
             int length = text.Length;
             int fontSize = baseFontSize - (int)(length * fontSizeRatio);
+            if (fontSize < 1) fontSize = 1;
 
             return fontSize;
         }
 
-        
+        private bool CheckFontSize(string text, string fontName, float fontSize, FontStyle fontStyle, int width, int height)
+        {
+            // Create a new Bitmap with the specified width and height
+            Bitmap bitmap = new Bitmap(width, height);
+
+            // Create a Graphics object from the Bitmap
+            using (Graphics graphics = Graphics.FromImage(bitmap))
+            {
+                Font font = new Font(fontName, fontSize, fontStyle);
+                // Measuring the text to check if it fits in the rectangle
+                SizeF textSize = graphics.MeasureString(text, font);
+                if (textSize.Width > width || textSize.Height > height)
+                {
+                    // Text won't fit, do nothing
+                    bitmap.Dispose();
+                    return false;
+                }
+            }
+            bitmap.Dispose();
+            return true;
+        }
+
+        public float CalcMaxFontSize(string text, string fontName, float fontSize, FontStyle fontStyle, int width, int height)
+        {
+            while (!CheckFontSize(text, fontName, fontSize, fontStyle, width, height))
+            {
+                fontSize = (float)fontSize - 0.5f;
+                if (fontSize < 20)
+                {
+                    fontSize = 20;
+                    break;
+                }
+            }
+            return fontSize;
+        }
     }
 }
