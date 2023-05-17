@@ -318,8 +318,20 @@ namespace Plugin1D
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            // Считываем шаблонное изображение
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            // Проверка исходных данных
+            if (textBoxT1.Text == "")
+            {
+                MessageBox.Show("Отсутствует заголовок.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!(File.Exists(Path.Combine(path, "main.png")) || File.Exists(Path.Combine(path, comboBoxImages.SelectedItem.ToString() + ".png"))))
+            {
+                MessageBox.Show("Плагин поврежден. Обратитесь к разработчику.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            // Считываем шаблонное изображение
             Image imageMain = null;
             try
             {
