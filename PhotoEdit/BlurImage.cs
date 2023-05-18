@@ -1,97 +1,79 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Imaging;
+using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Drawing.Imaging;
 
-namespace MediaSocial.Classes
+namespace PhotoEdit
 {
     public class BlurImage
     {
-        /*
-        static void Main(string[] args)
+        public Image Blur(Image image, int blurAmount)
         {
-            Bitmap bitmap = new Bitmap("C:\\Users\\erik\\test.png");
-            bitmap = Blur(bitmap, 10);
-            bitmap.Save("C:\\Users\\erik\\test2.png");
-        }
-        */
-
-        public static Bitmap Blur(Bitmap image, Int32 blurSize)
-        {
-            return Blur(image, new Rectangle(0, 0, image.Width, image.Height), blurSize);
+            return BlurFfmpeg(image, blurAmount);
         }
 
-        public unsafe static Bitmap Blur(Bitmap image, Rectangle rectangle, Int32 blurSize)
+        private Image BlurFfmpeg(Image image, int blurAmount)
         {
-            Bitmap blurred = new Bitmap(image.Width, image.Height);
-
-            // make an exact copy of the bitmap provided
-            using (Graphics graphics = Graphics.FromImage(blurred))
-                graphics.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height),
-                    new Rectangle(0, 0, image.Width, image.Height), GraphicsUnit.Pixel);
-
-            // Lock the bitmap's bits
-            BitmapData blurredData = blurred.LockBits(new Rectangle(0, 0, image.Width, image.Height), ImageLockMode.ReadWrite, blurred.PixelFormat);
-
-            // Get bits per pixel for current PixelFormat
-            int bitsPerPixel = Image.GetPixelFormatSize(blurred.PixelFormat);
-
-            // Get pointer to first line
-            byte* scan0 = (byte*)blurredData.Scan0.ToPointer();
-
-            // look at every pixel in the blur rectangle
-            for (int xx = rectangle.X; xx < rectangle.X + rectangle.Width; xx++)
+            // Проверяем наличие ffmpeg
+            if (!File.Exists("ffmpeg.exe"))
             {
-                for (int yy = rectangle.Y; yy < rectangle.Y + rectangle.Height; yy++)
-                {
-                    int avgR = 0, avgG = 0, avgB = 0;
-                    int blurPixelCount = 0;
-
-                    // average the color of the red, green and blue for each pixel in the
-                    // blur size while making sure you don't go outside the image bounds
-                    for (int x = xx; (x < xx + blurSize && x < image.Width); x++)
-                    {
-                        for (int y = yy; (y < yy + blurSize && y < image.Height); y++)
-                        {
-                            // Get pointer to RGB
-                            byte* data = scan0 + y * blurredData.Stride + x * bitsPerPixel / 8;
-
-                            avgB += data[0]; // Blue
-                            avgG += data[1]; // Green
-                            avgR += data[2]; // Red
-
-                            blurPixelCount++;
-                        }
-                    }
-
-                    avgR = avgR / blurPixelCount;
-                    avgG = avgG / blurPixelCount;
-                    avgB = avgB / blurPixelCount;
-
-                    // now that we know the average for the blur size, set each pixel to that color
-                    for (int x = xx; x < xx + blurSize && x < image.Width && x < rectangle.Width; x++)
-                    {
-                        for (int y = yy; y < yy + blurSize && y < image.Height && y < rectangle.Height; y++)
-                        {
-                            // Get pointer to RGB
-                            byte* data = scan0 + y * blurredData.Stride + x * bitsPerPixel / 8;
-
-                            // Change values
-                            data[0] = (byte)avgB;
-                            data[1] = (byte)avgG;
-                            data[2] = (byte)avgR;
-                        }
-                    }
-                }
+                return image;
             }
 
-            // Unlock the bits
-            blurred.UnlockBits(blurredData);
+            // Создаем имя временного файла
+            string inputFile;
+            do
+            {
+                inputFile = Path.GetTempPath() + Guid.NewGuid().ToString() + ".jpg";
+            }
+            while (File.Exists(inputFile));
 
-            return blurred;
+            // Записываем временный файл
+            SaveImageFile saveImageFile = new SaveImageFile();
+            saveImageFile.image = image;
+            saveImageFile.savePath = inputFile;
+            saveImageFile.SaveImage();
+
+            // Создаем имя временного файла
+            string outputFile;
+            do
+            {
+                outputFile = Path.GetTempPath() + Guid.NewGuid().ToString() + ".jpg";
+            }
+            while (File.Exists(outputFile));
+
+
+
+            // Запускаем FFMPEG с параметрами
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = "ffmpeg.exe";
+            startInfo.Arguments = "-i \"" + inputFile + "\" -q:v 0 -filter_complex \"[0:v]boxblur=" + blurAmount + "[blurred]\" -map \"[blurred]\" \"" + outputFile + "\"";
+            // Параметр -q:v 0 дает максимальное качество jpeg файла
+            process.StartInfo = startInfo;
+
+            process.Start();
+            process.WaitForExit();
+            System.Threading.Thread.Sleep(500);
+
+            // Обрабатываем полученное изображение
+            try
+            {
+                Stream fileStream = new FileStream(outputFile, FileMode.Open);
+                image = Image.FromStream(fileStream);
+                fileStream.Close();
+                File.Delete(outputFile);
+                File.Delete(inputFile);
+            }
+            catch
+            {
+
+            }
+
+            return image;
         }
+
     }
 }

@@ -23,7 +23,7 @@ namespace PhotoEdit
             return fontSize;
         }
 
-        private bool CheckFontSize(string text, string fontName, float fontSize, FontStyle fontStyle, int width, int height)
+        private bool CheckFontSize(string text, string fontName, float fontSize, FontStyle fontStyle, int width, int height, StringFormat stringFormat)
         {
             // Create a new Bitmap with the specified width and height
             Bitmap bitmap = new Bitmap(width, height);
@@ -33,7 +33,7 @@ namespace PhotoEdit
             {
                 Font font = new Font(fontName, fontSize, fontStyle);
                 // Measuring the text to check if it fits in the rectangle
-                SizeF textSize = graphics.MeasureString(text, font);
+                SizeF textSize = graphics.MeasureString(text, font, new SizeF(width, height), stringFormat);
                 if (textSize.Width > width || textSize.Height > height)
                 {
                     // Text won't fit, do nothing
@@ -45,9 +45,9 @@ namespace PhotoEdit
             return true;
         }
 
-        public float CalcMaxFontSize(string text, string fontName, float fontSize, FontStyle fontStyle, int width, int height)
+        public float CalcMaxFontSize(string text, string fontName, float fontSize, FontStyle fontStyle, int width, int height, StringFormat stringFormat)
         {
-            while (!CheckFontSize(text, fontName, fontSize, fontStyle, width, height))
+            while (!CheckFontSize(text, fontName, fontSize, fontStyle, width, height, stringFormat))
             {
                 fontSize = (float)fontSize - 0.5f;
                 if (fontSize < 20)

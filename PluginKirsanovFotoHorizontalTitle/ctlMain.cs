@@ -6,7 +6,7 @@ using PhotoEdit;
 using System.Reflection;
 using System.IO;
 
-namespace Plugin1D
+namespace PluginKirsanovFotoHorizontalTitle
 {
 	/// <summary>
 	/// Summary description for ctlMain.
@@ -350,13 +350,27 @@ namespace Plugin1D
             Image imageOut = photo.Fill();
             // Получаем исходник фотографии
             Image ImageSouser = myHost.SendImages()[0];
+            // Создаем слой с размытием основного фото
+            PhotoSize resize = new PhotoSize();
+            resize.width = imageMain.Width;
+            resize.height = imageMain.Height;
+            resize.source = ImageSouser;
+            Image ImageBlur = resize.ScaleImage();
+            BlurImage blurImage = new BlurImage();
+            ImageBlur = blurImage.Blur(ImageBlur, 25);
+
             // Раскладываем по слоям
             Merge mergeImage = new Merge();
             mergeImage.sourceBottom = imageOut;
+            mergeImage.sourceTop = ImageBlur;
+            imageOut = mergeImage.MergeImage(); // На фон помещаем размытую фотографию
+            mergeImage.sourceBottom = imageOut;
             mergeImage.sourceTop = ImageSouser;
-            imageOut = mergeImage.MergeImage(); // На фон помещаем фотографию
+            mergeImage.top = 178;
+            imageOut = mergeImage.MergeImage(); // Помещаем основное фото
             mergeImage.sourceBottom = imageOut;
             mergeImage.sourceTop = imageMain;
+            mergeImage.top = 0;
             imageOut = mergeImage.MergeImage(); // Помещаем оформление
             // Рисуем иконку новости
             try

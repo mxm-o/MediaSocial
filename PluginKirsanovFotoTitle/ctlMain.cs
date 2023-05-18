@@ -6,7 +6,7 @@ using PhotoEdit;
 using System.Reflection;
 using System.IO;
 
-namespace Plugin1D
+namespace PluginKirsanovFotoTitle
 {
 	/// <summary>
 	/// Summary description for ctlMain.

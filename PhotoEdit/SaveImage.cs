@@ -1,8 +1,10 @@
-﻿using System;
+﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace MediaSocial.Classes
+namespace PhotoEdit
 {
     public class SaveImageFile
     {

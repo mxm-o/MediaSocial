@@ -56,7 +56,6 @@
     <Compile Include="Classes\Images.cs" />
     <Compile Include="Classes\PhotoEditorRender.cs" />
     <Compile Include="Classes\RotationImage.cs" />
-    <Compile Include="Classes\SaveImage.cs" />
     <Compile Include="DefaultControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

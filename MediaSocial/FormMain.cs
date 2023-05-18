@@ -1,4 +1,6 @@
-﻿using MediaSocial.Classes;
+﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+
+using MediaSocial.Classes;
 using PhotoEdit;
 using System;
 using System.Drawing;
