@@ -342,6 +342,8 @@ namespace PluginKirsanovFotoHorizontalTitle
             {
 
             }
+            this.Enabled = false;
+
             // √енерируем новое изображение
             PhotoGenerate photo = new PhotoGenerate();
             photo.height = imageMain.Height;
@@ -417,7 +419,7 @@ namespace PluginKirsanovFotoHorizontalTitle
                 imageOut = textAutor.DrawTextWithEffects();
             }
             myHost.ReciveImage(imageOut);
-
+            this.Enabled = true;
         }
 
         // «агрузка списка иконок дл€ заголовка новости

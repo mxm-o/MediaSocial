@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using PluginInterface;
 
-namespace PluginKirsanovFotoHorizontalTitle
+namespace PluginKirsanovFotoVertical
 {
     /// <summary>
     /// Plugin2
@@ -16,12 +16,12 @@ namespace PluginKirsanovFotoHorizontalTitle
 
             // Список изображений используемых плагином
             SizesList = new List<ListSizes>();
-            SizesList.Add(new ListSizes() { Id = 1, Name = "Фото", SizeX = 1218, SizeY = 1800 });
+            SizesList.Add(new ListSizes() { Id = 1, Name = "Фото", SizeX = 1800, SizeY = 1360 });
         }
 
         //Declarations of all our internal plugin variables
-        string myName = "Фото с заголовком (горизонтальное)";
-        string myDescription = "Модуль новости с заголовком и фото с горизонтальныи расположением.";
+        string myName = "Фото (вертикальное)";
+        string myDescription = "Модуль новости фото с вертикальным расположением.";
         string myAuthor = "Максим Отрохов";
         string myVersion = "1.0.0";
         bool myEditor = true;

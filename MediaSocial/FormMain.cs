@@ -1,6 +1,4 @@
-﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
-
-using MediaSocial.Classes;
+﻿using MediaSocial.Classes;
 using PhotoEdit;
 using System;
 using System.Drawing;
@@ -171,6 +169,7 @@ namespace MediaSocial
                     Global.imagesSouser.Clear();
                     Global.imagesRender.Clear();
                     Global.imagesSettings.Clear();
+                    Global.ImageOut = Properties.Resources.PhotoNotExist;
 
                     panelEditor.Enabled = selectedPlugin.Instance.Editor;
 

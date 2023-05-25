@@ -6,7 +6,7 @@ using PhotoEdit;
 using System.Reflection;
 using System.IO;
 
-namespace PluginKirsanovFoto
+namespace PluginKirsanovFotoHorizontal
 {
 	/// <summary>
 	/// Summary description for ctlMain.
@@ -92,7 +92,7 @@ namespace PluginKirsanovFoto
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.Controls.Add(this.textBoxT2);
             this.panel2.Controls.Add(this.labelT2);
-            this.panel2.Location = new System.Drawing.Point(3, 33);
+            this.panel2.Location = new System.Drawing.Point(2, 33);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(195, 71);
             this.panel2.TabIndex = 9;
@@ -180,12 +180,11 @@ namespace PluginKirsanovFoto
         {
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             // Проверка исходных данных
-            if (!(File.Exists(Path.Combine(path, "main.png"))))
+            if (!File.Exists(Path.Combine(path, "main.png")))
             {
                 MessageBox.Show("Плагин поврежден. Обратитесь к разработчику.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            this.Enabled = false;
             // Считываем шаблонное изображение
             Image imageMain = null;
             try
@@ -195,6 +194,8 @@ namespace PluginKirsanovFoto
             {
 
             }
+            this.Enabled = false;
+
             // Генерируем новое изображение
             PhotoGenerate photo = new PhotoGenerate();
             photo.height = imageMain.Height;
@@ -203,14 +204,29 @@ namespace PluginKirsanovFoto
             Image imageOut = photo.Fill();
             // Получаем исходник фотографии
             Image ImageSouser = myHost.SendImages()[0];
+            // Создаем слой с размытием основного фото
+            PhotoSize resize = new PhotoSize();
+            resize.width = imageMain.Width;
+            resize.height = imageMain.Height;
+            resize.source = ImageSouser;
+            Image ImageBlur = resize.ScaleImage();
+            BlurImage blurImage = new BlurImage();
+            ImageBlur = blurImage.Blur(ImageBlur, 25);
+
             // Раскладываем по слоям
             Merge mergeImage = new Merge();
             mergeImage.sourceBottom = imageOut;
+            mergeImage.sourceTop = ImageBlur;
+            imageOut = mergeImage.MergeImage(); // На фон помещаем размытую фотографию
+            mergeImage.sourceBottom = imageOut;
             mergeImage.sourceTop = ImageSouser;
-            imageOut = mergeImage.MergeImage(); // На фон помещаем фотографию
+            mergeImage.top = 282;
+            imageOut = mergeImage.MergeImage(); // Помещаем основное фото
             mergeImage.sourceBottom = imageOut;
             mergeImage.sourceTop = imageMain;
+            mergeImage.top = 0;
             imageOut = mergeImage.MergeImage(); // Помещаем оформление
+            
             // Пишем автора фото (если нужно)
             if (textBoxT2.Text != "")
             {

@@ -17,6 +17,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginKirsanovFoto", "Plugi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginKirsanovFotoHorizontalTitle", "PluginKirsanovFotoHorizontalTitle\PluginKirsanovFotoHorizontalTitle.csproj", "{7CDC9AEA-0E09-41C4-9F9C-7F0A8E51E1FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginKirsanovFotoVerticalTitle", "PluginKirsanovFotoVerticalTitle\PluginKirsanovFotoVerticalTitle.csproj", "{1D48EC2B-3064-46D4-857E-9047CDDC1CC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginKirsanovFotoHorizontal", "PluginKirsanovFotoHorizontal\PluginKirsanovFotoHorizontal.csproj", "{D1D01AC9-A926-4E0B-B8E2-AB422FF2C43D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginKirsanovFotoVertical", "PluginKirsanovFotoVertical\PluginKirsanovFotoVertical.csproj", "{9373975D-FC53-4142-9D2F-D23053A6B3EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +57,18 @@ Global
 		{7CDC9AEA-0E09-41C4-9F9C-7F0A8E51E1FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CDC9AEA-0E09-41C4-9F9C-7F0A8E51E1FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CDC9AEA-0E09-41C4-9F9C-7F0A8E51E1FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D48EC2B-3064-46D4-857E-9047CDDC1CC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D48EC2B-3064-46D4-857E-9047CDDC1CC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D48EC2B-3064-46D4-857E-9047CDDC1CC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D48EC2B-3064-46D4-857E-9047CDDC1CC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1D01AC9-A926-4E0B-B8E2-AB422FF2C43D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1D01AC9-A926-4E0B-B8E2-AB422FF2C43D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1D01AC9-A926-4E0B-B8E2-AB422FF2C43D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1D01AC9-A926-4E0B-B8E2-AB422FF2C43D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9373975D-FC53-4142-9D2F-D23053A6B3EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9373975D-FC53-4142-9D2F-D23053A6B3EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9373975D-FC53-4142-9D2F-D23053A6B3EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9373975D-FC53-4142-9D2F-D23053A6B3EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
