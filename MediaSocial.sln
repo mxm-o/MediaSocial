@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginKirsanovFotoHorizonta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginKirsanovFotoVertical", "PluginKirsanovFotoVertical\PluginKirsanovFotoVertical.csproj", "{9373975D-FC53-4142-9D2F-D23053A6B3EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginKirsanovQuote", "PluginKirsanovQuote\PluginKirsanovQuote.csproj", "{157E6F7A-C928-4B33-A11B-F9B8DDBCEFAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{9373975D-FC53-4142-9D2F-D23053A6B3EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9373975D-FC53-4142-9D2F-D23053A6B3EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9373975D-FC53-4142-9D2F-D23053A6B3EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{157E6F7A-C928-4B33-A11B-F9B8DDBCEFAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{157E6F7A-C928-4B33-A11B-F9B8DDBCEFAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{157E6F7A-C928-4B33-A11B-F9B8DDBCEFAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{157E6F7A-C928-4B33-A11B-F9B8DDBCEFAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

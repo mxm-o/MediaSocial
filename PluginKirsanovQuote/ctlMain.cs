@@ -5,51 +5,48 @@ using PluginInterface;
 using PhotoEdit;
 using System.Reflection;
 using System.IO;
-using System.Threading.Tasks;
 
-namespace PluginKirsanovFotoTitle
+namespace PluginKirsanovQuote
 {
-	/// <summary>
-	/// Summary description for ctlMain.
-	/// </summary>
-	public class ctlMain : System.Windows.Forms.UserControl
-	{
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.Container components = null;
+    /// <summary>
+    /// Summary description for ctlMain.
+    /// </summary>
+    public class ctlMain : System.Windows.Forms.UserControl
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.Container components = null;
 
-		public ctlMain()
-		{
-			// This call is required by the Windows.Forms Form Designer.
-			InitializeComponent();
+        public ctlMain()
+        {
+            // This call is required by the Windows.Forms Form Designer.
+            InitializeComponent();
             // TODO: Add any initialization after the InitializeComponent call
-            LoadingImages();
-
         }
 
-		/// <summary> 
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if(components != null)
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Component Designer generated code
-		/// <summary> 
-		/// Required method for Designer support - do not modify 
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        #region Component Designer generated code
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnCreate = new System.Windows.Forms.Button();
@@ -62,13 +59,13 @@ namespace PluginKirsanovFotoTitle
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.textBoxT1 = new System.Windows.Forms.TextBox();
             this.labelT1 = new System.Windows.Forms.Label();
-            this.comboBoxImages = new System.Windows.Forms.ComboBox();
-            this.pictureBoxImage = new System.Windows.Forms.PictureBox();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.textBoxT3 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnHelp
@@ -129,9 +126,9 @@ namespace PluginKirsanovFotoTitle
             this.labelT2.AutoSize = true;
             this.labelT2.Location = new System.Drawing.Point(4, 4);
             this.labelT2.Name = "labelT2";
-            this.labelT2.Size = new System.Drawing.Size(86, 13);
+            this.labelT2.Size = new System.Drawing.Size(87, 13);
             this.labelT2.TabIndex = 0;
-            this.labelT2.Text = "Источник фото:";
+            this.labelT2.Text = "Имя, Фамилия:";
             // 
             // panel1
             // 
@@ -170,7 +167,7 @@ namespace PluginKirsanovFotoTitle
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(122, 73);
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            150,
+            200,
             0,
             0,
             0});
@@ -183,7 +180,7 @@ namespace PluginKirsanovFotoTitle
             this.numericUpDown1.Size = new System.Drawing.Size(69, 20);
             this.numericUpDown1.TabIndex = 2;
             this.numericUpDown1.Value = new decimal(new int[] {
-            80,
+            120,
             0,
             0,
             0});
@@ -206,69 +203,68 @@ namespace PluginKirsanovFotoTitle
             this.labelT1.AutoSize = true;
             this.labelT1.Location = new System.Drawing.Point(4, 4);
             this.labelT1.Name = "labelT1";
-            this.labelT1.Size = new System.Drawing.Size(61, 13);
+            this.labelT1.Size = new System.Drawing.Size(76, 13);
             this.labelT1.TabIndex = 0;
-            this.labelT1.Text = "Заголовок";
+            this.labelT1.Text = "Текст цитаты";
             // 
-            // comboBoxImages
+            // panel3
             // 
-            this.comboBoxImages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxImages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxImages.FormattingEnabled = true;
-            this.comboBoxImages.Location = new System.Drawing.Point(10, 232);
-            this.comboBoxImages.Name = "comboBoxImages";
-            this.comboBoxImages.Size = new System.Drawing.Size(187, 21);
-            this.comboBoxImages.TabIndex = 13;
-            this.comboBoxImages.SelectedIndexChanged += new System.EventHandler(this.comboBoxImages_SelectedIndexChanged);
+            this.panel3.Controls.Add(this.textBoxT3);
+            this.panel3.Controls.Add(this.label2);
+            this.panel3.Location = new System.Drawing.Point(2, 212);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(195, 71);
+            this.panel3.TabIndex = 13;
             // 
-            // pictureBoxImage
+            // textBoxT3
             // 
-            this.pictureBoxImage.BackColor = System.Drawing.Color.Gainsboro;
-            this.pictureBoxImage.Location = new System.Drawing.Point(9, 260);
-            this.pictureBoxImage.Name = "pictureBoxImage";
-            this.pictureBoxImage.Size = new System.Drawing.Size(188, 107);
-            this.pictureBoxImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxImage.TabIndex = 14;
-            this.pictureBoxImage.TabStop = false;
+            this.textBoxT3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxT3.Location = new System.Drawing.Point(7, 20);
+            this.textBoxT3.MaxLength = 150;
+            this.textBoxT3.Multiline = true;
+            this.textBoxT3.Name = "textBoxT3";
+            this.textBoxT3.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxT3.Size = new System.Drawing.Size(185, 48);
+            this.textBoxT3.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 216);
+            this.label2.Location = new System.Drawing.Point(4, 4);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(89, 13);
-            this.label2.TabIndex = 15;
-            this.label2.Text = "Иконка новости";
+            this.label2.Size = new System.Drawing.Size(68, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Должность:";
             // 
             // ctlMain
             // 
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.pictureBoxImage);
-            this.Controls.Add(this.comboBoxImages);
+            this.Controls.Add(this.panel3);
             this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnCreate);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.MinimumSize = new System.Drawing.Size(200, 370);
+            this.MinimumSize = new System.Drawing.Size(200, 285);
             this.Name = "ctlMain";
-            this.Size = new System.Drawing.Size(200, 370);
+            this.Size = new System.Drawing.Size(200, 285);
             this.Load += new System.EventHandler(this.ctlMain_Load);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
-		}
-		#endregion
+        }
+        #endregion
 
-		IPluginHost myHost = null;
+        IPluginHost myHost = null;
         private Button btnHelp;
         private Button btnClear;
         private Button btnCreate;
@@ -280,32 +276,32 @@ namespace PluginKirsanovFotoTitle
         private Label labelT1;
         private Label label1;
         private NumericUpDown numericUpDown1;
-        private ComboBox comboBoxImages;
-        private PictureBox pictureBoxImage;
-        private Label label2;
         private Label labelTextLeght;
+        private Panel panel3;
+        private TextBox textBoxT3;
+        private Label label2;
         IPlugin myPlugin = null;
 
-		public IPluginHost PluginHost
-		{
-			get {return myHost;}
-			set {myHost = value;}
-		}
-		public IPlugin Plugin
-		{
-			get {return myPlugin;}
-			set {myPlugin = value;}
-		}
+        public IPluginHost PluginHost
+        {
+            get { return myHost; }
+            set { myHost = value; }
+        }
+        public IPlugin Plugin
+        {
+            get { return myPlugin; }
+            set { myPlugin = value; }
+        }
 
-		private void butSend_Click(object sender, System.EventArgs e)
-		{
-			myHost.Feedback(myPlugin.Feed, myPlugin);
-		}
+        private void butSend_Click(object sender, System.EventArgs e)
+        {
+            myHost.Feedback(myPlugin.Feed, myPlugin);
+        }
 
-		private void ctlMain_Load(object sender, System.EventArgs e)
-		{
-		
-		}
+        private void ctlMain_Load(object sender, System.EventArgs e)
+        {
+
+        }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
@@ -316,45 +312,21 @@ namespace PluginKirsanovFotoTitle
         {
             textBoxT1.Text = "";
             textBoxT2.Text = "";
-            if (comboBoxImages.Items.Count > 0) comboBoxImages.SelectedIndex = 0;
+            textBoxT3.Text = "";
         }
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             // Проверка исходных данных
-            if (textBoxT1.Text == "")
+            if (textBoxT1.Text == "" || textBoxT2.Text == "" || textBoxT3.Text == "")
             {
-                MessageBox.Show("Отсутствует заголовок.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (!(File.Exists(Path.Combine(path, "main.png")) || File.Exists(Path.Combine(path, comboBoxImages.SelectedItem.ToString() + ".png"))))
-            {
-                MessageBox.Show("Плагин поврежден. Обратитесь к разработчику.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Все текстовые поля (цитата, имя, должность) должны быть заполнены.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             this.Enabled = false;
-            // Создание задачи в дополнительном потоке
-            Task.Run(() => {
-                GenerateImage();
-            }).ContinueWith(task => {
-                // Метод, который будет выполнен после завершения задачи
-                GenerateImageCompletedHandler();
-            }, TaskScheduler.FromCurrentSynchronizationContext());
-        }
 
-        // Вспомогательный метод для обработки завершения задачи
-        private void GenerateImageCompletedHandler()
-        {
-            // Код для обработки события завершения задачи
-            this.Enabled = true;
-        }
-
-        private void GenerateImage()
-        {
-            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             // Считываем шаблонное изображение
             Image imageMain = null;
             try
@@ -377,103 +349,82 @@ namespace PluginKirsanovFotoTitle
             Merge mergeImage = new Merge();
             mergeImage.sourceBottom = imageOut;
             mergeImage.sourceTop = ImageSouser;
+            mergeImage.top = 1285;
+            mergeImage.left = 125;
             imageOut = mergeImage.MergeImage(); // На фон помещаем фотографию
             mergeImage.sourceBottom = imageOut;
             mergeImage.sourceTop = imageMain;
+            mergeImage.top = 0;
+            mergeImage.left = 0;
             imageOut = mergeImage.MergeImage(); // Помещаем оформление
-            // Рисуем иконку новости
-            try
-            {
-                mergeImage.sourceBottom = imageOut;
-                mergeImage.sourceTop = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "images", comboBoxImages.SelectedItem.ToString() + ".png"))));
-                mergeImage.top = 1385;
-                mergeImage.left = 85;
-                imageOut = mergeImage.MergeImage();
-            }
-            catch
-            {
-
-            }
-            // Пишем текст названия
+            // Пишем имя
             TextGenerate textE = new TextGenerate();
-            textE.textString = textBoxT1.Text;
-            textE.rectH = 250;
-            textE.rectW = 1380;
-            textE.rectX = 375;
-            textE.rectY = 1395;
+            textE.textString = textBoxT2.Text;
+            textE.rectH = 90;
+            textE.rectW = 1000;
+            textE.rectX = 635;
+            textE.rectY = 1470;
             textE.source = imageOut;
-            textE.fontSize = (float)numericUpDown1.Value;
+            textE.fontSize = 80; //(float)numericUpDown1.Value;
             textE.colorText = Color.Black;
             textE.fontName = "Lato";
-            textE.lineAlignment = StringAlignment.Center;
+            textE.stringAlignment = StringAlignment.Near;
+            textE.lineAlignment = StringAlignment.Far;
             //textE.debug = true;
             imageOut = textE.DrawTextWithEffects();
-            // Пишем автора фото (если нужно)
-            if (textBoxT2.Text != "")
-            {
-                TextGenerate textAutor = new TextGenerate();
-                textAutor.textString = "Фото: " + textBoxT2.Text;
-                textAutor.rectH = 100;
-                textAutor.rectW = 920;
-                textAutor.rectX = 820;
-                textAutor.rectY = 1670;
-                textAutor.fontStyle = FontStyle.Bold;
-                textAutor.source = imageOut;
-                textAutor.fontSize = 40;
-                textAutor.colorText = Color.White;
-                textAutor.stringAlignment = StringAlignment.Far;
-                textAutor.fontName = "Lato";
-                //textAutor.debug = true;
-                imageOut = textAutor.DrawTextWithEffects();
-            }
+            // Пишем должность
+            TextGenerate textAutor = new TextGenerate();
+            textAutor.textString = textBoxT3.Text;
+            textAutor.rectH = 150;
+            textAutor.rectW = 1000;
+            textAutor.rectX = 645;
+            textAutor.rectY = 1550;
+            textAutor.fontStyle = FontStyle.Regular;
+            textAutor.source = imageOut;
+            textAutor.fontSize = 40;
+            textAutor.colorText = Color.Black;
+            textAutor.stringAlignment = StringAlignment.Near;
+            textAutor.lineAlignment = StringAlignment.Near;
+            textAutor.fontName = "Lato";
+            //textAutor.debug = true;
+            imageOut = textAutor.DrawTextWithEffects();
+            // Пишем цитату
+            TextGenerate textQuote = new TextGenerate();
+            textQuote.textString = textBoxT1.Text;
+            textQuote.rectH = 910;
+            textQuote.rectW = 1650;
+            textQuote.rectX = 70;
+            textQuote.rectY = 250;
+            textQuote.fontStyle = FontStyle.Regular;
+            textQuote.source = imageOut;
+            textQuote.fontSize = (float)numericUpDown1.Value;
+            textQuote.colorText = Color.Black;
+            textQuote.stringAlignment = StringAlignment.Center;
+            textQuote.lineAlignment = StringAlignment.Center;
+            textQuote.fontName = "Lato";
+            //textQuote.debug = true;
+            imageOut = textQuote.DrawTextWithEffects();
             myHost.ReciveImage(imageOut);
+            this.Enabled = true;
         }
 
-        // Загрузка списка иконок для заголовка новости
-        private void LoadingImages()
-        {
-            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string[] files = Directory.GetFiles(Path.Combine(path, "images"), "*.png");
-            if (files.Length > 0)
-            {
-                for (int i = 0; i < files.Length; i++)
-                {
-                    comboBoxImages.Items.Add(files[i].Replace(Path.Combine(path, "images\\"), "").Replace(".png", ""));
-                }
-                    comboBoxImages.SelectedIndex = 0;
-            }
-        }
-
-        // Выбор изображения иконки новости
-        private void comboBoxImages_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "images");
-            try
-            {
-                Image image = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, comboBoxImages.SelectedItem.ToString() + ".png"))));
-                pictureBoxImage.Image = image;
-            } catch
-            {
-
-            }
-        }
         // Расчет размера шрифта
         private void textBoxT1_TextChanged(object sender, EventArgs e)
         {
             // Расчет размера шрифта
             CalculateFontSize fontSize = new CalculateFontSize();
-            fontSize.baseFontSize = 105;
+            fontSize.baseFontSize = 175;
             fontSize.fontSizeRatio = 0.5;
             StringFormat stringFormat = new StringFormat();
             stringFormat.Alignment = StringAlignment.Center;
             stringFormat.LineAlignment = StringAlignment.Center;
-            decimal fontsize = (decimal)fontSize.CalcMaxFontSize(textBoxT1.Text, "Lato", fontSize.FontSize(textBoxT1.Text), FontStyle.Regular, 1380, 250, stringFormat);
+            decimal fontsize = (decimal)fontSize.CalcMaxFontSize(textBoxT1.Text, "Lato", fontSize.FontSize(textBoxT1.Text), FontStyle.Regular, 910, 1650, stringFormat);
             if (fontsize < numericUpDown1.Minimum) fontsize = numericUpDown1.Minimum;
             if (fontsize > numericUpDown1.Maximum) fontsize = numericUpDown1.Maximum;
             numericUpDown1.Value = fontsize;
             // Отображение длины текста
             labelTextLeght.Text = textBoxT1.Text.Length.ToString();
-            labelTextLeght.ForeColor = textBoxT1.Text.Length > 60 ? Color.Red : SystemColors.ControlText;
+            labelTextLeght.ForeColor = textBoxT1.Text.Length > 200 ? Color.Red : SystemColors.ControlText;
         }
     }
 }
