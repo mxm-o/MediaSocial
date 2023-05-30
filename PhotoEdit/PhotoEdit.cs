@@ -70,29 +70,24 @@ namespace PhotoEdit
                 float dstwidth = width; // Результирующая ширина.
                 float dstheight = height; // Результирующая высота.
                 float left = 0; // x-координата результирующего изображения.
-                float top = 0; //y-координата результирующего изображения.
+                float top = 0; // y-координата результирующего изображения.
 
                 dstwidth = dstwidth + dstwidth * zoom / 100;
                 dstheight = dstheight + dstheight * zoom / 100;
 
                 float ratio_x = srcwidth / dstwidth;
                 float ratio_y = srcheight / dstheight;
-                float ratio = 0;
 
                 if (ratio_x < ratio_y)
                 {
                     dstwidth = srcwidth / ratio_x;
                     dstheight = srcheight / ratio_x;
-                    ratio = ratio_x;
                 }
                 else
                 {
                     dstwidth = srcwidth / ratio_y;
                     dstheight = srcheight / ratio_y;
-                    ratio = ratio_y;
                 }
-
-
 
                 if (ratio_x > ratio_y)
                 {
@@ -129,7 +124,6 @@ namespace PhotoEdit
                         top = top - height * vertical * -1 / 100;
                     }
                 }
-
 
                 left = left - width * horizontal * -1 / 100;
                 top = top - height * vertical * -1 / 100;

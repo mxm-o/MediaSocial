@@ -30,14 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.tabControlImg = new System.Windows.Forms.TabControl();
-            this.tabPageSouser = new System.Windows.Forms.TabPage();
-            this.pictureBoxSouser = new System.Windows.Forms.PictureBox();
-            this.tabPageRender = new System.Windows.Forms.TabPage();
-            this.pictureBoxRender = new System.Windows.Forms.PictureBox();
-            this.tabPageDone = new System.Windows.Forms.TabPage();
-            this.pictureBoxDone = new System.Windows.Forms.PictureBox();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.panelImg = new System.Windows.Forms.Panel();
+            this.cmbBoxImgType = new System.Windows.Forms.ComboBox();
             this.buttonImgClear = new System.Windows.Forms.Button();
             this.buttonImgOpen = new System.Windows.Forms.Button();
             this.comboBoxImg = new System.Windows.Forms.ComboBox();
@@ -60,6 +55,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkBoxAuto = new System.Windows.Forms.CheckBox();
             this.btnAutoBr = new System.Windows.Forms.Button();
             this.numericUpDownRotate = new System.Windows.Forms.NumericUpDown();
             this.buttonRotate270 = new System.Windows.Forms.Button();
@@ -137,14 +133,8 @@
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
-            this.tabControlImg.SuspendLayout();
-            this.tabPageSouser.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSouser)).BeginInit();
-            this.tabPageRender.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRender)).BeginInit();
-            this.tabPageDone.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDone)).BeginInit();
-            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            this.panelImg.SuspendLayout();
             this.tabControlPlugins.SuspendLayout();
             this.tabPluginModule.SuspendLayout();
             this.tabPluginEditor.SuspendLayout();
@@ -181,8 +171,8 @@
             // 
             // splitContainer.Panel1
             // 
-            this.splitContainer.Panel1.Controls.Add(this.tabControlImg);
-            this.splitContainer.Panel1.Controls.Add(this.panel1);
+            this.splitContainer.Panel1.Controls.Add(this.pictureBox);
+            this.splitContainer.Panel1.Controls.Add(this.panelImg);
             this.splitContainer.Panel1MinSize = 400;
             // 
             // splitContainer.Panel2
@@ -193,100 +183,50 @@
             this.splitContainer.TabIndex = 1;
             this.splitContainer.TabStop = false;
             // 
-            // tabControlImg
+            // pictureBox
             // 
-            this.tabControlImg.AllowDrop = true;
-            this.tabControlImg.Controls.Add(this.tabPageSouser);
-            this.tabControlImg.Controls.Add(this.tabPageRender);
-            this.tabControlImg.Controls.Add(this.tabPageDone);
-            this.tabControlImg.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlImg.Location = new System.Drawing.Point(0, 0);
-            this.tabControlImg.Name = "tabControlImg";
-            this.tabControlImg.SelectedIndex = 0;
-            this.tabControlImg.Size = new System.Drawing.Size(467, 540);
-            this.tabControlImg.TabIndex = 0;
-            this.tabControlImg.SelectedIndexChanged += new System.EventHandler(this.tabControlImg_SelectedIndexChanged);
-            this.tabControlImg.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabControlImg_DragDrop);
-            this.tabControlImg.DragEnter += new System.Windows.Forms.DragEventHandler(this.tabControlImg_DragEnter);
+            this.pictureBox.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox.ErrorImage = global::MediaSocial.Properties.Resources.PhotoNotExist;
+            this.pictureBox.Image = global::MediaSocial.Properties.Resources.PhotoNotExist;
+            this.pictureBox.InitialImage = global::MediaSocial.Properties.Resources.PhotoNotExist;
+            this.pictureBox.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(467, 540);
+            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox.TabIndex = 2;
+            this.pictureBox.TabStop = false;
+            this.pictureBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.pictureBox_DragDrop);
+            this.pictureBox.DragEnter += new System.Windows.Forms.DragEventHandler(this.pictureBox_DragEnter);
+            this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseMove);
+            this.pictureBox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseWheel);
             // 
-            // tabPageSouser
+            // panelImg
             // 
-            this.tabPageSouser.Controls.Add(this.pictureBoxSouser);
-            this.tabPageSouser.Location = new System.Drawing.Point(4, 22);
-            this.tabPageSouser.Name = "tabPageSouser";
-            this.tabPageSouser.Size = new System.Drawing.Size(459, 514);
-            this.tabPageSouser.TabIndex = 0;
-            this.tabPageSouser.Text = "Исходное изображение";
+            this.panelImg.AllowDrop = true;
+            this.panelImg.Controls.Add(this.cmbBoxImgType);
+            this.panelImg.Controls.Add(this.buttonImgClear);
+            this.panelImg.Controls.Add(this.buttonImgOpen);
+            this.panelImg.Controls.Add(this.comboBoxImg);
+            this.panelImg.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelImg.Location = new System.Drawing.Point(0, 540);
+            this.panelImg.Name = "panelImg";
+            this.panelImg.Size = new System.Drawing.Size(467, 35);
+            this.panelImg.TabIndex = 0;
             // 
-            // pictureBoxSouser
+            // cmbBoxImgType
             // 
-            this.pictureBoxSouser.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBoxSouser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBoxSouser.ErrorImage = global::MediaSocial.Properties.Resources.PhotoNotExist;
-            this.pictureBoxSouser.Image = global::MediaSocial.Properties.Resources.PhotoNotExist;
-            this.pictureBoxSouser.InitialImage = global::MediaSocial.Properties.Resources.PhotoNotExist;
-            this.pictureBoxSouser.Location = new System.Drawing.Point(0, 0);
-            this.pictureBoxSouser.Name = "pictureBoxSouser";
-            this.pictureBoxSouser.Size = new System.Drawing.Size(459, 514);
-            this.pictureBoxSouser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxSouser.TabIndex = 1;
-            this.pictureBoxSouser.TabStop = false;
-            // 
-            // tabPageRender
-            // 
-            this.tabPageRender.Controls.Add(this.pictureBoxRender);
-            this.tabPageRender.Location = new System.Drawing.Point(4, 22);
-            this.tabPageRender.Name = "tabPageRender";
-            this.tabPageRender.Size = new System.Drawing.Size(459, 514);
-            this.tabPageRender.TabIndex = 1;
-            this.tabPageRender.Text = "Обработанное изображение";
-            // 
-            // pictureBoxRender
-            // 
-            this.pictureBoxRender.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBoxRender.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBoxRender.ErrorImage = global::MediaSocial.Properties.Resources.PhotoNotExist;
-            this.pictureBoxRender.Image = global::MediaSocial.Properties.Resources.PhotoNotExist;
-            this.pictureBoxRender.InitialImage = global::MediaSocial.Properties.Resources.PhotoNotExist;
-            this.pictureBoxRender.Location = new System.Drawing.Point(0, 0);
-            this.pictureBoxRender.Name = "pictureBoxRender";
-            this.pictureBoxRender.Size = new System.Drawing.Size(459, 514);
-            this.pictureBoxRender.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxRender.TabIndex = 1;
-            this.pictureBoxRender.TabStop = false;
-            // 
-            // tabPageDone
-            // 
-            this.tabPageDone.Controls.Add(this.pictureBoxDone);
-            this.tabPageDone.Location = new System.Drawing.Point(4, 22);
-            this.tabPageDone.Name = "tabPageDone";
-            this.tabPageDone.Size = new System.Drawing.Size(459, 514);
-            this.tabPageDone.TabIndex = 2;
-            this.tabPageDone.Text = "Готовое изображение";
-            // 
-            // pictureBoxDone
-            // 
-            this.pictureBoxDone.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBoxDone.ErrorImage = global::MediaSocial.Properties.Resources.PhotoNotExist;
-            this.pictureBoxDone.Image = global::MediaSocial.Properties.Resources.PhotoNotExist;
-            this.pictureBoxDone.InitialImage = global::MediaSocial.Properties.Resources.PhotoNotExist;
-            this.pictureBoxDone.Location = new System.Drawing.Point(0, 0);
-            this.pictureBoxDone.Name = "pictureBoxDone";
-            this.pictureBoxDone.Size = new System.Drawing.Size(459, 514);
-            this.pictureBoxDone.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxDone.TabIndex = 1;
-            this.pictureBoxDone.TabStop = false;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.buttonImgClear);
-            this.panel1.Controls.Add(this.buttonImgOpen);
-            this.panel1.Controls.Add(this.comboBoxImg);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 540);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(467, 35);
-            this.panel1.TabIndex = 0;
+            this.cmbBoxImgType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxImgType.FormattingEnabled = true;
+            this.cmbBoxImgType.Items.AddRange(new object[] {
+            "Исходное изображение",
+            "Обработанное изображение",
+            "Готовое изображение"});
+            this.cmbBoxImgType.Location = new System.Drawing.Point(297, 9);
+            this.cmbBoxImgType.Name = "cmbBoxImgType";
+            this.cmbBoxImgType.Size = new System.Drawing.Size(167, 21);
+            this.cmbBoxImgType.TabIndex = 3;
+            this.cmbBoxImgType.SelectedIndexChanged += new System.EventHandler(this.cmbBoxImgType_SelectedIndexChanged);
             // 
             // buttonImgClear
             // 
@@ -329,6 +269,7 @@
             this.tabControlPlugins.SelectedIndex = 0;
             this.tabControlPlugins.Size = new System.Drawing.Size(673, 575);
             this.tabControlPlugins.TabIndex = 1;
+            this.tabControlPlugins.SelectedIndexChanged += new System.EventHandler(this.tabControlPlugins_SelectedIndexChanged);
             // 
             // tabPluginModule
             // 
@@ -436,6 +377,7 @@
             this.trackBarZoom.Name = "trackBarZoom";
             this.trackBarZoom.Size = new System.Drawing.Size(539, 34);
             this.trackBarZoom.TabIndex = 17;
+            this.trackBarZoom.ValueChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
             // 
             // label8
             // 
@@ -468,6 +410,7 @@
             this.trackBarHorisontal.Name = "trackBarHorisontal";
             this.trackBarHorisontal.Size = new System.Drawing.Size(539, 34);
             this.trackBarHorisontal.TabIndex = 14;
+            this.trackBarHorisontal.ValueChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
             // 
             // label4
             // 
@@ -500,6 +443,7 @@
             this.trackBarVertical.Name = "trackBarVertical";
             this.trackBarVertical.Size = new System.Drawing.Size(539, 34);
             this.trackBarVertical.TabIndex = 11;
+            this.trackBarVertical.ValueChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
             // 
             // label6
             // 
@@ -524,6 +468,7 @@
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.checkBoxAuto);
             this.groupBox3.Controls.Add(this.btnAutoBr);
             this.groupBox3.Controls.Add(this.numericUpDownRotate);
             this.groupBox3.Controls.Add(this.buttonRotate270);
@@ -536,6 +481,17 @@
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Другое";
+            // 
+            // checkBoxAuto
+            // 
+            this.checkBoxAuto.AutoSize = true;
+            this.checkBoxAuto.Location = new System.Drawing.Point(387, 21);
+            this.checkBoxAuto.Name = "checkBoxAuto";
+            this.checkBoxAuto.Size = new System.Drawing.Size(103, 17);
+            this.checkBoxAuto.TabIndex = 21;
+            this.checkBoxAuto.Text = "Автообработка";
+            this.checkBoxAuto.UseVisualStyleBackColor = true;
+            this.checkBoxAuto.CheckedChanged += new System.EventHandler(this.checkBoxAuto_CheckedChanged);
             // 
             // btnAutoBr
             // 
@@ -564,6 +520,7 @@
             this.numericUpDownRotate.Name = "numericUpDownRotate";
             this.numericUpDownRotate.Size = new System.Drawing.Size(57, 20);
             this.numericUpDownRotate.TabIndex = 28;
+            this.numericUpDownRotate.ValueChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
             // 
             // buttonRotate270
             // 
@@ -636,6 +593,7 @@
             this.trackBarTone.Name = "trackBarTone";
             this.trackBarTone.Size = new System.Drawing.Size(574, 34);
             this.trackBarTone.TabIndex = 21;
+            this.trackBarTone.ValueChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
             // 
             // label3
             // 
@@ -658,6 +616,7 @@
             this.trackBarTemperature.Name = "trackBarTemperature";
             this.trackBarTemperature.Size = new System.Drawing.Size(574, 34);
             this.trackBarTemperature.TabIndex = 19;
+            this.trackBarTemperature.MouseCaptureChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
             // 
             // label1
             // 
@@ -680,6 +639,7 @@
             this.trackBarSaturation.Name = "trackBarSaturation";
             this.trackBarSaturation.Size = new System.Drawing.Size(574, 34);
             this.trackBarSaturation.TabIndex = 17;
+            this.trackBarSaturation.ValueChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
             // 
             // label2
             // 
@@ -702,6 +662,7 @@
             this.trackBarContrast.Name = "trackBarContrast";
             this.trackBarContrast.Size = new System.Drawing.Size(574, 34);
             this.trackBarContrast.TabIndex = 14;
+            this.trackBarContrast.ValueChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
             // 
             // label10
             // 
@@ -724,6 +685,7 @@
             this.trackBarBrightness.Name = "trackBarBrightness";
             this.trackBarBrightness.Size = new System.Drawing.Size(574, 34);
             this.trackBarBrightness.TabIndex = 11;
+            this.trackBarBrightness.ValueChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
             // 
             // label12
             // 
@@ -973,58 +935,58 @@
             // NewToolStripMenuItem
             // 
             this.NewToolStripMenuItem.Name = "NewToolStripMenuItem";
-            this.NewToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.NewToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.NewToolStripMenuItem.Text = "Создать";
             // 
             // OpenToolStripMenuItem
             // 
             this.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
-            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.OpenToolStripMenuItem.Text = "Открыть";
             // 
             // CloseToolStripMenuItem
             // 
             this.CloseToolStripMenuItem.Name = "CloseToolStripMenuItem";
-            this.CloseToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.CloseToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.CloseToolStripMenuItem.Text = "Закрыть";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(159, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(160, 6);
             // 
             // SaveToolStripMenuItem
             // 
             this.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
-            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.SaveToolStripMenuItem.Text = "Сохранить";
             // 
             // SaveAsToolStripMenuItem
             // 
             this.SaveAsToolStripMenuItem.Name = "SaveAsToolStripMenuItem";
-            this.SaveAsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.SaveAsToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.SaveAsToolStripMenuItem.Text = "Сохранить как...";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(159, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(160, 6);
             // 
             // SettingsToolStripMenuItem
             // 
             this.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem";
-            this.SettingsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.SettingsToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.SettingsToolStripMenuItem.Text = "Настройки";
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(159, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(160, 6);
             // 
             // QuitToolStripMenuItem
             // 
             this.QuitToolStripMenuItem.Name = "QuitToolStripMenuItem";
-            this.QuitToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.QuitToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.QuitToolStripMenuItem.Text = "Выход";
             this.QuitToolStripMenuItem.Click += new System.EventHandler(this.QuitToolStripMenuItem_Click);
             // 
@@ -1254,14 +1216,8 @@
             this.splitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
-            this.tabControlImg.ResumeLayout(false);
-            this.tabPageSouser.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSouser)).EndInit();
-            this.tabPageRender.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRender)).EndInit();
-            this.tabPageDone.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDone)).EndInit();
-            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            this.panelImg.ResumeLayout(false);
             this.tabControlPlugins.ResumeLayout(false);
             this.tabPluginModule.ResumeLayout(false);
             this.tabPluginEditor.ResumeLayout(false);
@@ -1332,23 +1288,16 @@
         private System.Windows.Forms.ToolStripComboBox toolStripCmbPlugin;
         private System.Windows.Forms.ToolStripButton toolStripBtnModules;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.TabControl tabControlImg;
-        private System.Windows.Forms.TabPage tabPageSouser;
-        private System.Windows.Forms.TabPage tabPageRender;
-        private System.Windows.Forms.TabPage tabPageDone;
-        private System.Windows.Forms.PictureBox pictureBoxSouser;
-        private System.Windows.Forms.PictureBox pictureBoxDone;
         private System.Windows.Forms.ToolStripButton toolStripButtonEditor;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem PhotoEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panelImg;
         private System.Windows.Forms.Button buttonImgClear;
         private System.Windows.Forms.Button buttonImgOpen;
         private System.Windows.Forms.ComboBox comboBoxImg;
         private System.Windows.Forms.ToolStripMenuItem ModulsReloadToolStripMenuItem;
-        private System.Windows.Forms.PictureBox pictureBoxRender;
         private System.Windows.Forms.TabControl tabControlPlugins;
         private System.Windows.Forms.TabPage tabPluginModule;
         private System.Windows.Forms.Panel pnlPlugin;
@@ -1404,6 +1353,9 @@
         private System.Windows.Forms.NumericUpDown numericUpDownRotate;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.Button btnAutoBr;
+        private System.Windows.Forms.PictureBox pictureBox;
+        private System.Windows.Forms.ComboBox cmbBoxImgType;
+        private System.Windows.Forms.CheckBox checkBoxAuto;
     }
 }
 

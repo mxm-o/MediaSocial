@@ -14,7 +14,11 @@ namespace MediaSocial
         public FormMain()
         {
             InitializeComponent();
+            pictureBox.AllowDrop = true;
         }
+
+        // Создаем таймер обработки картинки
+        private Timer delayTimer = new Timer();
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -55,6 +59,9 @@ namespace MediaSocial
             }
             // Проверяем кнопку сохранения
             buttonImgSaveQuick.Enabled = textBoxSaveNameFile.Text == "" ? false : true;
+            // Устанавливаем таймер срабатыванися обработки картинки
+            delayTimer.Interval = 500;
+            delayTimer.Tick += new EventHandler(delayTimer_Tick);
         }
 
         // Загрузка настроек
@@ -130,8 +137,19 @@ namespace MediaSocial
 
         private void Global_ImageOutChanged(object sender, EventArgs e)
         {
-            pictureBoxDone.Image = Global.ImageOut;
-            tabControlImg.SelectedTab = tabPageDone;
+            showPicturebox();
+
+            if (cmbBoxImgType.InvokeRequired)
+            {
+                cmbBoxImgType.BeginInvoke(new Action(() =>
+                {
+                    cmbBoxImgType.SelectedIndex = 2;
+                }));
+            }
+            else
+            {
+                cmbBoxImgType.SelectedIndex = 2;
+            }
         }
 
         // Активация плагина
@@ -192,8 +210,7 @@ namespace MediaSocial
                         Properties.Settings.Default.inputSave = 2;
                         radioButtonRender.Enabled = false;
                         radioButtonSouser.Enabled = false;
-                        panel1.Enabled = false;
-                        tabControlImg.SelectedTab = tabPageDone;
+                        panelImg.Enabled = false;
                         panelEditor.Enabled = false;
                     }
                     else
@@ -202,12 +219,18 @@ namespace MediaSocial
                         radioButtonSouser.Enabled = true;
                     }
 
-                    if (selectedPlugin.Instance.SizesList.Count > 0) comboBoxImg.SelectedIndex = 0;
+                    if (selectedPlugin.Instance.SizesList.Count > 0)
+                    {
+                        comboBoxImg.SelectedIndex = 0;
+                        cmbBoxImgType.SelectedIndex = 0;
+                    }
+
                     comboBoxImg.Enabled = selectedPlugin.Instance.SizesList.Count > 1;
+                    cmbBoxImgType.Enabled = selectedPlugin.Instance.SizesList.Count > 0;
                 }
             }
         }
-
+        // Открытие по кнопке
         private void buttonImgOpen_Click(object sender, EventArgs e)
         {
             if (comboBoxImg.Items.Count > 0)
@@ -217,6 +240,22 @@ namespace MediaSocial
             else
             {
                 MessageBox.Show("Не выбран модуль!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        // Открытие перетаскиванием
+        private void pictureBox_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop) && ((e.AllowedEffect & DragDropEffects.Move) == DragDropEffects.Move)) e.Effect = DragDropEffects.Move;
+        }
+
+        private void pictureBox_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop) && e.Effect == DragDropEffects.Move)
+            {
+                toolStripStatusLabel1.Text = "Открытие изображения...";
+                string[] objects = (string[])e.Data.GetData(DataFormats.FileDrop); // В objects хранятся пути к папкам и файлам
+                Image image = openImage(@objects[0]); // Берем первый файл
+                if (image != null) insertImage(image);
             }
         }
 
@@ -258,29 +297,15 @@ namespace MediaSocial
             Image image = null;
             try
             {
-                if (tabControlImg.SelectedTab == tabPageSouser && Global.imagesSouser[comboBoxImg.SelectedIndex].Exist) image = Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures;
-                if (tabControlImg.SelectedTab == tabPageRender && Global.imagesRender[comboBoxImg.SelectedIndex].Exist) image = Global.imagesRender[comboBoxImg.SelectedIndex].Pictures;
-                if (tabControlImg.SelectedTab == tabPageDone) image = Global.ImageOut;
-            } catch { }
+                if (cmbBoxImgType.SelectedIndex == 0 && Global.imagesSouser[comboBoxImg.SelectedIndex].Exist) image = Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures;
+                if (cmbBoxImgType.SelectedIndex == 1 && Global.imagesRender[comboBoxImg.SelectedIndex].Exist) image = Global.imagesRender[comboBoxImg.SelectedIndex].Pictures;
+                if (cmbBoxImgType.SelectedIndex == 2) image = Global.ImageOut;
+            }
+            catch { }
             if (image != null) Clipboard.SetImage(image);
         }
 
-        // Добавление файла перетаскиванием
-        private void tabControlImg_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop) && ((e.AllowedEffect & DragDropEffects.Move) == DragDropEffects.Move)) e.Effect = DragDropEffects.Move;
-        }
 
-        private void tabControlImg_DragDrop(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop) && e.Effect == DragDropEffects.Move)
-            {
-                toolStripStatusLabel1.Text = "Открытие изображения...";
-                string[] objects = (string[])e.Data.GetData(DataFormats.FileDrop); // В objects хранятся пути к папкам и файлам
-                Image image = openImage(@objects[0]); // Берем первый файл
-                if (image != null) insertImage(image);
-            }
-        }
 
         private Image openImage(string pathImage)
         {
@@ -336,17 +361,17 @@ namespace MediaSocial
 
 
         // Добавление изображения в глобальные списки изображения + в pictureBox'ы
-        private void insertImage (Image image)
+        private void insertImage(Image image)
         {
             if (image != null)
             {
                 Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures = image;
                 Global.imagesSouser[comboBoxImg.SelectedIndex].Exist = true;
-                pictureBoxSouser.Image = Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures;
 
                 Global.imagesRender[Global.ImageIndexNow].Pictures = renderEditor(Global.imagesSouser[Global.ImageIndexNow].Pictures, Global.ImageIndexNow);
                 Global.imagesRender[Global.ImageIndexNow].Exist = true;
-                pictureBoxRender.Image = Global.imagesRender[Global.ImageIndexNow].Pictures;
+
+                showPicturebox();
             }
         }
 
@@ -355,10 +380,10 @@ namespace MediaSocial
             if (comboBoxImg.Items.Count > 0)
             {
                 Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures = global::MediaSocial.Properties.Resources.PhotoNotExist;
-                pictureBoxSouser.Image = global::MediaSocial.Properties.Resources.PhotoNotExist;
 
                 Global.imagesRender[comboBoxImg.SelectedIndex].Pictures = global::MediaSocial.Properties.Resources.PhotoNotExist;
-                pictureBoxRender.Image = global::MediaSocial.Properties.Resources.PhotoNotExist;
+
+                pictureBox.Image = global::MediaSocial.Properties.Resources.PhotoNotExist;
 
                 Global.imagesSettings.Clear();
             }
@@ -376,34 +401,33 @@ namespace MediaSocial
 
         private void ImgSouserToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tabControlImg.SelectedTab = tabPageSouser;
+            cmbBoxImgType.SelectedValue = 0;
         }
 
         private void ImgRenderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tabControlImg.SelectedTab = tabPageRender;
+            cmbBoxImgType.SelectedValue = 1;
         }
 
         private void ImgDoneToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tabControlImg.SelectedTab = tabPageDone;
+            cmbBoxImgType.SelectedValue = 2;
         }
 
         private void tabControlImg_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControlImg.SelectedIndex == 1) { tabControlPlugins.SelectedTab = tabPluginEditor; }
+            //if (tabControlImg.SelectedIndex == 1) { tabControlPlugins.SelectedTab = tabPluginEditor; }
         }
 
         private void toolStripButtonEditor_Click(object sender, EventArgs e)
         {
             tabControlPlugins.SelectedTab = tabPluginEditor;
-            tabControlImg.SelectedTab = tabPageRender;
+            cmbBoxImgType.SelectedValue = 1;
         }
 
         private void toolStripButtonSave_Click(object sender, EventArgs e)
         {
-            tabControlPlugins.SelectedTab = tabPluginSave;
-            tabControlImg.SelectedTab = tabPageDone;
+
         }
 
         private void textBoxSaveNameFile_TextChanged(object sender, EventArgs e)
@@ -421,8 +445,7 @@ namespace MediaSocial
         private void comboBoxImg_SelectedIndexChanged(object sender, EventArgs e)
         {
             Global.ImageIndexNow = comboBoxImg.SelectedIndex;
-            pictureBoxSouser.Image = Global.imagesSouser[Global.ImageIndexNow].Pictures;
-            pictureBoxRender.Image = Global.imagesRender[Global.ImageIndexNow].Pictures;
+            showPicturebox();
             LoadEditorSetting(Global.ImageIndexNow);
         }
 
@@ -437,7 +460,23 @@ namespace MediaSocial
             {
                 btnEditorOk.Enabled = false;
                 Global.imagesRender[Global.ImageIndexNow].Pictures = renderEditor(Global.imagesSouser[Global.ImageIndexNow].Pictures, Global.ImageIndexNow);
-                pictureBoxRender.Image = Global.imagesRender[Global.ImageIndexNow].Pictures;
+                pictureBox.Image = Global.imagesRender[Global.ImageIndexNow].Pictures;
+                btnEditorOk.Enabled = true;
+            }
+        }
+
+        // Обработка картинки по таймеру
+        private void delayTimer_Tick(object sender, EventArgs e)
+        {
+            // Останавливаем таймер
+            delayTimer.Stop();
+
+            // Выполняем необходимые действия
+            if (Global.imagesRender[Global.ImageIndexNow].Exist)
+            {
+                btnEditorOk.Enabled = false;
+                Global.imagesRender[Global.ImageIndexNow].Pictures = renderEditor(Global.imagesSouser[Global.ImageIndexNow].Pictures, Global.ImageIndexNow);
+                pictureBox.Image = Global.imagesRender[Global.ImageIndexNow].Pictures;
                 btnEditorOk.Enabled = true;
             }
         }
@@ -664,7 +703,7 @@ namespace MediaSocial
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
 
-                saveFileDialog.Filter = "Text files (*." + Properties.Settings.Default.typeSave + ")|*." + Properties.Settings.Default.typeSave; //фильтр для расширения файла
+                saveFileDialog.Filter = "Image file (*." + Properties.Settings.Default.typeSave + ")|*." + Properties.Settings.Default.typeSave; //фильтр для расширения файла
                 saveFileDialog.InitialDirectory = Properties.Settings.Default.pathSave; //начальная директория
                 saveFileDialog.RestoreDirectory = true;
                 saveFileDialog.Title = "Выберите файл для сохранения";
@@ -691,6 +730,104 @@ namespace MediaSocial
                         toolStripStatusLabel1.Text = "Ошибка сохранения файла";
                     }
                 }
+            }
+        }
+        // Изменение положения изображения мышью
+        private void pictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (tabControlPlugins.SelectedTab == tabPluginEditor && e.Button == MouseButtons.Left)
+            {
+                int x = (e.Location.X - (pictureBox.Width / 2)) / 2;
+                int y = (e.Location.Y - (pictureBox.Height / 2)) / 2;
+                x = x > trackBarHorisontal.Maximum ? trackBarHorisontal.Maximum : x;
+                x = x < trackBarHorisontal.Minimum ? trackBarHorisontal.Minimum : x;
+                y = y > trackBarVertical.Maximum ? trackBarVertical.Maximum : y;
+                y = y < trackBarVertical.Minimum ? trackBarVertical.Minimum : y;
+
+                trackBarHorisontal.Value = x;
+                trackBarVertical.Value = y;
+            }
+        }
+        // Изменение размера изображения мышью
+        private void pictureBox_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (tabControlPlugins.SelectedTab == tabPluginEditor)
+            {
+                int delta = e.Delta * SystemInformation.MouseWheelScrollLines / 120;
+                if (delta > 0 && trackBarZoom.Value < 100)
+                {
+                    trackBarZoom.Value++;
+                }
+                else if (delta < 0 && trackBarZoom.Value > -100)
+                {
+                    trackBarZoom.Value--;
+                }
+            }
+        }
+
+        // Меняем картинку отображаемую в программе
+        private void cmbBoxImgType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            showPicturebox();
+        }
+
+        private void showPicturebox()
+        {
+            pictureBox.Image = Properties.Resources.PhotoNotExist;
+            try
+            {
+                switch (cmbBoxImgType.SelectedIndex)
+                {
+                    case 0:
+                        if (Global.imagesSouser[comboBoxImg.SelectedIndex].Exist)
+                        {
+                            pictureBox.Image = Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures;
+                        }
+                        break;
+                    case 1:
+                        if (Global.imagesRender[comboBoxImg.SelectedIndex].Exist)
+                        {
+                            pictureBox.Image = Global.imagesRender[comboBoxImg.SelectedIndex].Pictures;
+                        }
+                        break;
+                    case 2:
+                        pictureBox.Image = Global.ImageOut;
+                        break;
+                    default:
+                        pictureBox.Image = Properties.Resources.PhotoNotExist;
+                        break;
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void PictAutoRender()
+        {
+            if (checkBoxAuto.Checked)
+            {
+                delayTimer.Stop(); // Останавливаем таймер, если он уже запущен
+                delayTimer.Start(); // Запускаем таймер
+            }
+        }
+
+        private void trackBarVertical_ValueChanged(object sender, EventArgs e)
+        {
+            delayTimer.Stop();
+            PictAutoRender();
+        }
+
+        private void checkBoxAuto_CheckedChanged(object sender, EventArgs e)
+        {
+            btnEditorOk.Enabled = !checkBoxAuto.Checked;
+        }
+
+        private void tabControlPlugins_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControlPlugins.SelectedIndex == 1) {
+                cmbBoxImgType.SelectedIndex = 1;
             }
         }
     }
