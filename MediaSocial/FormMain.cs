@@ -815,7 +815,6 @@ namespace MediaSocial
 
         private void trackBarVertical_ValueChanged(object sender, EventArgs e)
         {
-            delayTimer.Stop();
             PictAutoRender();
         }
 
