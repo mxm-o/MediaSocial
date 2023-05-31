@@ -1,3 +1,5 @@
+// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+
 using System;
 using System.Drawing;
 using System.Windows.Forms;

@@ -1,4 +1,5 @@
-using System;
+// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+
 using System.Collections.Generic;
 using PluginInterface;
 

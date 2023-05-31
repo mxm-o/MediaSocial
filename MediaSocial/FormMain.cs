@@ -1,4 +1,6 @@
-﻿using MediaSocial.Classes;
+﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+
+using MediaSocial.Classes;
 using PhotoEdit;
 using System;
 using System.Drawing;
@@ -35,9 +37,6 @@ namespace MediaSocial
             //Add each plugin to the treeview
             foreach (Types.AvailablePlugin pluginOn in Global.Plugins.AvailablePlugins)
             {
-                //TreeNode newNode = new TreeNode(pluginOn.Instance.Name);
-                //this.cmbPlugins.Items.Add(newNode);
-                //this.cmbPlugins.Items.Add(pluginOn.Instance.Name);
                 toolStripCmbPlugin.Items.Add(pluginOn.Instance.Name);
             }
         }

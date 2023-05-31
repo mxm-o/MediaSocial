@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+
 using System.Drawing.Drawing2D;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing.Imaging;
 
 namespace PhotoEdit
 {

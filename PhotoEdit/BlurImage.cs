@@ -1,8 +1,9 @@
-﻿using System;
+﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Drawing.Imaging;
 
 namespace PhotoEdit
 {
@@ -43,8 +44,6 @@ namespace PhotoEdit
             }
             while (File.Exists(outputFile));
 
-
-
             // Запускаем FFMPEG с параметрами
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -74,6 +73,5 @@ namespace PhotoEdit
 
             return image;
         }
-
     }
 }

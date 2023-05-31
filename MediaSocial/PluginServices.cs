@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+
+using System;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
@@ -179,9 +181,6 @@ namespace MediaSocial
             return Global.ImageIndexNow;
         }
     }
-
-
-
 
     namespace Types
     {

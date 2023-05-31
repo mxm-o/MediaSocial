@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+
+using System.Collections.Generic;
 using PluginInterface;
 
 namespace PluginKirsanovFotoHorizontalTitle
@@ -54,46 +56,6 @@ namespace PluginKirsanovFotoHorizontalTitle
         /// </summary>
         public IPluginHost Host
         {
-
-            //Эта часть в настоящее время не реализована
-            /*
-			Вот вкратце... Вы можете заставить хост-программу реализовать этот интерфейс...
-			это, по сути, дает вам возможность разрешить плагинам доступ к некоторым функциям хост-программы.	
-			
-			Пример: mp3-плеер. Если бы у вас был интерфейс IPluginHost, например:
-			
-			public interface IPluginHost
-			{
-				void Play(string FileName);
-				void Stop();			
-			}
-			
-				то, что вы должны сделать, это когда плагин загружается на хост (это будет похоже 
-				на файл PluginServices.cs в методе AddPlugin()), который вы должны установить:	
-
-				newPlugin.Host = this;
-				
-				это дало бы плагину ссылку на хост... теперь, когда плагин
-				знает, что хост содержит эти методы, он может легко получить к ним доступ, например:
-			
-				this.Host.Play("C:\MyCoolMp3.mp3");
-				
-			и тогда они могли бы пойти:
-			
-				this.Host.Stop();
-				
-			all this being from right inside the plugin!  I hope you get the point.  It 
-			just means that you can indeed make your plugins able to interact with the 
-			host program itself.  Let's face it.. It would be no fun if you couldn't do this,
-			because otherwise all the plugin is, is just standalone functionality running
-			inside the host program.. (of course there are cases when you can still accomplish
-			many things without needing to allow the plugin to play with the host... for example
-			you could have an spam filter, and have each plugin be a different filter... that would
-			be pretty simple to make plugins for...
-			
-			so anyhow, that is what the host thingy is all aboot, eh!	
-			
-			*/
             get
             {
                 return myHost;
