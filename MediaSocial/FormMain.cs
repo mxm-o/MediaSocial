@@ -45,7 +45,6 @@ namespace MediaSocial
         private void FormMain_Load(object sender, EventArgs e)
         {
             // Загружаем настройки
-
             LoadSetting();
 
             // Загружаем плагины
@@ -137,8 +136,6 @@ namespace MediaSocial
 
         private void Global_ImageOutChanged(object sender, EventArgs e)
         {
-            showPicturebox();
-
             if (cmbBoxImgType.InvokeRequired)
             {
                 cmbBoxImgType.BeginInvoke(new Action(() =>
@@ -150,6 +147,8 @@ namespace MediaSocial
             {
                 cmbBoxImgType.SelectedIndex = 2;
             }
+
+            showPicturebox();
         }
 
         // Активация плагина
@@ -383,7 +382,7 @@ namespace MediaSocial
 
                 Global.imagesRender[comboBoxImg.SelectedIndex].Pictures = global::MediaSocial.Properties.Resources.PhotoNotExist;
 
-                pictureBox.Image = global::MediaSocial.Properties.Resources.PhotoNotExist;
+                pictureBox.Image = Properties.Resources.PhotoNotExist;
 
                 Global.imagesSettings.Clear();
             }
@@ -401,17 +400,17 @@ namespace MediaSocial
 
         private void ImgSouserToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            cmbBoxImgType.SelectedValue = 0;
+            cmbBoxImgType.SelectedIndex = 0;
         }
 
         private void ImgRenderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            cmbBoxImgType.SelectedValue = 1;
+            cmbBoxImgType.SelectedIndex = 1;
         }
 
         private void ImgDoneToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            cmbBoxImgType.SelectedValue = 2;
+            cmbBoxImgType.SelectedIndex = 2;
         }
 
         private void tabControlImg_SelectedIndexChanged(object sender, EventArgs e)
@@ -456,13 +455,7 @@ namespace MediaSocial
 
         private void btnEditorOk_Click(object sender, EventArgs e)
         {
-            if (Global.imagesRender[Global.ImageIndexNow].Exist)
-            {
-                btnEditorOk.Enabled = false;
-                Global.imagesRender[Global.ImageIndexNow].Pictures = renderEditor(Global.imagesSouser[Global.ImageIndexNow].Pictures, Global.ImageIndexNow);
-                pictureBox.Image = Global.imagesRender[Global.ImageIndexNow].Pictures;
-                btnEditorOk.Enabled = true;
-            }
+            EditorOk();
         }
 
         // Обработка картинки по таймеру
@@ -472,12 +465,17 @@ namespace MediaSocial
             delayTimer.Stop();
 
             // Выполняем необходимые действия
+            EditorOk();
+        }
+
+        private void EditorOk()
+        {
             if (Global.imagesRender[Global.ImageIndexNow].Exist)
             {
-                btnEditorOk.Enabled = false;
+                if (!checkBoxAuto.Checked) btnEditorOk.Enabled = false;
                 Global.imagesRender[Global.ImageIndexNow].Pictures = renderEditor(Global.imagesSouser[Global.ImageIndexNow].Pictures, Global.ImageIndexNow);
                 pictureBox.Image = Global.imagesRender[Global.ImageIndexNow].Pictures;
-                btnEditorOk.Enabled = true;
+                if (!checkBoxAuto.Checked) btnEditorOk.Enabled = true;
             }
         }
 
@@ -645,9 +643,9 @@ namespace MediaSocial
 
         private decimal calcRotateBox(decimal value, decimal x)
         {
-            value = value + x;
-            if (value >= 360) value = value - 360;
-            if (value < 0) value = value + 360;
+            value += x;
+            if (value >= 360) value -= 360;
+            if (value < 0) value += 360;
             return value;
         }
 
