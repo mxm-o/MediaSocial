@@ -133,8 +133,10 @@ namespace MediaSocial
             Properties.Settings.Default.Reload();
         }
 
+        // Действия при обновлении итогового изображения
         private void Global_ImageOutChanged(object sender, EventArgs e)
         {
+            // Дополнительная проверка на случай вызова из другого потока
             if (cmbBoxImgType.InvokeRequired)
             {
                 cmbBoxImgType.BeginInvoke(new Action(() =>
