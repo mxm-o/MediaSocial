@@ -1,9 +1,10 @@
 ﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
 
 using System.Collections.Generic;
+using System.Windows.Forms;
 using PluginInterface;
 
-namespace PluginKirsanovDemography
+namespace PluginKirsanovWeatherManual
 {
     /// <summary>
     /// Plugin2
@@ -21,14 +22,16 @@ namespace PluginKirsanovDemography
         }
 
         //Declarations of all our internal plugin variables
-        string myName = "Демография";
-        string myDescription = "Модуль демография";
+        string myName = "Прогноз погоды";
+        string myDescription = "Модуль прогноза погоды";
         string myAuthor = "Максим Отрохов";
         string myVersion = "1.0.0";
         bool myEditor = false;
-        string feed = "Имена заполняются через пробел (или запятую) в одной ячейке текущего года.";
-        
+        string feed = "";
+
         public List<ListSizes> SizesList { get; }
+
+        public List<WeatherSetting> WeaterSetting { get; set; }
 
         IPluginHost myHost = null;
         System.Windows.Forms.UserControl myMainInterface = new ctlMain();
@@ -97,12 +100,13 @@ namespace PluginKirsanovDemography
         {
             //This is the first Function called by the host...
             //Put anything needed to start with here first
+            Configuration.Load();
         }
 
         public void Dispose()
         {
             //Put any cleanup code in here for when the program is stopped
+            Configuration.Save();
         }
-
     }
 }

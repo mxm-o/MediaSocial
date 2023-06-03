@@ -57,8 +57,8 @@ namespace PluginKirsanovDemography
             this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.labelT1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.dataGridViewDemography = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
             this.DemographyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DemographyNow = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DemographyOld = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -138,15 +138,6 @@ namespace PluginKirsanovDemography
             this.panel2.Size = new System.Drawing.Size(244, 244);
             this.panel2.TabIndex = 13;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 4);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(48, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Данные";
-            // 
             // dataGridViewDemography
             // 
             this.dataGridViewDemography.AllowUserToAddRows = false;
@@ -164,23 +155,35 @@ namespace PluginKirsanovDemography
             this.dataGridViewDemography.Size = new System.Drawing.Size(234, 220);
             this.dataGridViewDemography.TabIndex = 1;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(4, 4);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(48, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Данные";
+            // 
             // DemographyName
             // 
             this.DemographyName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.DemographyName.HeaderText = "Название";
             this.DemographyName.Name = "DemographyName";
+            this.DemographyName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // DemographyNow
             // 
             this.DemographyNow.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.DemographyNow.HeaderText = "Параметр 1";
             this.DemographyNow.Name = "DemographyNow";
+            this.DemographyNow.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // DemographyOld
             // 
             this.DemographyOld.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.DemographyOld.HeaderText = "Параметр 2";
             this.DemographyOld.Name = "DemographyOld";
+            this.DemographyOld.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // ctlMain
             // 

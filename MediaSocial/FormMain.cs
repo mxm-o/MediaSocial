@@ -43,6 +43,13 @@ namespace MediaSocial
 
         private void FormMain_Load(object sender, EventArgs e)
         {
+            // Проверяем обновление версии для обновления и переноса настроек
+            if (Properties.Settings.Default.CallUpgrade)
+            {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.CallUpgrade = false;
+                Properties.Settings.Default.Save();
+            }
             // Загружаем настройки
             LoadSetting();
 

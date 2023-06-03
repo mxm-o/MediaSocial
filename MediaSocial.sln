@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginKirsanovGoodMorning",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginKirsanovDemography", "PluginKirsanovDemography\PluginKirsanovDemography.csproj", "{8E67587A-8E4C-4693-83DC-F47A07D93460}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginKirsanovWeatherManual", "PluginKirsanovWeatherManual\PluginKirsanovWeatherManual.csproj", "{D977860C-7765-4BB4-B1EA-91DCF711E229}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{8E67587A-8E4C-4693-83DC-F47A07D93460}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E67587A-8E4C-4693-83DC-F47A07D93460}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E67587A-8E4C-4693-83DC-F47A07D93460}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D977860C-7765-4BB4-B1EA-91DCF711E229}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D977860C-7765-4BB4-B1EA-91DCF711E229}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D977860C-7765-4BB4-B1EA-91DCF711E229}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D977860C-7765-4BB4-B1EA-91DCF711E229}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
