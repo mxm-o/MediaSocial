@@ -555,7 +555,7 @@ namespace PluginKirsanovWeatherManual
             textName.rectH = 90;
             textName.rectW = 510;
             textName.rectX = 50;
-            textName.rectY = 1680;
+            textName.rectY = 1650;
             textName.source = imageOut;
             textName.fontSize = 60;
             textName.colorText = Color.Black;
@@ -600,7 +600,7 @@ namespace PluginKirsanovWeatherManual
             textName.rectH = 90;
             textName.rectW = 510;
             textName.rectX = 640;
-            textName.rectY = 1680;
+            textName.rectY = 1650;
             textName.source = imageOut;
             textName.fontSize = 60;
             textName.colorText = Color.Black;
@@ -645,7 +645,7 @@ namespace PluginKirsanovWeatherManual
             textName.rectH = 90;
             textName.rectW = 510;
             textName.rectX = 1230;
-            textName.rectY = 1680;
+            textName.rectY = 1650;
             textName.source = imageOut;
             textName.fontSize = 60;
             textName.colorText = Color.Black;

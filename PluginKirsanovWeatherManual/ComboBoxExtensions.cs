@@ -8,7 +8,7 @@ namespace PluginKirsanovWeatherManual
     {
         public static string FindMatchingItem(this ComboBox comboBox, string searchStr)
         {
-            var matchingItems = comboBox.Items.Cast<string>().Where(item => item.ToLower().Replace(" ", "").Contains(searchStr.ToLower().Replace(" ", ""))).ToList();
+            var matchingItems = comboBox.Items.Cast<string>().Where(item => item.ToLower().Replace(" ", "").StartsWith(searchStr.ToLower().Replace(" ", ""))).ToList();
 
             if (matchingItems.Count == 0)
             {

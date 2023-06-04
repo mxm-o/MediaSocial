@@ -50,6 +50,9 @@ namespace MediaSocial
                 Properties.Settings.Default.CallUpgrade = false;
                 Properties.Settings.Default.Save();
             }
+            // Загружаем иконку
+            IntPtr Hicon = Properties.Resources.icon.GetHicon();
+            this.Icon = Icon.FromHandle(Hicon);
             // Загружаем настройки
             LoadSetting();
 
@@ -834,6 +837,12 @@ namespace MediaSocial
             if (tabControlPlugins.SelectedIndex == 1) {
                 cmbBoxImgType.SelectedIndex = 1;
             }
+        }
+
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox1 aboutBox1 = new AboutBox1();
+            aboutBox1.ShowDialog();
         }
     }
 }

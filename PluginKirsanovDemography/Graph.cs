@@ -26,7 +26,13 @@ namespace PluginKirsanovDemography
             Image image2 = null;
             if (value2 != 0)
             {
-                photo.width = value1 >= value2 ? (350 / value1 * value2) : (350 / value2 * value1);
+                try
+                {
+                    photo.width = value1 >= value2 ? (350 / value1 * value2) : (350 / value2 * value1);
+                } catch
+                {
+                    photo.width = 1;
+                }
                 if (photo.width <= 0) photo.width = 1;
                 photo.colorMain = value1 <= value2 ? Color.FromArgb(50, 141, 212) : Color.FromArgb(62, 181, 241);
                 image2 = photo.Fill();

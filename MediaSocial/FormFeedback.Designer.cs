@@ -129,6 +129,7 @@
             this.Name = "FormFeedback";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Информация";
+            this.Load += new System.EventHandler(this.FormFeedback_Load);
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 

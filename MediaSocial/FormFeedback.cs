@@ -1,6 +1,7 @@
 ﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
 
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace MediaSocial
@@ -44,6 +45,13 @@ namespace MediaSocial
         private void btnOk_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void FormFeedback_Load(object sender, EventArgs e)
+        {
+            IntPtr Hicon = Properties.Resources.icon.GetHicon();
+            Icon icon = Icon.FromHandle(Hicon);
+            Icon = icon;
         }
     }
 }

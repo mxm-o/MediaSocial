@@ -42,7 +42,7 @@ namespace PluginKirsanovWeatherManual
             comboBoxCell.Items.Add("Южный");
             comboBoxCell.Items.Add("Юго-Западный");
             comboBoxCell.Items.Add("Западный");
-            comboBoxCell.Items.Add("Северо-западный");
+            comboBoxCell.Items.Add("Северо-Западный");
 
             return comboBoxCell;
         }
