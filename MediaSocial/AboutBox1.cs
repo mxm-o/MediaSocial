@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MediaSocial
@@ -20,9 +15,7 @@ namespace MediaSocial
             this.labelCopyright.Text = AssemblyCopyright;
             this.textBoxDescription.Text = "" +
                 "В модулях и программе испольуются компоненты:" + Environment.NewLine +
-                "Иконки: https://www.flaticon.com/free-icons/" + Environment.NewLine +
-                "FFMPEG: https://ffmpeg.org/" + Environment.NewLine +
-                "Html Agility Pack: https://html-agility-pack.net/";
+                "Иконки: https://www.flaticon.com/free-icons/" + Environment.NewLine;
         }
 
         #region Методы доступа к атрибутам сборки

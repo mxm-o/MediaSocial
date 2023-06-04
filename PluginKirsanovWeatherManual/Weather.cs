@@ -1,15 +1,14 @@
-﻿using HtmlAgilityPack;
-using System;
+﻿using System;
 using System.Text.RegularExpressions;
 
 namespace PluginKirsanovWeatherManual
 {
     public class Weather
     {
-        public HtmlDocument loadHtml(bool cache, out bool result)
+        public HtmlAgilityPack.HtmlDocument loadHtml(bool cache, out bool result)
         {
             DateTime dateTimeCache = Global.siteTime;
-            HtmlDocument doc = new HtmlDocument();
+            HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
             DateTime dateTimeNow = DateTime.Now;
             result = false;
 
@@ -22,7 +21,7 @@ namespace PluginKirsanovWeatherManual
                 try
                 {
                     //HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
-                    var webGet = new HtmlWeb();
+                    var webGet = new HtmlAgilityPack.HtmlWeb();
                     //doc.LoadHtml(s);
                     doc = webGet.Load(Global.sitePath);
                     DateTime dateTimeMax = dateTimeNow;
@@ -55,7 +54,7 @@ namespace PluginKirsanovWeatherManual
                 try
                 {
                     string end = "";
-                    HtmlNode bodyNode = doc.DocumentNode.SelectSingleNode(Global.weatherSetting[j].XPath.Replace("x:", ""));
+                    HtmlAgilityPack.HtmlNode bodyNode = doc.DocumentNode.SelectSingleNode(Global.weatherSetting[j].XPath.Replace("x:", ""));
                     if (Global.weatherSetting[j].XPathType == "innerText") end = bodyNode.InnerText;
                     if (Global.weatherSetting[j].XPathType == "innerHtml") end = bodyNode.InnerHtml;
                     if (Global.weatherSetting[j].XPathType == "title") end = bodyNode.Attributes["title"].Value;

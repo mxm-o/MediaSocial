@@ -1,13 +1,12 @@
 ﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
 
 using System.Collections.Generic;
-using System.Windows.Forms;
 using PluginInterface;
 
 namespace PluginKirsanovWeatherManual
 {
     /// <summary>
-    /// Plugin2
+    /// Plugin
     /// </summary>
     public class Plugin : IPlugin  // <-- See how we inherited the IPlugin interface?
     {

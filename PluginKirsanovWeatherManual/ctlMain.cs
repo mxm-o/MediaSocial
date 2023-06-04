@@ -10,10 +10,10 @@ using System.IO;
 
 namespace PluginKirsanovWeatherManual
 {
-	/// <summary>
-	/// Summary description for ctlMain.
-	/// </summary>
-	public class ctlMain : System.Windows.Forms.UserControl
+    /// <summary>
+    /// Summary description for ctlMain.
+    /// </summary>
+    public class ctlMain : UserControl
     {
         private System.ComponentModel.IContainer components;
 
@@ -23,12 +23,23 @@ namespace PluginKirsanovWeatherManual
 			InitializeComponent();
             // TODO: Add any initialization after the InitializeComponent call
             LoadingImages();
+            // Проверка наличия HtmlAgilityPack.dll
+            try
+            {
+                // Пробуем загрузить сборку
+                Assembly.Load("HtmlAgilityPack");
+            }
+            catch
+            {
+                panelAuto.Enabled = false;
+                panelAuto.Visible = false;
+            }
         }
 
-		/// <summary> 
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose( bool disposing )
 		{
 			if( disposing )
 			{
@@ -65,11 +76,13 @@ namespace PluginKirsanovWeatherManual
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridViewWeather = new PluginKirsanovWeatherManual.DoubleBufferedDataGridView();
             this.globalBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.panelAuto = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewWeather)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.globalBindingSource)).BeginInit();
+            this.panelAuto.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnHelp
@@ -153,7 +166,7 @@ namespace PluginKirsanovWeatherManual
             // 
             // btnSetting
             // 
-            this.btnSetting.Location = new System.Drawing.Point(10, 385);
+            this.btnSetting.Location = new System.Drawing.Point(168, 3);
             this.btnSetting.Name = "btnSetting";
             this.btnSetting.Size = new System.Drawing.Size(75, 23);
             this.btnSetting.TabIndex = 14;
@@ -163,7 +176,7 @@ namespace PluginKirsanovWeatherManual
             // 
             // buttonUpdate
             // 
-            this.buttonUpdate.Location = new System.Drawing.Point(91, 385);
+            this.buttonUpdate.Location = new System.Drawing.Point(94, 3);
             this.buttonUpdate.Name = "buttonUpdate";
             this.buttonUpdate.Size = new System.Drawing.Size(68, 23);
             this.buttonUpdate.TabIndex = 15;
@@ -174,7 +187,7 @@ namespace PluginKirsanovWeatherManual
             // labelUpdate
             // 
             this.labelUpdate.AutoSize = true;
-            this.labelUpdate.Location = new System.Drawing.Point(7, 411);
+            this.labelUpdate.Location = new System.Drawing.Point(4, 29);
             this.labelUpdate.Name = "labelUpdate";
             this.labelUpdate.Size = new System.Drawing.Size(107, 13);
             this.labelUpdate.TabIndex = 16;
@@ -213,7 +226,7 @@ namespace PluginKirsanovWeatherManual
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(165, 385);
+            this.button1.Location = new System.Drawing.Point(7, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(81, 23);
             this.button1.TabIndex = 18;
@@ -241,15 +254,23 @@ namespace PluginKirsanovWeatherManual
             // 
             this.globalBindingSource.DataSource = typeof(PluginKirsanovWeatherManual.Global);
             // 
+            // panelAuto
+            // 
+            this.panelAuto.Controls.Add(this.btnSetting);
+            this.panelAuto.Controls.Add(this.button1);
+            this.panelAuto.Controls.Add(this.buttonUpdate);
+            this.panelAuto.Controls.Add(this.labelUpdate);
+            this.panelAuto.Location = new System.Drawing.Point(3, 382);
+            this.panelAuto.Name = "panelAuto";
+            this.panelAuto.Size = new System.Drawing.Size(250, 48);
+            this.panelAuto.TabIndex = 19;
+            // 
             // ctlMain
             // 
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.panelAuto);
             this.Controls.Add(this.dataGridViewWeather);
             this.Controls.Add(this.panel3);
-            this.Controls.Add(this.labelUpdate);
-            this.Controls.Add(this.buttonUpdate);
-            this.Controls.Add(this.btnSetting);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.btnHelp);
             this.Controls.Add(this.btnClear);
@@ -267,8 +288,9 @@ namespace PluginKirsanovWeatherManual
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewWeather)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.globalBindingSource)).EndInit();
+            this.panelAuto.ResumeLayout(false);
+            this.panelAuto.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
 		}
 		#endregion
@@ -291,6 +313,7 @@ namespace PluginKirsanovWeatherManual
         private Label label2;
         private BindingSource globalBindingSource;
         IPlugin myPlugin = null;
+        private Panel panelAuto;
         private Button button1;
 
         public IPluginHost PluginHost
@@ -388,7 +411,9 @@ namespace PluginKirsanovWeatherManual
         private void LoadingImages()
         {
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            comboBoxImages.Items.Clear();
             string[] files = Directory.GetFiles(Path.Combine(path, "background"), "*.jpg");
+
             if (files.Length > 0)
             {
                 for (int i = 0; i < files.Length; i++)
@@ -411,28 +436,39 @@ namespace PluginKirsanovWeatherManual
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            this.Enabled = false;
+            bool error = false;
 
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             // Считываем шаблонное изображение
             Image imageMain = null;
+            Image imageFon = null;
+
             try
             {
                 imageMain = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "main.png"))));
             } catch
             {
-
+                error = true;
+                MessageBox.Show("Ошибка целостности плагина. Обратитесь к разработчику.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            Image imageFon = null;
+
             try
             {
                 imageFon = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "background", comboBoxImages.Text + ".jpg"))));
             }
             catch
             {
-
+                MessageBox.Show("Ошибка обработки файла фона. Укажите другой файл.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LoadingImages();
+                error = true;
             }
 
+            if (error)
+            {
+                return;
+            }
+
+            Enabled = false;
             // Обрезаем фон
             PhotoSize photoSizeFon = new PhotoSize();
             photoSizeFon.source = imageFon;
