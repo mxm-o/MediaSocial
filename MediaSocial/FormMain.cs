@@ -173,15 +173,6 @@ namespace MediaSocial
 
                 if (selectedPlugin != null)
                 {
-                    //Again, if the plugin is found, do some work...
-
-
-                    //This part adds the plugin's info to the 'Plugin Information:' Frame
-                    //this.lblPluginName.Text = selectedPlugin.Instance.Name;
-                    //this.lblPluginVersion.Text = "(" + selectedPlugin.Instance.Version + ")";
-                    //this.lblPluginAuthor.Text = "By: " + selectedPlugin.Instance.Author;
-                    //this.lblPluginDesc.Text = selectedPlugin.Instance.Description;
-
                     //Clear the current panel of any other plugin controls... 
                     //Note: this only affects visuals.. doesn't close the instance of the plugin
                     this.pnlPlugin.Controls.Clear();

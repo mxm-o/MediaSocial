@@ -118,5 +118,15 @@ namespace PluginKirsanovWeatherManual
                 MessageBox.Show("Нет доступа к указанному сайту!", "Ошибка обновления прогноза!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void buttonImport_Click(object sender, EventArgs e)
+        {
+            Configuration.Load(true);
+        }
+
+        private void buttonExport_Click(object sender, EventArgs e)
+        {
+            Configuration.Save(true);
+        }
     }
 }

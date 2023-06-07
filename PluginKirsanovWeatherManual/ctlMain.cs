@@ -18,9 +18,9 @@ namespace PluginKirsanovWeatherManual
         private System.ComponentModel.IContainer components;
 
         public ctlMain()
-		{
-			// This call is required by the Windows.Forms Form Designer.
-			InitializeComponent();
+        {
+            // This call is required by the Windows.Forms Form Designer.
+            InitializeComponent();
             // TODO: Add any initialization after the InitializeComponent call
             LoadingImages();
             // Проверка наличия HtmlAgilityPack.dll
@@ -39,25 +39,25 @@ namespace PluginKirsanovWeatherManual
         /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
-        protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if(components != null)
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
-		}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Component Designer generated code
-		/// <summary> 
-		/// Required method for Designer support - do not modify 
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        #region Component Designer generated code
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             this.btnHelp = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
@@ -117,7 +117,7 @@ namespace PluginKirsanovWeatherManual
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.dateTimePicker);
             this.panel1.Controls.Add(this.labelT1);
@@ -147,7 +147,7 @@ namespace PluginKirsanovWeatherManual
             // 
             // panel2
             // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.Controls.Add(this.label1);
             this.panel2.Location = new System.Drawing.Point(3, 84);
@@ -194,7 +194,7 @@ namespace PluginKirsanovWeatherManual
             // 
             // panel3
             // 
-            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel3.Controls.Add(this.comboBoxImages);
             this.panel3.Controls.Add(this.label2);
@@ -205,7 +205,7 @@ namespace PluginKirsanovWeatherManual
             // 
             // comboBoxImages
             // 
-            this.comboBoxImages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.comboBoxImages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxImages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxImages.FormattingEnabled = true;
@@ -237,7 +237,7 @@ namespace PluginKirsanovWeatherManual
             // 
             this.dataGridViewWeather.AllowUserToAddRows = false;
             this.dataGridViewWeather.AllowUserToDeleteRows = false;
-            this.dataGridViewWeather.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.dataGridViewWeather.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewWeather.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewWeather.Location = new System.Drawing.Point(6, 104);
@@ -290,10 +290,10 @@ namespace PluginKirsanovWeatherManual
             this.panelAuto.ResumeLayout(false);
             this.ResumeLayout(false);
 
-		}
-		#endregion
+        }
+        #endregion
 
-		IPluginHost myHost = null;
+        IPluginHost myHost = null;
         private Button btnHelp;
         private Button btnClear;
         private Button btnCreate;
@@ -315,23 +315,23 @@ namespace PluginKirsanovWeatherManual
         private Button button1;
 
         public IPluginHost PluginHost
-		{
-			get {return myHost;}
-			set {myHost = value;}
-		}
-		public IPlugin Plugin
-		{
-			get {return myPlugin;}
-			set {myPlugin = value;}
-		}
+        {
+            get { return myHost; }
+            set { myHost = value; }
+        }
+        public IPlugin Plugin
+        {
+            get { return myPlugin; }
+            set { myPlugin = value; }
+        }
 
-		private void butSend_Click(object sender, System.EventArgs e)
-		{
-			myHost.Feedback(myPlugin.Feed, myPlugin);
-		}
+        private void butSend_Click(object sender, System.EventArgs e)
+        {
+            myHost.Feedback(myPlugin.Feed, myPlugin);
+        }
 
-		private void ctlMain_Load(object sender, System.EventArgs e)
-		{
+        private void ctlMain_Load(object sender, System.EventArgs e)
+        {
             Clear();
             generateWeathersTable();
             labelUpdate.Text = "Прогноз обновлен: " + Global.siteTime.ToString();
@@ -339,27 +339,6 @@ namespace PluginKirsanovWeatherManual
 
         private void generateWeathersTable()
         {
-            if (Global.weatherSetting.Count <= 0)
-            {
-                Global.weatherSetting.Add(new WeatherSetting() { Name = "Температура сегодня", Value = "0", XPath = "", XPathType = "innerHtml", AutoClear = true, Clear = "", Type = "temp" });
-                Global.weatherSetting.Add(new WeatherSetting() { Name = "Облачность", Value = "Ясно", XPath = "", XPathType = "innerHtml", AutoClear = true, Clear = "", Type = "cloudlong" });
-                Global.weatherSetting.Add(new WeatherSetting() { Name = "Облачность кратко", Value = "Ясно", XPath = "", XPathType = "innerHtml", AutoClear = true, Clear = "", Type = "cloudshort" });
-                Global.weatherSetting.Add(new WeatherSetting() { Name = "Ветер направление", Value = "Западный", XPath = "", XPathType = "innerHtml", AutoClear = true, Clear = "", Type = "winddirectionlong" });
-                Global.weatherSetting.Add(new WeatherSetting() { Name = "Ветер сила", Value = "6", XPath = "", XPathType = "innerHtml", AutoClear = true, Clear = "", Type = "windpower" });
-                Global.weatherSetting.Add(new WeatherSetting() { Name = "Атмосферное давление", Value = "755", XPath = "", XPathType = "innerHtml", AutoClear = true, Clear = "", Type = "pressure" });
-                Global.weatherSetting.Add(new WeatherSetting() { Name = "Влажность", Value = "70", XPath = "", XPathType = "innerHtml", AutoClear = true, Clear = "", Type = "humidity" });
-                Global.weatherSetting.Add(new WeatherSetting() { Name = "1. Облачность", Value = "Ясно", XPath = "", XPathType = "innerHtml", AutoClear = true, Clear = "", Type = "cloudshort" });
-                Global.weatherSetting.Add(new WeatherSetting() { Name = "1. Температура день", Value = "0", XPath = "", XPathType = "innerHtml", AutoClear = true, Clear = "", Type = "temp" });
-                Global.weatherSetting.Add(new WeatherSetting() { Name = "1. Температура ночь", Value = "0", XPath = "", XPathType = "innerHtml", AutoClear = true, Clear = "", Type = "temp" });
-                Global.weatherSetting.Add(new WeatherSetting() { Name = "2. Облачность", Value = "Ясно", XPath = "", XPathType = "innerHtml", AutoClear = true, Clear = "", Type = "cloudshort" });
-                Global.weatherSetting.Add(new WeatherSetting() { Name = "2. Температура день", Value = "0", XPath = "", XPathType = "innerHtml", AutoClear = true, Clear = "", Type = "temp" });
-                Global.weatherSetting.Add(new WeatherSetting() { Name = "2. Температура ночь", Value = "0", XPath = "", XPathType = "innerHtml", AutoClear = true, Clear = "", Type = "temp" });
-                Global.weatherSetting.Add(new WeatherSetting() { Name = "3. Облачность", Value = "Ясно", XPath = "", XPathType = "innerHtml", AutoClear = true, Clear = "", Type = "cloudshort" });
-                Global.weatherSetting.Add(new WeatherSetting() { Name = "3. Температура день", Value = "0", XPath = "", XPathType = "innerHtml", AutoClear = true, Clear = "", Type = "temp" });
-                Global.weatherSetting.Add(new WeatherSetting() { Name = "3. Температура ночь", Value = "0", XPath = "", XPathType = "innerHtml", AutoClear = true, Clear = "", Type = "temp" });
-
-                Global.siteTime = DateTime.Now.AddYears(-10);
-            }
             dataGridViewWeather.DataSource = Global.weatherSetting;
         }
 
@@ -393,7 +372,7 @@ namespace PluginKirsanovWeatherManual
                     case "winddirectionlong":
                         row.Cells[1] = WeatherType.WindCell();
                         break;
-                    default: 
+                    default:
                         break;
                 }
             }
@@ -402,7 +381,14 @@ namespace PluginKirsanovWeatherManual
         private void dataGridViewWeather_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             dataGridSettings();
-            comboBoxImages.SelectedItem = comboBoxImages.FindMatchingItem(Global.weatherSetting[2].Value);
+            try
+            {
+                comboBoxImages.SelectedItem = comboBoxImages.FindMatchingItem(Global.weatherSetting[2].Value);
+            }
+            catch
+            {
+
+            }
         }
 
         // Загрузка списка иконок для заголовка новости
@@ -444,7 +430,8 @@ namespace PluginKirsanovWeatherManual
             try
             {
                 imageMain = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "main.png"))));
-            } catch
+            }
+            catch
             {
                 error = true;
                 MessageBox.Show("Ошибка целостности плагина. Обратитесь к разработчику.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -705,11 +692,11 @@ namespace PluginKirsanovWeatherManual
         private void btnSetting_Click(object sender, EventArgs e)
         {
             Setting setting = new Setting();
-            if (setting.ShowDialog() == DialogResult.OK)
-            {
-                // Обновить данные в таблице
-                dataGridViewWeather.Refresh();
-            }
+            setting.ShowDialog();
+
+            // Обновить данные в таблице
+            dataGridViewWeather.Refresh();
+
             labelUpdate.Text = "Прогноз обновлен: " + Global.siteTime.ToString();
         }
 
@@ -735,7 +722,7 @@ namespace PluginKirsanovWeatherManual
         {
             Weather weather = new Weather();
             bool error = false;
-            if (Global.siteTime < DateTime.Now.AddHours(5))
+            if (Global.siteTime.AddHours(5) < DateTime.Now)
             {
                 labelUpdate.Text = "Обновление прогноза...";
                 weather.loadHtml(true, out error);
@@ -758,9 +745,10 @@ namespace PluginKirsanovWeatherManual
             if (dateTimePicker.Value.ToString("dd.MM.yyyy") != DateTime.Now.ToString("dd.MM.yyyy"))
             {
                 button1.Enabled = false;
-            } else
+            }
+            else
             {
-                button1.Enabled= true;
+                button1.Enabled = true;
             }
         }
 

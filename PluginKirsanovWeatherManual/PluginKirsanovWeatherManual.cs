@@ -99,6 +99,7 @@ namespace PluginKirsanovWeatherManual
         {
             //This is the first Function called by the host...
             //Put anything needed to start with here first
+            Configuration.Generation();
             Configuration.Load();
         }
 
