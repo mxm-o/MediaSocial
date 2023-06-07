@@ -166,7 +166,14 @@ namespace MediaSocial
             Image[] img = new Image[Global.imagesRender.Count];
             for (var i = 0; i < Global.imagesRender.Count; i++)
             {
-                img[i] = Global.imagesRender[i].Pictures;
+                if (Global.imagesRender[i].Exist)
+                {
+                    img[i] = Global.imagesRender[i].Pictures;
+                }
+                else
+                {
+                    img[i] = null;
+                }
             }
             return img;
         }

@@ -3,13 +3,14 @@ using System.Configuration;
 using System.Xml;
 using System.IO;
 using System.Globalization;
+using System.Windows.Forms;
 
 namespace PluginKirsanovWeatherManual
 {
     public static class Configuration
     {
         private static string path = Path.GetDirectoryName(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath);
-        public static void Save()
+        public static void Save(bool clipboars = false)
         {
             // Save the weatherSetting data to an XML file
             XmlDocument doc = new XmlDocument();
@@ -31,14 +32,29 @@ namespace PluginKirsanovWeatherManual
 
             XmlElement siteNode = doc.CreateElement("site");
             siteNode.SetAttribute("path", Global.sitePath);
-            siteNode.SetAttribute("time", Global.siteTime.ToString("dd.MM.yyyy HH:mm:ss"));
-            siteNode.InnerText = Global.siteHtml;
+            siteNode.SetAttribute("time", clipboars ? "" : Global.siteTime.ToString("dd.MM.yyyy HH:mm:ss"));
+            siteNode.InnerText = clipboars ? "" :Global.siteHtml;
             doc.DocumentElement.AppendChild(siteNode);
 
-            doc.Save(Path.Combine(path, "weatherSettings.xml"));
+            if (clipboars)
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "xml files (*.xml)|*.xml";
+                saveFileDialog.FileName = "copy";
+                saveFileDialog.RestoreDirectory = true;
+                var result = saveFileDialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    doc.Save(saveFileDialog.FileName);
+                }
+            }
+            else
+            {
+                doc.Save(Path.Combine(path, "weatherSettings.xml"));
+            }
         }
 
-        public static void Load() {
+        public static void Load(bool clipboars = false) {
 
             // Загружаем weatherSetting данные из XML файла
             var temp = Global.weatherSetting; // Делаем временную копию существующих данных

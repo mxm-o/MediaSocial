@@ -186,10 +186,9 @@ namespace PluginKirsanovWeatherManual
             // 
             // labelUpdate
             // 
-            this.labelUpdate.AutoSize = true;
             this.labelUpdate.Location = new System.Drawing.Point(4, 29);
             this.labelUpdate.Name = "labelUpdate";
-            this.labelUpdate.Size = new System.Drawing.Size(107, 13);
+            this.labelUpdate.Size = new System.Drawing.Size(239, 13);
             this.labelUpdate.TabIndex = 16;
             this.labelUpdate.Text = "Прогноз обновлён: ";
             // 
@@ -289,7 +288,6 @@ namespace PluginKirsanovWeatherManual
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewWeather)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.globalBindingSource)).EndInit();
             this.panelAuto.ResumeLayout(false);
-            this.panelAuto.PerformLayout();
             this.ResumeLayout(false);
 
 		}
@@ -727,7 +725,7 @@ namespace PluginKirsanovWeatherManual
             bool error;
             weather.loadHtml(false, out error);
             labelUpdate.Text = "Прогноз обновлен: " + Global.siteTime.ToString();
-            if (!error)
+            if (error)
             {
                 MessageBox.Show("Нет доступа к указанному сайту!", "Ошибка обновления прогноза!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -737,7 +735,7 @@ namespace PluginKirsanovWeatherManual
         {
             Weather weather = new Weather();
             bool error = false;
-            if (Global.siteTime > DateTime.Now.AddHours(5))
+            if (Global.siteTime < DateTime.Now.AddHours(5))
             {
                 labelUpdate.Text = "Обновление прогноза...";
                 weather.loadHtml(true, out error);

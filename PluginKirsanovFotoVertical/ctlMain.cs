@@ -187,6 +187,14 @@ namespace PluginKirsanovFotoVertical
                 MessageBox.Show("Плагин поврежден. Обратитесь к разработчику.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            // Получаем исходник фотографии
+            Image ImageSouser = myHost.SendImages()[0];
+            if (ImageSouser == null)
+            {
+                MessageBox.Show("Не выбрано изображение.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             // Считываем шаблонное изображение
             Image imageMain = null;
             try
@@ -196,7 +204,7 @@ namespace PluginKirsanovFotoVertical
             {
 
             }
-            this.Enabled = false;
+            Enabled = false;
 
             // Генерируем новое изображение
             PhotoGenerate photo = new PhotoGenerate();
@@ -204,8 +212,6 @@ namespace PluginKirsanovFotoVertical
             photo.width = imageMain.Width;
             photo.colorMain = Color.White;
             Image imageOut = photo.Fill();
-            // Получаем исходник фотографии
-            Image ImageSouser = myHost.SendImages()[0];
             // Создаем слой с размытием основного фото
             PhotoSize resize = new PhotoSize();
             resize.width = imageMain.Width;
@@ -248,7 +254,7 @@ namespace PluginKirsanovFotoVertical
                 imageOut = textAutor.DrawTextWithEffects();
             }
             myHost.ReciveImage(imageOut);
-            this.Enabled = true;
+            Enabled = true;
         }
     }
 }

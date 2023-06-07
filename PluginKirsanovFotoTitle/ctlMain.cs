@@ -337,7 +337,15 @@ namespace PluginKirsanovFotoTitle
                 return;
             }
 
-            this.Enabled = false;
+            // Получаем исходник фотографии
+            Image ImageSouser = myHost.SendImages()[0];
+            if (ImageSouser == null)
+            {
+                MessageBox.Show("Не выбрано изображение.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            Enabled = false;
             // Создание задачи в дополнительном потоке
             Task.Run(() => {
                 GenerateImage();
@@ -351,7 +359,7 @@ namespace PluginKirsanovFotoTitle
         private void GenerateImageCompletedHandler()
         {
             // Код для обработки события завершения задачи
-            this.Enabled = true;
+            Enabled = true;
         }
 
         private void GenerateImage()
@@ -367,14 +375,14 @@ namespace PluginKirsanovFotoTitle
             {
 
             }
+
+            Image ImageSouser = myHost.SendImages()[0];
             // Генерируем новое изображение
             PhotoGenerate photo = new PhotoGenerate();
             photo.height = imageMain.Height;
             photo.width = imageMain.Width;
             photo.colorMain = Color.White;
             Image imageOut = photo.Fill();
-            // Получаем исходник фотографии
-            Image ImageSouser = myHost.SendImages()[0];
             // Раскладываем по слоям
             Merge mergeImage = new Merge();
             mergeImage.sourceBottom = imageOut;

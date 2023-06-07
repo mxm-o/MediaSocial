@@ -230,7 +230,15 @@ namespace PluginKirsanovGoodMorning
             {
 
             }
-            this.Enabled = false;
+
+            // Получаем исходник фотографии
+            Image ImageSouser = myHost.SendImages()[0];
+            if (ImageSouser == null)
+            {
+                MessageBox.Show("Не выбрано изображение.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            Enabled = false;
 
             // Генерируем новое изображение
             PhotoGenerate photo = new PhotoGenerate();
@@ -238,8 +246,6 @@ namespace PluginKirsanovGoodMorning
             photo.width = imageMain.Width;
             photo.colorMain = Color.White;
             Image imageOut = photo.Fill();
-            // Получаем исходник фотографии
-            Image ImageSouser = myHost.SendImages()[0];
             // Раскладываем по слоям
             Merge mergeImage = new Merge();
             mergeImage.sourceBottom = imageOut;
@@ -314,7 +320,7 @@ namespace PluginKirsanovGoodMorning
                 imageOut = textAutor.DrawTextWithEffects();
             }
             myHost.ReciveImage(imageOut);
-            this.Enabled = true;
+            Enabled = true;
         }
     }
 }

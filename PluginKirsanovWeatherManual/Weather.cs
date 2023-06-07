@@ -28,11 +28,11 @@ namespace PluginKirsanovWeatherManual
                     Global.siteTime = dateTimeMax;
                     Global.siteHtml = doc.Text;
                     Configuration.Save();
-                    result = true;
+                    result = false;
                 }
                 catch
                 {
-                    result = false;
+                    result = true;
                 }
             }
             return doc;

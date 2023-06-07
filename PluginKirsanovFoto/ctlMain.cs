@@ -182,11 +182,19 @@ namespace PluginKirsanovFoto
         {
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             // Проверка исходных данных
-            if (!(File.Exists(Path.Combine(path, "main.png"))))
+            if (!File.Exists(Path.Combine(path, "main.png")))
             {
                 MessageBox.Show("Плагин поврежден. Обратитесь к разработчику.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            // Получаем исходник фотографии
+            Image ImageSouser = myHost.SendImages()[0];
+            if (ImageSouser == null)
+            {
+                MessageBox.Show("Не выбрано изображение.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             this.Enabled = false;
             // Считываем шаблонное изображение
             Image imageMain = null;
@@ -203,8 +211,6 @@ namespace PluginKirsanovFoto
             photo.width = imageMain.Width;
             photo.colorMain = Color.White;
             Image imageOut = photo.Fill();
-            // Получаем исходник фотографии
-            Image ImageSouser = myHost.SendImages()[0];
             // Раскладываем по слоям
             Merge mergeImage = new Merge();
             mergeImage.sourceBottom = imageOut;

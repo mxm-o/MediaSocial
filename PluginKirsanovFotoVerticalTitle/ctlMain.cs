@@ -330,6 +330,14 @@ namespace PluginKirsanovFotoVerticalTitle
                 return;
             }
 
+            // Получаем исходник фотографии
+            Image ImageSouser = myHost.SendImages()[0];
+            if (ImageSouser == null)
+            {
+                MessageBox.Show("Не выбрано изображение.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (!(File.Exists(Path.Combine(path, "main.png")) || File.Exists(Path.Combine(path, comboBoxImages.SelectedItem.ToString() + ".png"))))
             {
                 MessageBox.Show("Плагин поврежден. Обратитесь к разработчику.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -352,8 +360,6 @@ namespace PluginKirsanovFotoVerticalTitle
             photo.width = imageMain.Width;
             photo.colorMain = Color.White;
             Image imageOut = photo.Fill();
-            // Получаем исходник фотографии
-            Image ImageSouser = myHost.SendImages()[0];
             // Создаем слой с размытием основного фото
             PhotoSize resize = new PhotoSize();
             resize.width = imageMain.Width;

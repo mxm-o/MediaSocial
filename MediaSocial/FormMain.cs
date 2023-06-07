@@ -227,6 +227,7 @@ namespace MediaSocial
                     {
                         radioButtonRender.Enabled = true;
                         radioButtonSouser.Enabled = true;
+                        panelImg.Enabled = true;
                     }
 
                     if (selectedPlugin.Instance.SizesList.Count > 0)
@@ -389,9 +390,13 @@ namespace MediaSocial
         {
             if (comboBoxImg.Items.Count > 0)
             {
-                Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures = global::MediaSocial.Properties.Resources.PhotoNotExist;
+                Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures = Properties.Resources.PhotoNotExist;
+                Global.imagesSouser[comboBoxImg.SelectedIndex].Exist = false;
 
-                Global.imagesRender[comboBoxImg.SelectedIndex].Pictures = global::MediaSocial.Properties.Resources.PhotoNotExist;
+                Global.imagesRender[comboBoxImg.SelectedIndex].Pictures = Properties.Resources.PhotoNotExist;
+                Global.imagesRender[comboBoxImg.SelectedIndex].Exist = false;
+
+                Global.ImageOut = Properties.Resources.PhotoNotExist;
 
                 pictureBox.Image = Properties.Resources.PhotoNotExist;
 
