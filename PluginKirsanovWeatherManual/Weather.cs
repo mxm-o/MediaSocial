@@ -70,11 +70,13 @@ namespace PluginKirsanovWeatherManual
                             case "temp":
                                 end = end.Replace(" &deg;C", "");
                                 end = end.Replace("&deg;", "");
+                                end = WeatherType.RemoveHtmlTags(end);
                                 break;
                             case "cloudlong":
 
                                 break;
                             case "cloudshort":
+                                end = end.ToLower().Contains("гроза") ? "Гроза" : end;
                                 end = end.ToLower().Contains("снег") ? "Снег" : end;
                                 end = end.ToLower().Contains("дождь") ? "Дождь" : end;
                                 end = end.ToLower().Contains("осадки") ? "Дождь" : end;
@@ -86,6 +88,7 @@ namespace PluginKirsanovWeatherManual
                                 end = end.Replace("Ветер", "");
                                 end = end.Replace("ветер", "");
                                 end = end.Replace("ветер", "");
+                                end = end.Replace("нет ветра", "шт");
                                 end = WeatherType.FilterWindDirection(end, "short");
                                 break;
                             case "winddirectionlong":
@@ -93,23 +96,19 @@ namespace PluginKirsanovWeatherManual
                                 end = end.Replace("Ветер", "");
                                 end = end.Replace("ветер", "");
                                 end = end.Replace("ветер", "");
+                                end = end.Replace("нет ветра", "шт");
                                 end = WeatherType.FilterWindDirection(end, "full");
                                 break;
                             case "windpower":
-                                end = end.Replace("Ветер: ", "");
-                                end = end.Replace("Ветер", "");
-                                end = end.Replace("ветер", "");
-                                end = end.Replace("ветер", "");
+                                end = WeatherType.FindDigital(end);
                                 break;
                             case "pressure":
-                                end = end.Replace(" мм", "");
-                                end = end.Replace(" рт.ст.", "");
+                                end = WeatherType.RemoveHtmlTags(end);
+                                end = WeatherType.FindDigital(end);
                                 break;
                             case "humidity":
-                                end = end.Replace("Влажность: ", "");
-                                end = end.Replace("Влажность", "");
-                                end = end.Replace("влажность", "");
-                                end = end.Replace("%", "");
+                                end = WeatherType.RemoveHtmlTags(end);
+                                end = WeatherType.FindDigital(end);
                                 break;
                             default:
 
@@ -117,15 +116,13 @@ namespace PluginKirsanovWeatherManual
                         }
                     }
 
-
-
                     if (Global.weatherSetting[j].Clear != null && Global.weatherSetting[j].Clear != "")
                     {
                         Regex regex = new Regex(@Global.weatherSetting[j].Clear);
                         Match match = regex.Match(end);
                         if (match.Success)
                         {
-                            end = (match.Value).Trim();
+                            end = match.Value.Trim();
                         }
 
                     }

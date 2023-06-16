@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.lblFeedback = new System.Windows.Forms.Label();
             this.lblPluginAuthor = new System.Windows.Forms.Label();
             this.lblPluginVersion = new System.Windows.Forms.Label();
             this.lblPluginName = new System.Windows.Forms.Label();
-            this.lblPluginDesc = new System.Windows.Forms.Label();
             this.btnOk = new System.Windows.Forms.Button();
+            this.lblPluginDesc = new System.Windows.Forms.Label();
+            this.lblFeedback = new System.Windows.Forms.TextBox();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,16 +54,6 @@
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Информация о модуле:";
-            // 
-            // lblFeedback
-            // 
-            this.lblFeedback.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblFeedback.Location = new System.Drawing.Point(8, 105);
-            this.lblFeedback.Name = "lblFeedback";
-            this.lblFeedback.Size = new System.Drawing.Size(341, 28);
-            this.lblFeedback.TabIndex = 0;
             // 
             // lblPluginAuthor
             // 
@@ -96,16 +86,6 @@
             this.lblPluginName.TabIndex = 3;
             this.lblPluginName.Text = "<Plugin Name Here>";
             // 
-            // lblPluginDesc
-            // 
-            this.lblPluginDesc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblPluginDesc.Location = new System.Drawing.Point(16, 72);
-            this.lblPluginDesc.Name = "lblPluginDesc";
-            this.lblPluginDesc.Size = new System.Drawing.Size(333, 33);
-            this.lblPluginDesc.TabIndex = 0;
-            // 
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -117,6 +97,29 @@
             this.btnOk.Text = "ОК";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            // 
+            // lblPluginDesc
+            // 
+            this.lblPluginDesc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblPluginDesc.Location = new System.Drawing.Point(16, 72);
+            this.lblPluginDesc.Name = "lblPluginDesc";
+            this.lblPluginDesc.Size = new System.Drawing.Size(333, 33);
+            this.lblPluginDesc.TabIndex = 0;
+            // 
+            // lblFeedback
+            // 
+            this.lblFeedback.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblFeedback.BackColor = System.Drawing.SystemColors.Control;
+            this.lblFeedback.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lblFeedback.Location = new System.Drawing.Point(11, 108);
+            this.lblFeedback.Multiline = true;
+            this.lblFeedback.Name = "lblFeedback";
+            this.lblFeedback.ReadOnly = true;
+            this.lblFeedback.Size = new System.Drawing.Size(340, 27);
+            this.lblFeedback.TabIndex = 8;
             // 
             // FormFeedback
             // 
@@ -131,6 +134,7 @@
             this.Text = "Информация";
             this.Load += new System.EventHandler(this.FormFeedback_Load);
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -141,8 +145,8 @@
         private System.Windows.Forms.Label lblPluginAuthor;
         private System.Windows.Forms.Label lblPluginVersion;
         private System.Windows.Forms.Label lblPluginName;
-        private System.Windows.Forms.Label lblPluginDesc;
         private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.Label lblFeedback;
+        private System.Windows.Forms.Label lblPluginDesc;
+        private System.Windows.Forms.TextBox lblFeedback;
     }
 }

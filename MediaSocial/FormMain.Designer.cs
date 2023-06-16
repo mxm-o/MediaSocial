@@ -98,7 +98,6 @@
             this.CloseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.SaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SaveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.SettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -114,7 +113,6 @@
             this.ImgDoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.ModulsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ModulsReloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMain = new System.Windows.Forms.ToolStrip();
@@ -318,7 +316,7 @@
             // 
             // btnEditorReset
             // 
-            this.btnEditorReset.Location = new System.Drawing.Point(165, 437);
+            this.btnEditorReset.Location = new System.Drawing.Point(84, 437);
             this.btnEditorReset.Name = "btnEditorReset";
             this.btnEditorReset.Size = new System.Drawing.Size(75, 23);
             this.btnEditorReset.TabIndex = 20;
@@ -328,12 +326,14 @@
             // 
             // btnEditorCancel
             // 
-            this.btnEditorCancel.Location = new System.Drawing.Point(84, 437);
+            this.btnEditorCancel.Enabled = false;
+            this.btnEditorCancel.Location = new System.Drawing.Point(165, 437);
             this.btnEditorCancel.Name = "btnEditorCancel";
             this.btnEditorCancel.Size = new System.Drawing.Size(75, 23);
             this.btnEditorCancel.TabIndex = 19;
             this.btnEditorCancel.Text = "Отменить";
             this.btnEditorCancel.UseVisualStyleBackColor = true;
+            this.btnEditorCancel.Visible = false;
             // 
             // btnEditorOk
             // 
@@ -923,7 +923,6 @@
             this.CloseToolStripMenuItem,
             this.toolStripSeparator2,
             this.SaveToolStripMenuItem,
-            this.SaveAsToolStripMenuItem,
             this.toolStripSeparator3,
             this.SettingsToolStripMenuItem,
             this.toolStripSeparator7,
@@ -935,58 +934,58 @@
             // NewToolStripMenuItem
             // 
             this.NewToolStripMenuItem.Name = "NewToolStripMenuItem";
-            this.NewToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.NewToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.NewToolStripMenuItem.Text = "Создать";
+            this.NewToolStripMenuItem.Click += new System.EventHandler(this.NewToolStripMenuItem_Click);
             // 
             // OpenToolStripMenuItem
             // 
             this.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
-            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.OpenToolStripMenuItem.Text = "Открыть";
+            this.OpenToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
             // 
             // CloseToolStripMenuItem
             // 
             this.CloseToolStripMenuItem.Name = "CloseToolStripMenuItem";
-            this.CloseToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.CloseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.CloseToolStripMenuItem.Text = "Закрыть";
+            this.CloseToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(160, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // SaveToolStripMenuItem
             // 
             this.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
-            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.SaveToolStripMenuItem.Text = "Сохранить";
-            // 
-            // SaveAsToolStripMenuItem
-            // 
-            this.SaveAsToolStripMenuItem.Name = "SaveAsToolStripMenuItem";
-            this.SaveAsToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
-            this.SaveAsToolStripMenuItem.Text = "Сохранить как...";
+            this.SaveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(160, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator3.Visible = false;
             // 
             // SettingsToolStripMenuItem
             // 
             this.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem";
-            this.SettingsToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.SettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.SettingsToolStripMenuItem.Text = "Настройки";
+            this.SettingsToolStripMenuItem.Visible = false;
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(160, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
             // 
             // QuitToolStripMenuItem
             // 
             this.QuitToolStripMenuItem.Name = "QuitToolStripMenuItem";
-            this.QuitToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.QuitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.QuitToolStripMenuItem.Text = "Выход";
             this.QuitToolStripMenuItem.Click += new System.EventHandler(this.QuitToolStripMenuItem_Click);
             // 
@@ -1025,6 +1024,7 @@
             this.PhotoEditorToolStripMenuItem.Name = "PhotoEditorToolStripMenuItem";
             this.PhotoEditorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.PhotoEditorToolStripMenuItem.Text = "ФотоРедактор";
+            this.PhotoEditorToolStripMenuItem.Click += new System.EventHandler(this.PhotoEditorToolStripMenuItem_Click);
             // 
             // ViewToolStripMenuItem
             // 
@@ -1033,8 +1033,7 @@
             this.ImgRenderToolStripMenuItem,
             this.ImgDoneToolStripMenuItem,
             this.toolStripSeparator5,
-            this.ModulsToolStripMenuItem,
-            this.ModulsReloadToolStripMenuItem});
+            this.ModulsToolStripMenuItem});
             this.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem";
             this.ViewToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.ViewToolStripMenuItem.Text = "&Вид";
@@ -1067,15 +1066,10 @@
             // 
             // ModulsToolStripMenuItem
             // 
+            this.ModulsToolStripMenuItem.Enabled = false;
             this.ModulsToolStripMenuItem.Name = "ModulsToolStripMenuItem";
             this.ModulsToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.ModulsToolStripMenuItem.Text = "&Модули";
-            // 
-            // ModulsReloadToolStripMenuItem
-            // 
-            this.ModulsReloadToolStripMenuItem.Name = "ModulsReloadToolStripMenuItem";
-            this.ModulsReloadToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
-            this.ModulsReloadToolStripMenuItem.Text = "Обновить список модулей";
             // 
             // HelpToolStripMenuItem
             // 
@@ -1088,7 +1082,7 @@
             // AboutToolStripMenuItem
             // 
             this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.AboutToolStripMenuItem.Text = "О программе";
             this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
@@ -1119,6 +1113,7 @@
             this.toolStripButtonNew.Name = "toolStripButtonNew";
             this.toolStripButtonNew.Size = new System.Drawing.Size(26, 27);
             this.toolStripButtonNew.Text = "Новый";
+            this.toolStripButtonNew.Click += new System.EventHandler(this.toolStripButtonNew_Click);
             // 
             // toolStripButtonOpen
             // 
@@ -1128,6 +1123,7 @@
             this.toolStripButtonOpen.Name = "toolStripButtonOpen";
             this.toolStripButtonOpen.Size = new System.Drawing.Size(26, 27);
             this.toolStripButtonOpen.Text = "Открыть";
+            this.toolStripButtonOpen.Click += new System.EventHandler(this.toolStripButtonOpen_Click);
             // 
             // toolStripButtonSave
             // 
@@ -1161,6 +1157,7 @@
             // toolStripBtnModules
             // 
             this.toolStripBtnModules.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripBtnModules.Enabled = false;
             this.toolStripBtnModules.Image = global::MediaSocial.Properties.Resources.modules;
             this.toolStripBtnModules.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripBtnModules.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -1267,7 +1264,6 @@
         private System.Windows.Forms.ToolStripMenuItem CloseToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem SaveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem SaveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem QuitToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripButtonOpen;
@@ -1298,7 +1294,6 @@
         private System.Windows.Forms.Button buttonImgClear;
         private System.Windows.Forms.Button buttonImgOpen;
         private System.Windows.Forms.ComboBox comboBoxImg;
-        private System.Windows.Forms.ToolStripMenuItem ModulsReloadToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControlPlugins;
         private System.Windows.Forms.TabPage tabPluginModule;
         private System.Windows.Forms.Panel pnlPlugin;

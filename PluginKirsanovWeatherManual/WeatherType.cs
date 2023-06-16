@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace PluginKirsanovWeatherManual
@@ -140,7 +141,7 @@ namespace PluginKirsanovWeatherManual
                 case "в":
                 case "с":
                 case "з":
-                case "ш":
+                case "шт":
                     return true;
                 default:
                     return false;
@@ -167,7 +168,7 @@ namespace PluginKirsanovWeatherManual
                     return "Западный";
                 case "сз":
                     return "Северо-Западный";
-                case "ш":
+                case "шт":
                     return "Штиль";
                 default:
                     return "";
@@ -211,5 +212,36 @@ namespace PluginKirsanovWeatherManual
 
             return input.Substring(0, 1).ToUpper() + input.Substring(1);
         }
+
+        public static string FindDigital(string input)
+        {
+            if (input == null || input == string.Empty)
+            {
+                return string.Empty;
+            }
+
+            string pattern = @"\d+";
+            Match match = Regex.Match(input, pattern);
+            if (match.Success)
+            {
+                return match.Value;
+            }
+            else
+            {
+                return "0";
+            }
+        }
+
+        public static string RemoveHtmlTags(string input)
+        {
+            if (input == null || input == string.Empty)
+            {
+                return string.Empty;
+            }
+
+            string pattern = @"<[^<]*?>.*?<\/.*?>";
+            return Regex.Replace(input, pattern, string.Empty);
+        }
+
     }
 }

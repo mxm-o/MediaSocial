@@ -58,10 +58,10 @@ namespace PluginKirsanovDemography
             this.labelT1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dataGridViewDemography = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
             this.DemographyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DemographyNow = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DemographyOld = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDemography)).BeginInit();
@@ -154,15 +154,7 @@ namespace PluginKirsanovDemography
             this.dataGridViewDemography.Name = "dataGridViewDemography";
             this.dataGridViewDemography.Size = new System.Drawing.Size(234, 220);
             this.dataGridViewDemography.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 4);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(48, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Данные";
+            this.dataGridViewDemography.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewDemography_CellEndEdit);
             // 
             // DemographyName
             // 
@@ -184,6 +176,15 @@ namespace PluginKirsanovDemography
             this.DemographyOld.HeaderText = "Параметр 2";
             this.DemographyOld.Name = "DemographyOld";
             this.DemographyOld.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(4, 4);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(48, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Данные";
             // 
             // ctlMain
             // 
@@ -246,6 +247,8 @@ namespace PluginKirsanovDemography
         private void generateStatisticTable()
         {
             var dt = dateTimePicker.Value;
+
+            dataGridViewDemography.Rows.Clear();
 
             dataGridViewDemography.Rows.Add("Год", dt.Year, dt.Year - 1);
             dataGridViewDemography.Rows.Add("Рождение девочки", 0, 0);
@@ -379,6 +382,29 @@ namespace PluginKirsanovDemography
 
             myHost.ReciveImage(imageOut);
             this.Enabled = true;
+        }
+
+        private void dataGridViewDemography_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 1 || e.ColumnIndex == 2)
+            {
+                if (e.RowIndex <= 5) {
+                    int value;
+                    try
+                    {
+                        value = Convert.ToInt16(dataGridViewDemography.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+                        if (value < 0)
+                        {
+                            value *= -1;
+                        }
+                    } catch
+                    {
+                        value = 0;
+                    }
+
+                    dataGridViewDemography.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = value;
+                }
+            }
         }
     }
 }

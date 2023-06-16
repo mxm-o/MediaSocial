@@ -1,11 +1,7 @@
 ﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CoordinateSharp;
+using SunSetRiseLib;
 
 namespace PluginKirsanovGoodMorning
 {
@@ -28,39 +24,35 @@ namespace PluginKirsanovGoodMorning
         /// Долгота 
         /// </summary>
         public double longitude = 42.728663;
+        /// <summary>
+        /// Переход на летнее время
+        /// </summary>
+        public bool dst = false;
+
 
         // Восход
         public string SunRise()
         {
-            Coordinate cSegodnya = new Coordinate(latitude, longitude, dt);
-            string timeRise = convertTime(cSegodnya.CelestialInfo.SunRise.ToString(), timeZone);
-            return timeRise;
+            double JD = Util.calcJD(dt);
+            double sunRise = Util.calcSunRiseUTC(JD, latitude, longitude);
+            return Util.getDateTime(sunRise, timeZone, dt, dst).Value.ToString("HH:mm");
         }
         // Закат
         public string SunSet()
         {
-            Coordinate cSegodnya = new Coordinate(latitude, longitude, dt);
-            string timeSet = convertTime(cSegodnya.CelestialInfo.SunSet.ToString(), timeZone);
-            return timeSet;
+            double JD = Util.calcJD(dt);
+            double sunSet = Util.calcSunSetUTC(JD, latitude, longitude);
+            return Util.getDateTime(sunSet, timeZone, dt, dst).Value.ToString("HH:mm");
         }
         // Долгота дня
         public string DayDuration()
         {
-            Coordinate cSegodnya = new Coordinate(latitude, longitude, dt);
-            DateTime myRise = DateTime.ParseExact(cSegodnya.CelestialInfo.SunRise.ToString(), "dd.MM.yyyy H:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-            DateTime mySet = DateTime.ParseExact(cSegodnya.CelestialInfo.SunSet.ToString(), "dd.MM.yyyy H:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+            double JD = Util.calcJD(dt);
+            double sunRise = Util.calcSunRiseUTC(JD, latitude, longitude);
+            double sunSet = Util.calcSunSetUTC(JD, latitude, longitude);
 
-            TimeSpan mydate = mySet - myRise;
-            return mydate.Hours.ToString() + ":" + mydate.Minutes.ToString("D2");
-        }
-
-        // Конвертация даты
-        private string convertTime(string date, int timeZone)
-        {
-            DateTime myDate = DateTime.ParseExact(date, "dd.MM.yyyy H:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-            myDate = myDate.AddHours(timeZone);
-
-            return myDate.ToString("HH:mm", System.Globalization.CultureInfo.GetCultureInfo("RU-ru"));
+            double mydate = sunSet - sunRise;
+            return Util.getDateTime(mydate, 0, dt, dst).Value.ToString("HH:mm");
         }
     }
 }

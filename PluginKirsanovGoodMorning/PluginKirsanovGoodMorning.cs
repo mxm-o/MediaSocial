@@ -27,7 +27,7 @@ namespace PluginKirsanovGoodMorning
         string myAuthor = "Максим Отрохов";
         string myVersion = "1.0.0";
         bool myEditor = true;
-        string feed = "";
+        string feed = "В плагине используется код из библиотеки SunSetRiseLib: https://github.com/sely2k/SunSetRiseLib";
         //int[] numImgs = { 1600, 1800 };
         public List<ListSizes> SizesList { get; }
 

@@ -229,6 +229,8 @@ namespace MediaSocial
 
                     comboBoxImg.Enabled = selectedPlugin.Instance.SizesList.Count > 1;
                     cmbBoxImgType.Enabled = selectedPlugin.Instance.SizesList.Count > 0;
+                    OpenToolStripMenuItem.Enabled = selectedPlugin.Instance.SizesList.Count > 0;
+                    toolStripButtonOpen.Enabled = selectedPlugin.Instance.SizesList.Count > 0;
                 }
             }
         }
@@ -433,7 +435,7 @@ namespace MediaSocial
 
         private void toolStripButtonSave_Click(object sender, EventArgs e)
         {
-
+            tabControlPlugins.SelectedTab = tabPluginSave;
         }
 
         private void textBoxSaveNameFile_TextChanged(object sender, EventArgs e)
@@ -839,6 +841,52 @@ namespace MediaSocial
         {
             AboutBox1 aboutBox1 = new AboutBox1();
             aboutBox1.ShowDialog();
+        }
+
+        private void PhotoEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tabControlPlugins.SelectedTab = tabPluginEditor;
+            cmbBoxImgType.SelectedValue = 1;
+        }
+
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tabControlPlugins.SelectedTab = tabPluginSave;
+        }
+
+        private void toolStripButtonNew_Click(object sender, EventArgs e)
+        {
+            clearImage();
+        }
+
+        private void NewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clearImage();
+        }
+
+        private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clearImage();
+        }
+
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (comboBoxImg.Items.Count > 0)
+            {
+                openImage();
+            }
+            else
+            {
+                MessageBox.Show("Не выбран модуль!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void toolStripButtonOpen_Click(object sender, EventArgs e)
+        {
+            if (comboBoxImg.Items.Count > 0)
+            {
+                openImage();
+            }
         }
     }
 }

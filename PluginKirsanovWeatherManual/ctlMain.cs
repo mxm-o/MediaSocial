@@ -512,7 +512,17 @@ namespace PluginKirsanovWeatherManual
             //textName.debug = true;
             imageOut = textName.DrawTextWithEffects();
             // Пишем другие на сегодня
-            textName.textString = "Ветер: " + Global.weatherSetting[3].Value.ToLower() + ", " + Global.weatherSetting[4].Value + " м/с" +
+            string wind;
+            if (Global.weatherSetting[4].Value == "0")
+            {
+                wind = "Ветер: " + Global.weatherSetting[3].Value.ToLower() + "";
+            }
+            else
+            {
+                wind = "Ветер: " + Global.weatherSetting[3].Value.ToLower() + ", " + Global.weatherSetting[4].Value + " м/с";
+            }
+
+            textName.textString = wind +
                 Environment.NewLine + "Атмосферное давление: " + Global.weatherSetting[5].Value + " мм" +
                 Environment.NewLine + "Влажность: " + Global.weatherSetting[6].Value + "%";
             textName.rectH = 200;
