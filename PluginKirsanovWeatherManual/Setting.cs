@@ -94,7 +94,7 @@ namespace PluginKirsanovWeatherManual
             bool error;
             weather.loadHtml(false, out error);
             labelPogodaUpdate.Text = "Прогноз обновлен: " + Global.siteTime.ToString();
-            if (!error)
+            if (error)
             {
                 MessageBox.Show("Нет доступа к указанному сайту!", "Ошибка обновления прогноза!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -103,13 +103,13 @@ namespace PluginKirsanovWeatherManual
         private void buttonLoadPogoda_Click(object sender, EventArgs e)
         {
             Weather weather = new Weather();
-            bool error = false;
+            bool error = true;
             if (Global.siteTime > DateTime.Now.AddHours(5)) {
                 labelPogodaUpdate.Text = "Обновление прогноза...";
                 weather.loadHtml(true, out error);
                 labelPogodaUpdate.Text = "Прогноз обновлен: " + Global.siteTime.ToString();
             }
-            if (!error && Global.siteHtml != "")
+            if (error && Global.siteHtml != "")
             {
                 weather.parsePogoda();
                 dataGridViewWeather.Refresh();

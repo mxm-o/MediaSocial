@@ -780,6 +780,22 @@ namespace MediaSocial
 
         private void showPicturebox()
         {
+            if (pictureBox.InvokeRequired)
+            {
+                pictureBox.Invoke(new MethodInvoker(delegate {
+                    showPicturebox();
+                }));
+                return;
+            }
+
+            if (cmbBoxImgType.InvokeRequired)
+            {
+                cmbBoxImgType.Invoke(new MethodInvoker(delegate {
+                    showPicturebox();
+                }));
+                return;
+            }
+
             pictureBox.Image = Properties.Resources.PhotoNotExist;
             try
             {

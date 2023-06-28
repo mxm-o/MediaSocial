@@ -394,11 +394,24 @@ namespace PluginKirsanovFotoTitle
             // Рисуем иконку новости
             try
             {
-                mergeImage.sourceBottom = imageOut;
-                mergeImage.sourceTop = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "images", comboBoxImages.SelectedItem.ToString() + ".png"))));
-                mergeImage.top = 1385;
-                mergeImage.left = 85;
-                imageOut = mergeImage.MergeImage();
+                string selectedItemText = "";
+                if (comboBoxImages.InvokeRequired)
+                {
+                    selectedItemText = comboBoxImages.Invoke(new Func<string>(() => comboBoxImages.SelectedItem.ToString())) as string;
+                } 
+                else
+                {
+                    selectedItemText = comboBoxImages.SelectedItem.ToString();
+                }
+
+                if (!string.IsNullOrEmpty(selectedItemText))
+                {
+                    mergeImage.sourceBottom = imageOut;
+                    mergeImage.sourceTop = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "images", selectedItemText + ".png"))));
+                    mergeImage.top = 1385;
+                    mergeImage.left = 85;
+                    imageOut = mergeImage.MergeImage();
+                }
             }
             catch
             {

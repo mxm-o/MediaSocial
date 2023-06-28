@@ -473,7 +473,7 @@ namespace PluginKirsanovWeatherManual
             textE.rectH = 100;
             textE.rectW = 1000;
             textE.rectX = 45;
-            textE.rectY = 210;
+            textE.rectY = 190;
             textE.source = imageOut;
             textE.fontSize = 100;
             textE.colorText = Color.White;
@@ -488,7 +488,7 @@ namespace PluginKirsanovWeatherManual
             textName.rectH = 250;
             textName.rectW = 800;
             textName.rectX = 90;
-            textName.rectY = 570;
+            textName.rectY = 550;
             textName.source = imageOut;
             textName.fontSize = 210;
             textName.colorText = Color.FromArgb(50, 141, 212);

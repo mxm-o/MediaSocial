@@ -264,7 +264,7 @@ namespace PluginKirsanovGoodMorning
             textE.rectH = 100;
             textE.rectW = 1000;
             textE.rectX = 500;
-            textE.rectY = 40;
+            textE.rectY = 30;
             textE.source = imageOut;
             textE.fontSize = 90;
             textE.colorText = Color.White;
@@ -281,7 +281,7 @@ namespace PluginKirsanovGoodMorning
             textSet.rectH = 80;
             textSet.rectW = 250;
             textSet.rectX = 170;
-            textSet.rectY = 1300;
+            textSet.rectY = 1290;
             textSet.source = imageOut;
             textSet.fontSize = 80;
             textSet.colorText = Color.White;
@@ -292,12 +292,12 @@ namespace PluginKirsanovGoodMorning
             imageOut = textSet.DrawTextWithEffects();
             // Пишем закат
             textSet.textString = sunSet.SunSet();
-            textSet.rectY = 1410;
+            textSet.rectY = 1400;
             textSet.source = imageOut;
             imageOut = textSet.DrawTextWithEffects();
             // Пишем Долготу
             textSet.textString = sunSet.DayDuration();
-            textSet.rectY = 1520;
+            textSet.rectY = 1510;
             textSet.source = imageOut;
             imageOut = textSet.DrawTextWithEffects();
 

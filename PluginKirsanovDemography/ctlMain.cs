@@ -304,7 +304,7 @@ namespace PluginKirsanovDemography
             textE.rectH = 100;
             textE.rectW = 1000;
             textE.rectX = 40;
-            textE.rectY = 220;
+            textE.rectY = 210;
             textE.source = imageOut;
             textE.fontSize = 100;
             textE.colorText = Color.White;

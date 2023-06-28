@@ -51,7 +51,7 @@ namespace PluginKirsanovDemography
             // Пишем цифры
             TextGenerate textAutor = new TextGenerate();
             textAutor.textString = value1.ToString();
-            textAutor.rectH = 130;
+            textAutor.rectH = 110;
             textAutor.rectW = 130;
             textAutor.rectX = 350;
             textAutor.rectY = 0;
@@ -65,7 +65,7 @@ namespace PluginKirsanovDemography
             imageOut = textAutor.DrawTextWithEffects();
             // Пишем цифры
             textAutor.textString = ((value2 - value1) > 0 ? "+" : "") + (value2 - value1).ToString();
-            textAutor.rectH = 125;
+            textAutor.rectH = 105;
             textAutor.rectW = 135;
             textAutor.rectX = 475;
             textAutor.rectY = 0;
