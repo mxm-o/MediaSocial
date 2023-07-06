@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 
 namespace PhotoEdit
 {
@@ -11,13 +12,56 @@ namespace PhotoEdit
     {
         public Image Blur(Image image, int blurAmount)
         {
-            return BlurFfmpeg(image, blurAmount);
+            if (checkFfmpeg()) {
+                image = BlurFfmpeg(image, blurAmount); 
+            } else if (checkKaliko())
+            {
+                image = BlurKaliko(image, blurAmount);
+            }
+
+            return image;
+        }
+
+        private Image BlurKaliko(Image image, int blurAmount)
+        {
+            if (!checkKaliko()) return image;
+            // Creating Kaliko image
+            var imageGaus = new Kaliko.ImageLibrary.KalikoImage(image);
+            var filter = new Kaliko.ImageLibrary.Filters.GaussianBlurFilter(blurAmount);
+            imageGaus.ApplyFilter(filter);
+
+            return imageGaus.GetAsBitmap();
+        }
+
+        // Проверка наличия Kaliko.ImageLibrary
+        private bool checkKaliko()
+        {
+            try
+            {
+                // Пробуем загрузить сборку
+                Assembly.Load("Kaliko.ImageLibrary");
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        // Проверяем наличие ffmpeg
+        private bool checkFfmpeg()
+        {
+            if (File.Exists("ffmpeg.exe"))
+            {
+                return true;
+            }
+            return false;
         }
 
         private Image BlurFfmpeg(Image image, int blurAmount)
         {
             // Проверяем наличие ffmpeg
-            if (!File.Exists("ffmpeg.exe"))
+            if (!checkFfmpeg())
             {
                 return image;
             }
