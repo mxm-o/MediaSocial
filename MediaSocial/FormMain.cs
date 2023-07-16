@@ -286,14 +286,52 @@ namespace MediaSocial
             if (image != null) insertImage(image);
         }
 
-        // Буфер обмена
+        // Буфер обмена вставка (включая ctrl + v)
         private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Если в буфере изображение
             if (Clipboard.ContainsImage())
             {
                 Image image = Clipboard.GetImage();
                 insertImage(image);
             }
+            // Если текст
+            else if (Clipboard.ContainsText())
+            {
+                // Получаем текст из буфера обмена
+                string text = Clipboard.GetText();
+
+                Control container = ActiveControl;
+                // Ищем текст бокс верхний по слоям
+                TextBox activeTextBox = FindActiveTextBox(ActiveControl);
+                if (activeTextBox != null)
+                {
+                    // Вставляем текст
+                    activeTextBox.Paste(text);
+                }
+
+            }
+        }
+
+        // Поиск активного контрола (textbox)
+        private TextBox FindActiveTextBox(Control control)
+        {
+            foreach (Control childControl in control.Controls)
+            {
+                if (childControl is TextBox textBox && textBox.Focused)
+                {
+                    return textBox;
+                }
+                else if (childControl.HasChildren)
+                {
+                    TextBox textBoxInChildren = FindActiveTextBox(childControl);
+                    if (textBoxInChildren != null)
+                    {
+                        return textBoxInChildren;
+                    }
+                }
+            }
+            return null;
         }
 
         private void CopyToolStripMenuItem_Click(object sender, EventArgs e)

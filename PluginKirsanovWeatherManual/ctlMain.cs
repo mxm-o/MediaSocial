@@ -448,6 +448,11 @@ namespace PluginKirsanovWeatherManual
                 error = true;
             }
 
+            if (!CheckFont.FontExists("Lato") || !CheckFont.FontExists("linea-weather-10")) {
+                MessageBox.Show("В системе отсутствуют нужные шрифты. Проверьте наличие требуемых шрифтов к данному дизайну.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                error = true; 
+            }
+
             if (error)
             {
                 return;

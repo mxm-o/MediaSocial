@@ -207,6 +207,12 @@ namespace PluginKirsanovHistory
                 return;
             }
 
+            if (!CheckFont.FontExists("Lato"))
+            {
+                MessageBox.Show("В системе отсутствуют нужные шрифты. Проверьте наличие требуемых шрифтов к данному дизайну.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             Enabled = false;
 
             // Генерируем новое изображение

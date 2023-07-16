@@ -195,6 +195,12 @@ namespace PluginKirsanovFoto
                 return;
             }
 
+            if (!CheckFont.FontExists("Lato"))
+            {
+                MessageBox.Show("В системе отсутствуют нужные шрифты. Проверьте наличие требуемых шрифтов к данному дизайну.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             this.Enabled = false;
             // Считываем шаблонное изображение
             Image imageMain = null;
