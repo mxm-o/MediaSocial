@@ -717,7 +717,8 @@ namespace MediaSocial
             textBoxSaveNameFile.Text = "";
         }
 
-        private void buttonImgSaveQuick_Click(object sender, EventArgs e)
+        //Сохранение файла
+        private void saveFile(string filename, bool quick=true)
         {
             SaveImageFile saveImageFile = new SaveImageFile();
             saveImageFile.image = null;
@@ -727,11 +728,16 @@ namespace MediaSocial
             saveImageFile.saveFormat = Properties.Settings.Default.typeSave;
             saveImageFile.quality = (int)(Properties.Settings.Default.qualitySave / 4.0 * 100);
 
-            string path = Path.Combine(Properties.Settings.Default.pathSave, textBoxSaveNameFile.Text + "." + Properties.Settings.Default.typeSave);
+            string path = filename;
             bool writeFile = true;
-            if (File.Exists(path) && MessageBox.Show("Файл с указанным именем уже существует. Заменить?", "Замена файла!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.Cancel)
-            {
-                writeFile = false;
+
+            if (quick) { 
+                path = Path.Combine(Properties.Settings.Default.pathSave, filename + "." + Properties.Settings.Default.typeSave);
+
+                if (File.Exists(path) && MessageBox.Show("Файл с указанным именем уже существует. Заменить?", "Замена файла!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.Cancel)
+                {
+                    writeFile = false;
+                }
             }
 
             if (writeFile)
@@ -745,15 +751,18 @@ namespace MediaSocial
                 {
                     toolStripStatusLabel1.Text = "Ошибка сохранения файла";
                 }
-
             }
+        }
+
+        private void buttonImgSaveQuick_Click(object sender, EventArgs e)
+        {
+            saveFile(textBoxSaveNameFile.Text, true);
         }
 
         private void buttonImgSave_Click(object sender, EventArgs e)
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
-
                 saveFileDialog.Filter = "Image file (*." + Properties.Settings.Default.typeSave + ")|*." + Properties.Settings.Default.typeSave; //фильтр для расширения файла
                 saveFileDialog.InitialDirectory = Properties.Settings.Default.pathSave; //начальная директория
                 saveFileDialog.RestoreDirectory = true;
@@ -762,24 +771,7 @@ namespace MediaSocial
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    string path = saveFileDialog.FileName;
-                    SaveImageFile saveImageFile = new SaveImageFile();
-                    saveImageFile.image = null;
-                    if (Properties.Settings.Default.inputSave == 2) saveImageFile.image = Global.ImageOut;
-                    if (Properties.Settings.Default.inputSave == 1) saveImageFile.image = Global.imagesRender[Global.ImageIndexNow].Pictures;
-                    if (Properties.Settings.Default.inputSave == 0) saveImageFile.image = Global.imagesSouser[Global.ImageIndexNow].Pictures;
-                    saveImageFile.saveFormat = Properties.Settings.Default.typeSave;
-                    saveImageFile.quality = (int)(Properties.Settings.Default.qualitySave / 4.0 * 100);
-
-                    try
-                    {
-                        saveImageFile.savePath = path;
-                        saveImageFile.SaveImage();
-                    }
-                    catch
-                    {
-                        toolStripStatusLabel1.Text = "Ошибка сохранения файла";
-                    }
+                    saveFile(saveFileDialog.FileName, false);
                 }
             }
         }
