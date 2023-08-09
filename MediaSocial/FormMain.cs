@@ -405,7 +405,7 @@ namespace MediaSocial
         // Добавление изображения в глобальные списки изображения + в pictureBox'ы
         private void insertImage(Image image)
         {
-            if (image != null)
+            if (image != null && comboBoxImg.Items.Count > 0)
             {
                 Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures = image;
                 Global.imagesSouser[comboBoxImg.SelectedIndex].Exist = true;
@@ -414,6 +414,9 @@ namespace MediaSocial
                 Global.imagesRender[Global.ImageIndexNow].Exist = true;
 
                 showPicturebox();
+            } else
+            {
+                System.Media.SystemSounds.Exclamation.Play();
             }
         }
 
