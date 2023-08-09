@@ -63,7 +63,7 @@ namespace PluginKirsanovDemography
             //textAutor.debug = true;
             imageOut = textAutor.DrawTextWithEffects();
             // Пишем цифры
-            textAutor.textString = ((value2 - value1) > 0 ? "+" : "") + (value2 - value1).ToString();
+            textAutor.textString = ((value1 - value2) > 0 ? "+" : "") + (value1 - value2).ToString();
             textAutor.rectH = 105;
             textAutor.rectW = 135;
             textAutor.rectX = 475;
@@ -171,7 +171,7 @@ namespace PluginKirsanovDemography
             imageOut = textGirlNow.DrawTextWithEffects();
             // Пишем цифры
             TextGenerate textGirlOld = new TextGenerate();
-            textGirlOld.textString = ((girlOld - girlNow) > 0 ? "+" : "") + (girlOld - girlNow).ToString();
+            textGirlOld.textString = ((girlNow - girlOld) > 0 ? "+" : "") + (girlNow - girlOld).ToString();
             textGirlOld.rectH = 80;
             textGirlOld.rectW = 135;
             textGirlOld.rectX = 475;
@@ -201,7 +201,7 @@ namespace PluginKirsanovDemography
             imageOut = textBoyNow.DrawTextWithEffects();
             // Пишем цифры
             TextGenerate textBoyOld = new TextGenerate();
-            textBoyOld.textString = ((boyOld - boyNow) > 0 ? "+" : "") + (boyOld - boyNow).ToString();
+            textBoyOld.textString = ((boyNow - boyOld) > 0 ? "+" : "") + (boyNow - boyOld).ToString();
             textBoyOld.rectH = 80;
             textBoyOld.rectW = 135;
             textBoyOld.rectX = 475;

@@ -478,14 +478,17 @@ namespace MediaSocial
 
         private void textBoxSaveNameFile_TextChanged(object sender, EventArgs e)
         {
+            buttonImgSaveQuick.Enabled = textBoxSaveNameFile.Text == "" ? false : true;
+        }
+
+        private void textBoxSaveNameFile_Leave(object sender, EventArgs e)
+        {
             string fileName = textBoxSaveNameFile.Text;
             string invalidCharsPattern = $"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()))}]"; // escape invalid chars
             string safeFileName = Regex.Replace(fileName, invalidCharsPattern, "");
             string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(safeFileName);
             string validFileName = $"{fileNameWithoutExtension}{Path.GetExtension(safeFileName)}";
             textBoxSaveNameFile.Text = validFileName;
-            textBoxSaveNameFile.SelectionStart = textBoxSaveNameFile.Text.Length;
-            buttonImgSaveQuick.Enabled = textBoxSaveNameFile.Text == "" ? false : true;
         }
 
         private void comboBoxImg_SelectedIndexChanged(object sender, EventArgs e)

@@ -808,6 +808,7 @@
             this.textBoxSaveNameFile.Size = new System.Drawing.Size(567, 20);
             this.textBoxSaveNameFile.TabIndex = 4;
             this.textBoxSaveNameFile.TextChanged += new System.EventHandler(this.textBoxSaveNameFile_TextChanged);
+            this.textBoxSaveNameFile.Leave += new System.EventHandler(this.textBoxSaveNameFile_Leave);
             // 
             // label13
             // 
