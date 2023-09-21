@@ -41,5 +41,25 @@ namespace MediaSocial
         }
 
         public static int ImageIndexNow;
+
+        private static bool renderE;
+
+        public static bool renderEditor
+        {
+            get { return renderE; }
+            set
+            {
+                renderE = value;
+                OnEditorChanged();
+            }
+        }
+
+        public static event EventHandler EditorChanged;
+
+        private static void OnEditorChanged()
+        {
+            if (EditorChanged != null)
+                EditorChanged(null, EventArgs.Empty);
+        }
     }
 }

@@ -30,6 +30,8 @@ namespace PluginInterface
 
         void ReciveImage(System.Drawing.Image image);
 
+        void RenderEditor();
+
         int IndexImage();
     }
 

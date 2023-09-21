@@ -470,7 +470,7 @@ namespace PluginKirsanovFotoHorizontalTitle
         {
             // ׀אסקוע נאחלונא רנטפעא
             CalculateFontSize fontSize = new CalculateFontSize();
-            fontSize.baseFontSize = 105;
+            fontSize.baseFontSize = 100;
             fontSize.fontSizeRatio = 0.5;
             StringFormat stringFormat = new StringFormat();
             stringFormat.Alignment = StringAlignment.Center;

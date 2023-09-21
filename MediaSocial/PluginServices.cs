@@ -187,6 +187,11 @@ namespace MediaSocial
         {
             return Global.ImageIndexNow;
         }
+
+        public void RenderEditor()
+        {
+            Global.renderEditor = true;
+        }
     }
 
     namespace Types

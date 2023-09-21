@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace MediaSocial
 {
@@ -20,7 +21,7 @@ namespace MediaSocial
         }
 
         // Создаем таймер обработки картинки
-        private Timer delayTimer = new Timer();
+        private System.Windows.Forms.Timer delayTimer = new System.Windows.Forms.Timer();
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -60,6 +61,8 @@ namespace MediaSocial
             LoadPlugins();
             // Подписываемся на изменение главной картинки
             Global.ImageOutChanged += Global_ImageOutChanged;
+            // Подписываем на событие изменения размера изображения
+            Global.EditorChanged += Global_EditorChanged;
             // Выбираем первый плагин если он есть
             if (toolStripCmbPlugin.Items.Count > 0)
             {
@@ -71,6 +74,8 @@ namespace MediaSocial
             delayTimer.Interval = 500;
             delayTimer.Tick += new EventHandler(delayTimer_Tick);
         }
+
+
 
         // Загрузка настроек
         private void LoadSetting()
@@ -161,6 +166,8 @@ namespace MediaSocial
 
             showPicturebox();
         }
+
+
 
         // Активация плагина
         private void cmbPlugins_SelectedValueChanged(object sender, EventArgs e)
@@ -510,6 +517,15 @@ namespace MediaSocial
         {
             EditorOk();
         }
+        // Обработка изображения по изменению формата из плагина
+        private void Global_EditorChanged(object sender, EventArgs e)
+        {
+            if (Global.renderEditor)
+            {
+                EditorOk();
+                Global.renderEditor = false;
+            }
+        }
 
         // Обработка картинки по таймеру
         private void delayTimer_Tick(object sender, EventArgs e)
@@ -523,12 +539,18 @@ namespace MediaSocial
 
         private void EditorOk()
         {
-            if (Global.imagesRender[Global.ImageIndexNow].Exist)
+            try
             {
-                if (!checkBoxAuto.Checked) btnEditorOk.Enabled = false;
-                Global.imagesRender[Global.ImageIndexNow].Pictures = renderEditor(Global.imagesSouser[Global.ImageIndexNow].Pictures, Global.ImageIndexNow);
-                pictureBox.Image = Global.imagesRender[Global.ImageIndexNow].Pictures;
-                if (!checkBoxAuto.Checked) btnEditorOk.Enabled = true;
+                if (Global.imagesRender[Global.ImageIndexNow].Exist)
+                {
+                    if (!checkBoxAuto.Checked) btnEditorOk.Enabled = false;
+                    Global.imagesRender[Global.ImageIndexNow].Pictures = renderEditor(Global.imagesSouser[Global.ImageIndexNow].Pictures, Global.ImageIndexNow);
+                    pictureBox.Image = Global.imagesRender[Global.ImageIndexNow].Pictures;
+                    if (!checkBoxAuto.Checked) btnEditorOk.Enabled = true;
+                }
+            } catch
+            {
+                pictureBox.Image = Properties.Resources.PhotoNotExist;
             }
         }
 
@@ -756,7 +778,11 @@ namespace MediaSocial
 
         private void buttonImgSaveQuick_Click(object sender, EventArgs e)
         {
-            saveFile(textBoxSaveNameFile.Text, true);
+            toolStripStatusLabel1.Text = "Сохранение файла";
+            Thread thread = new Thread(() => saveFile(textBoxSaveNameFile.Text, true));
+            thread.Start();
+            thread.Join();
+            toolStripStatusLabel1.Text = "Готово";
         }
 
         private void buttonImgSave_Click(object sender, EventArgs e)
@@ -771,7 +797,11 @@ namespace MediaSocial
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    saveFile(saveFileDialog.FileName, false);
+                    toolStripStatusLabel1.Text = "Сохранение файла";
+                    Thread thread = new Thread(() => saveFile(saveFileDialog.FileName, false));
+                    thread.Start();
+                    thread.Join();
+                    toolStripStatusLabel1.Text = "Готово";
                 }
             }
         }

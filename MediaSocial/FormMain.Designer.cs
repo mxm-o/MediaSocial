@@ -282,7 +282,7 @@
             // 
             // pnlPlugin
             // 
-            this.pnlPlugin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlPlugin.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlPlugin.Location = new System.Drawing.Point(3, 3);
             this.pnlPlugin.Name = "pnlPlugin";
             this.pnlPlugin.Size = new System.Drawing.Size(659, 543);
@@ -316,7 +316,7 @@
             // 
             // btnEditorReset
             // 
-            this.btnEditorReset.Location = new System.Drawing.Point(84, 437);
+            this.btnEditorReset.Location = new System.Drawing.Point(84, 445);
             this.btnEditorReset.Name = "btnEditorReset";
             this.btnEditorReset.Size = new System.Drawing.Size(75, 23);
             this.btnEditorReset.TabIndex = 20;
@@ -327,7 +327,7 @@
             // btnEditorCancel
             // 
             this.btnEditorCancel.Enabled = false;
-            this.btnEditorCancel.Location = new System.Drawing.Point(165, 437);
+            this.btnEditorCancel.Location = new System.Drawing.Point(165, 445);
             this.btnEditorCancel.Name = "btnEditorCancel";
             this.btnEditorCancel.Size = new System.Drawing.Size(75, 23);
             this.btnEditorCancel.TabIndex = 19;
@@ -337,7 +337,7 @@
             // 
             // btnEditorOk
             // 
-            this.btnEditorOk.Location = new System.Drawing.Point(3, 437);
+            this.btnEditorOk.Location = new System.Drawing.Point(3, 445);
             this.btnEditorOk.Name = "btnEditorOk";
             this.btnEditorOk.Size = new System.Drawing.Size(75, 23);
             this.btnEditorOk.TabIndex = 18;
@@ -349,6 +349,7 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.AutoSize = true;
             this.groupBox1.Controls.Add(this.trackBarZoom);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label9);
@@ -360,7 +361,7 @@
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(653, 144);
+            this.groupBox1.Size = new System.Drawing.Size(653, 152);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Положение изображения";
@@ -475,7 +476,7 @@
             this.groupBox3.Controls.Add(this.buttonRotate180);
             this.groupBox3.Controls.Add(this.buttonRotate90);
             this.groupBox3.Controls.Add(this.label11);
-            this.groupBox3.Location = new System.Drawing.Point(3, 379);
+            this.groupBox3.Location = new System.Drawing.Point(3, 387);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(653, 52);
             this.groupBox3.TabIndex = 17;
@@ -575,7 +576,7 @@
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.trackBarBrightness);
             this.groupBox2.Controls.Add(this.label12);
-            this.groupBox2.Location = new System.Drawing.Point(3, 153);
+            this.groupBox2.Location = new System.Drawing.Point(3, 161);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(653, 220);
             this.groupBox2.TabIndex = 16;
@@ -1222,6 +1223,7 @@
             this.tabPluginModule.ResumeLayout(false);
             this.tabPluginEditor.ResumeLayout(false);
             this.panelEditor.ResumeLayout(false);
+            this.panelEditor.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarZoom)).EndInit();

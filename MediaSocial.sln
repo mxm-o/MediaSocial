@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginKirsanovWeatherManual
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginKirsanovHistory", "PluginKirsanovHistory\PluginKirsanovHistory.csproj", "{9400FB6D-959D-4F79-8012-C47787A0965A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginKirsanovNews", "PluginKirsanovNews\PluginKirsanovNews.csproj", "{46DAA01E-1124-40F2-B29B-B5E8F663791C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{9400FB6D-959D-4F79-8012-C47787A0965A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9400FB6D-959D-4F79-8012-C47787A0965A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9400FB6D-959D-4F79-8012-C47787A0965A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46DAA01E-1124-40F2-B29B-B5E8F663791C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46DAA01E-1124-40F2-B29B-B5E8F663791C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46DAA01E-1124-40F2-B29B-B5E8F663791C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46DAA01E-1124-40F2-B29B-B5E8F663791C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
