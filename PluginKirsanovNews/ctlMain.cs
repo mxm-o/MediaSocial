@@ -109,7 +109,7 @@ namespace PluginKirsanovNews
             // 
             // panelCopyright
             // 
-            this.panelCopyright.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.panelCopyright.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelCopyright.Controls.Add(this.textBoxT2);
             this.panelCopyright.Controls.Add(this.labelT2);
@@ -120,7 +120,7 @@ namespace PluginKirsanovNews
             // 
             // textBoxT2
             // 
-            this.textBoxT2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.textBoxT2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxT2.Location = new System.Drawing.Point(7, 20);
             this.textBoxT2.MaxLength = 150;
@@ -141,7 +141,7 @@ namespace PluginKirsanovNews
             // 
             // panelTitle
             // 
-            this.panelTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.panelTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelTitle.Controls.Add(this.pictureBoxImage);
             this.panelTitle.Controls.Add(this.label2);
@@ -158,7 +158,7 @@ namespace PluginKirsanovNews
             // 
             // pictureBoxImage
             // 
-            this.pictureBoxImage.BackColor = System.Drawing.Color.Gainsboro;
+            this.pictureBoxImage.BackColor = System.Drawing.Color.DodgerBlue;
             this.pictureBoxImage.Location = new System.Drawing.Point(3, 145);
             this.pictureBoxImage.Name = "pictureBoxImage";
             this.pictureBoxImage.Size = new System.Drawing.Size(195, 107);
@@ -177,7 +177,7 @@ namespace PluginKirsanovNews
             // 
             // comboBoxImages
             // 
-            this.comboBoxImages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.comboBoxImages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxImages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxImages.FormattingEnabled = true;
@@ -230,7 +230,7 @@ namespace PluginKirsanovNews
             // 
             // textBoxT1
             // 
-            this.textBoxT1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.textBoxT1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxT1.Location = new System.Drawing.Point(7, 20);
             this.textBoxT1.MaxLength = 300;
@@ -263,7 +263,7 @@ namespace PluginKirsanovNews
             // 
             // panelHead
             // 
-            this.panelHead.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.panelHead.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelHead.Controls.Add(this.label3);
             this.panelHead.Controls.Add(this.comboBoxFormat);
@@ -286,7 +286,7 @@ namespace PluginKirsanovNews
             // 
             // comboBoxFormat
             // 
-            this.comboBoxFormat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.comboBoxFormat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFormat.FormattingEnabled = true;
