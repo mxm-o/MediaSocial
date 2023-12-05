@@ -117,6 +117,7 @@ namespace PluginKirsanovDemography
             this.dateTimePicker.Name = "dateTimePicker";
             this.dateTimePicker.Size = new System.Drawing.Size(189, 20);
             this.dateTimePicker.TabIndex = 1;
+            this.dateTimePicker.ValueChanged += new System.EventHandler(this.dateTimePicker_ValueChanged);
             // 
             // labelT1
             // 
@@ -242,6 +243,7 @@ namespace PluginKirsanovDemography
 		private void ctlMain_Load(object sender, System.EventArgs e)
 		{
             Clear();
+            dataGridViewDemography.Columns["DemographyName"].ReadOnly = true;
         }
 
         private void generateStatisticTable()
@@ -251,8 +253,9 @@ namespace PluginKirsanovDemography
             dataGridViewDemography.Rows.Clear();
 
             dataGridViewDemography.Rows.Add("Год", dt.Year, dt.Year - 1);
-            dataGridViewDemography.Rows.Add("Рождение девочки", 0, 0);
-            dataGridViewDemography.Rows.Add("Рождение мальчики", 0, 0);
+            //dataGridViewDemography.Rows.Add("Рождение девочки", 0, 0);
+            //dataGridViewDemography.Rows.Add("Рождение мальчики", 0, 0);
+            dataGridViewDemography.Rows.Add("Рождение", 0, 0);
             dataGridViewDemography.Rows.Add("Смерть", 0, 0);
             dataGridViewDemography.Rows.Add("Брак", 0, 0);
             dataGridViewDemography.Rows.Add("Развод", 0, 0);
@@ -312,9 +315,9 @@ namespace PluginKirsanovDemography
             imageOut = mergeImage.MergeImage(); // Помещаем оформление
             // Пишем дату
             TextGenerate textE = new TextGenerate();
-            textE.textString = dateTimePicker.Value.ToString("MMMM yyyy").ToLower() + " года";
+            textE.textString = "за " + dateTimePicker.Value.ToString("MMMM").ToLower() + " в Кирсанове";
             textE.rectH = 100;
-            textE.rectW = 1000;
+            textE.rectW = 1300;
             textE.rectX = 40;
             textE.rectY = 210;
             textE.source = imageOut;
@@ -327,7 +330,7 @@ namespace PluginKirsanovDemography
             imageOut = textE.DrawTextWithEffects();
             // Пишем имена мужские
             TextGenerate textName = new TextGenerate();
-            textName.textString = dataGridViewDemography[1, 6].Value.ToString().Replace(","," ").Replace("  ", " ").Replace("  ", " ").Replace(" ", Environment.NewLine);
+            textName.textString = dataGridViewDemography[1, 5].Value.ToString().Replace(","," ").Replace("  ", " ").Replace("  ", " ").Replace(" ", Environment.NewLine);
             textName.rectH = 250;
             textName.rectW = 600;
             textName.rectX = 280;
@@ -341,7 +344,7 @@ namespace PluginKirsanovDemography
             //textName.debug = true;
             imageOut = textName.DrawTextWithEffects();
             // Пишем имена женские
-            textName.textString = dataGridViewDemography[1, 7].Value.ToString().Replace(",", " ").Replace("  ", " ").Replace("  ", " ").Replace(" ", Environment.NewLine);
+            textName.textString = dataGridViewDemography[1, 6].Value.ToString().Replace(",", " ").Replace("  ", " ").Replace("  ", " ").Replace(" ", Environment.NewLine);
             textName.rectH = 250;
             textName.rectW = 580;
             textName.rectX = 1150;
@@ -356,7 +359,7 @@ namespace PluginKirsanovDemography
             imageOut = textName.DrawTextWithEffects();
             // Рождаемость
             Graph graphBorn = new Graph();
-            Image imageGraphBorn = graphBorn.RenderGraphBorn(Convert.ToInt16(dataGridViewDemography[1, 1].Value), Convert.ToInt16(dataGridViewDemography[2, 1].Value), Convert.ToInt16(dataGridViewDemography[1, 2].Value), Convert.ToInt16(dataGridViewDemography[2, 2].Value));
+            Image imageGraphBorn = graphBorn.RenderGraphYears(Convert.ToInt16(dataGridViewDemography[1, 1].Value), Convert.ToInt16(dataGridViewDemography[2, 1].Value), dateTimePicker.Value.Year);
             // Раскладываем по слоям
             Merge mergeImageGraph = new Merge();
             mergeImageGraph.sourceBottom = imageOut;
@@ -366,7 +369,7 @@ namespace PluginKirsanovDemography
             imageOut = mergeImageGraph.MergeImage(); // Помещаем оформление
             // Смертность
             Graph graph = new Graph();
-            Image imageGraph = graph.RenderGraph(Convert.ToInt16(dataGridViewDemography[1, 3].Value), Convert.ToInt16(dataGridViewDemography[2, 3].Value));
+            Image imageGraph = graph.RenderGraphYears(Convert.ToInt16(dataGridViewDemography[1, 2].Value), Convert.ToInt16(dataGridViewDemography[2, 2].Value), dateTimePicker.Value.Year);
             // Раскладываем по слоям
             mergeImageGraph.sourceBottom = imageOut;
             mergeImageGraph.sourceTop = imageGraph;
@@ -375,7 +378,7 @@ namespace PluginKirsanovDemography
             imageOut = mergeImageGraph.MergeImage(); // Помещаем оформление
             // Браки
             Graph graphWedding = new Graph();
-            Image imageGraphWedding = graphWedding.RenderGraph(Convert.ToInt16(dataGridViewDemography[1, 4].Value), Convert.ToInt16(dataGridViewDemography[2, 4].Value));
+            Image imageGraphWedding = graphWedding.RenderGraphYears(Convert.ToInt16(dataGridViewDemography[1, 3].Value), Convert.ToInt16(dataGridViewDemography[2, 3].Value), dateTimePicker.Value.Year);
             // Раскладываем по слоям
             mergeImageGraph.sourceBottom = imageOut;
             mergeImageGraph.sourceTop = imageGraphWedding;
@@ -384,7 +387,7 @@ namespace PluginKirsanovDemography
             imageOut = mergeImageGraph.MergeImage(); // Помещаем оформление
             // Разводы
             Graph graphDivorce = new Graph();
-            Image imageGraphDivorce = graphDivorce.RenderGraph(Convert.ToInt16(dataGridViewDemography[1, 5].Value), Convert.ToInt16(dataGridViewDemography[2, 5].Value));
+            Image imageGraphDivorce = graphDivorce.RenderGraphYears(Convert.ToInt16(dataGridViewDemography[1, 4].Value), Convert.ToInt16(dataGridViewDemography[2, 4].Value), dateTimePicker.Value.Year);
             // Раскладываем по слоям
             mergeImageGraph.sourceBottom = imageOut;
             mergeImageGraph.sourceTop = imageGraphDivorce;
@@ -400,7 +403,7 @@ namespace PluginKirsanovDemography
         {
             if (e.ColumnIndex == 1 || e.ColumnIndex == 2)
             {
-                if (e.RowIndex <= 5) {
+                if (e.RowIndex <= 4) {
                     int value;
                     try
                     {
@@ -416,7 +419,32 @@ namespace PluginKirsanovDemography
 
                     dataGridViewDemography.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = value;
                 }
+                if (e.RowIndex > 4 && e.ColumnIndex == 2)
+                {
+                    dataGridViewDemography.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "-";
+                }
+                if (e.RowIndex == 0 && e.ColumnIndex == 1)
+                {
+                    var dt = dateTimePicker.Value;
+                    dataGridViewDemography.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = dt.Year;
+                }
+                if (e.RowIndex == 0 && e.ColumnIndex == 2)
+                {
+                    var dt = dateTimePicker.Value;
+                    dataGridViewDemography.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = dt.Year - 1;
+                }
             }
+        }
+
+        private void dateTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            var dt = dateTimePicker.Value;
+            try
+            {
+                dataGridViewDemography.Rows[0].Cells[1].Value = dt.Year;
+                dataGridViewDemography.Rows[0].Cells[2].Value = dt.Year - 1;
+            }
+            catch { }
         }
     }
 }

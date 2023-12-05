@@ -24,7 +24,7 @@ namespace PluginKirsanovDemography
         string myName = "Демография";
         string myDescription = "Модуль демография";
         string myAuthor = "Максим Отрохов";
-        string myVersion = "1.0.0";
+        string myVersion = "1.0.1";
         bool myEditor = false;
         string feed = "Имена заполняются через пробел (или запятую) в одной ячейке текущего года.";
         

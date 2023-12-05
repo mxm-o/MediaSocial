@@ -81,6 +81,7 @@ namespace PluginKirsanovWeatherManual
                                 end = end.ToLower().Contains("дождь") ? "Дождь" : end;
                                 end = end.ToLower().Contains("осадки") ? "Дождь" : end;
                                 end = end.ToLower().Contains("пасмурно") ? "Облачно" : end;
+                                end = end.ToLower().Contains("метель") ? "Снег" : end;
                                 end = WeatherType.CheckWeatherClowd(end);
                                 break;
                             case "winddirectionshort":

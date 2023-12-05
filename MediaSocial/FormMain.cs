@@ -838,6 +838,16 @@ namespace MediaSocial
             }
         }
 
+        private void pictureBox_MouseEnter(object sender, EventArgs e)
+        {
+            pictureBox.Focus();
+        }
+
+        private void pictureBox_MouseLeave(object sender, EventArgs e)
+        {
+            this.Focus();
+        }
+
         // Меняем картинку отображаемую в программе
         private void cmbBoxImgType_SelectedIndexChanged(object sender, EventArgs e)
         {
