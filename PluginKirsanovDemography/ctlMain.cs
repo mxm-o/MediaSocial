@@ -359,7 +359,7 @@ namespace PluginKirsanovDemography
             imageOut = textName.DrawTextWithEffects();
             // Рождаемость
             Graph graphBorn = new Graph();
-            Image imageGraphBorn = graphBorn.RenderGraphYears(Convert.ToInt16(dataGridViewDemography[1, 1].Value), Convert.ToInt16(dataGridViewDemography[2, 1].Value), dateTimePicker.Value.Year);
+            Image imageGraphBorn = graphBorn.RenderGraphYears(Convert.ToInt32(dataGridViewDemography[1, 1].Value), Convert.ToInt32(dataGridViewDemography[2, 1].Value), dateTimePicker.Value.Year);
             // Раскладываем по слоям
             Merge mergeImageGraph = new Merge();
             mergeImageGraph.sourceBottom = imageOut;
@@ -407,7 +407,7 @@ namespace PluginKirsanovDemography
                     int value;
                     try
                     {
-                        value = Convert.ToInt16(dataGridViewDemography.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+                        value = Convert.ToInt32(dataGridViewDemography.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
                         if (value < 0)
                         {
                             value *= -1;

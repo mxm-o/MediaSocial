@@ -224,7 +224,7 @@ namespace PluginKirsanovDemography
         {
             // Генерируем новое изображение
             PhotoGenerate photo = new PhotoGenerate();
-            photo.height = 140;
+            photo.height = 150;
             photo.width = 620;
             photo.colorMain = Color.White;
             Image imageOut = photo.Fill();
@@ -232,7 +232,7 @@ namespace PluginKirsanovDemography
             int widht = 350;
             try
             {
-                widht = value1 >= value2 ? 350 : (350 / value2 * value1);
+                widht = value1 > value2 ? 350 : (350 / value2 * value1);
             }
             catch
             {
@@ -252,7 +252,7 @@ namespace PluginKirsanovDemography
 
             try
             {
-                widht = value1 <= value2 ? 350 : (350 / value1 * value2);
+                widht = value1 < value2 ? 350 : (350 / value1 * value2);
             }
             catch
             {
@@ -281,7 +281,7 @@ namespace PluginKirsanovDemography
             TextGenerate textAutor = new TextGenerate();
             textAutor.textString = value1.ToString();
             textAutor.rectH = 70;
-            textAutor.rectW = 130;
+            textAutor.rectW = 230;
             textAutor.rectX = 350;
             textAutor.rectY = 10;
             textAutor.source = imageOut;
@@ -297,20 +297,20 @@ namespace PluginKirsanovDemography
             textAutor.textString = yearNow.ToString();
             textAutor.rectH = 70;
             textAutor.rectW = 130;
-            textAutor.rectX = 10;
-            textAutor.rectY = 15;
+            textAutor.rectX = 0;
+            textAutor.rectY = 10;
             textAutor.source = imageOut;
             textAutor.fontSize = 40;
             textAutor.colorText = Color.White;
-            textAutor.stringAlignment = StringAlignment.Near;
-            textAutor.lineAlignment = StringAlignment.Near;
+            textAutor.stringAlignment = StringAlignment.Center;
+            textAutor.lineAlignment = StringAlignment.Center;
             textAutor.fontName = "Lato";
             //textAutor.debug = true;
             imageOut = textAutor.DrawTextWithEffects();
             // Пишем цифры значение 2
             textAutor.textString = value2.ToString();
             textAutor.rectH = 70;
-            textAutor.rectW = 130;
+            textAutor.rectW = 230;
             textAutor.rectX = 350;
             textAutor.rectY = 80;
             textAutor.source = imageOut;
@@ -326,13 +326,13 @@ namespace PluginKirsanovDemography
             textAutor.textString = (yearNow - 1).ToString();
             textAutor.rectH = 70;
             textAutor.rectW = 130;
-            textAutor.rectX = 10;
-            textAutor.rectY = 85;
+            textAutor.rectX = 0;
+            textAutor.rectY = 80;
             textAutor.source = imageOut;
             textAutor.fontSize = 40;
             textAutor.colorText = Color.White;
-            textAutor.stringAlignment = StringAlignment.Near;
-            textAutor.lineAlignment = StringAlignment.Near;
+            textAutor.stringAlignment = StringAlignment.Center;
+            textAutor.lineAlignment = StringAlignment.Center;
             textAutor.fontName = "Lato";
             //textAutor.debug = true;
             imageOut = textAutor.DrawTextWithEffects();
