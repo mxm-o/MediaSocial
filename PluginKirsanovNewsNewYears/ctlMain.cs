@@ -8,7 +8,7 @@ using PhotoEdit;
 using System.Reflection;
 using System.IO;
 
-namespace PluginKirsanovNews
+namespace PluginKirsanovNewsNewYears
 {
     /// <summary>
     /// Summary description for ctlMain.
@@ -26,7 +26,7 @@ namespace PluginKirsanovNews
             InitializeComponent();
             // TODO: Add any initialization after the InitializeComponent call
             LoadingImages();
-            LoadingLayers();
+
         }
 
         /// <summary> 
@@ -58,8 +58,6 @@ namespace PluginKirsanovNews
             this.textBoxT2 = new System.Windows.Forms.TextBox();
             this.labelT2 = new System.Windows.Forms.Label();
             this.panelTitle = new System.Windows.Forms.Panel();
-            this.comboBoxLayers = new System.Windows.Forms.ComboBox();
-            this.checkBoxLayers = new System.Windows.Forms.CheckBox();
             this.pictureBoxImage = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBoxImages = new System.Windows.Forms.ComboBox();
@@ -145,8 +143,6 @@ namespace PluginKirsanovNews
             // 
             this.panelTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelTitle.Controls.Add(this.comboBoxLayers);
-            this.panelTitle.Controls.Add(this.checkBoxLayers);
             this.panelTitle.Controls.Add(this.pictureBoxImage);
             this.panelTitle.Controls.Add(this.label2);
             this.panelTitle.Controls.Add(this.comboBoxImages);
@@ -157,31 +153,8 @@ namespace PluginKirsanovNews
             this.panelTitle.Controls.Add(this.labelT1);
             this.panelTitle.Location = new System.Drawing.Point(0, 173);
             this.panelTitle.Name = "panelTitle";
-            this.panelTitle.Size = new System.Drawing.Size(200, 299);
+            this.panelTitle.Size = new System.Drawing.Size(200, 259);
             this.panelTitle.TabIndex = 8;
-            // 
-            // comboBoxLayers
-            // 
-            this.comboBoxLayers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxLayers.Enabled = false;
-            this.comboBoxLayers.FormattingEnabled = true;
-            this.comboBoxLayers.Location = new System.Drawing.Point(3, 275);
-            this.comboBoxLayers.Name = "comboBoxLayers";
-            this.comboBoxLayers.Size = new System.Drawing.Size(193, 21);
-            this.comboBoxLayers.TabIndex = 17;
-            // 
-            // checkBoxLayers
-            // 
-            this.checkBoxLayers.AutoSize = true;
-            this.checkBoxLayers.Location = new System.Drawing.Point(7, 258);
-            this.checkBoxLayers.Name = "checkBoxLayers";
-            this.checkBoxLayers.Size = new System.Drawing.Size(51, 17);
-            this.checkBoxLayers.TabIndex = 16;
-            this.checkBoxLayers.Text = "Слои";
-            this.checkBoxLayers.UseVisualStyleBackColor = true;
-            this.checkBoxLayers.CheckedChanged += new System.EventHandler(this.checkBoxLayers_CheckedChanged);
             // 
             // pictureBoxImage
             // 
@@ -334,9 +307,9 @@ namespace PluginKirsanovNews
             this.Controls.Add(this.panelCopyright);
             this.Controls.Add(this.checkBoxTitle);
             this.Controls.Add(this.panelTitle);
-            this.MinimumSize = new System.Drawing.Size(200, 474);
+            this.MinimumSize = new System.Drawing.Size(200, 370);
             this.Name = "ctlMain";
-            this.Size = new System.Drawing.Size(200, 474);
+            this.Size = new System.Drawing.Size(200, 435);
             this.Load += new System.EventHandler(this.ctlMain_Load);
             this.panelCopyright.ResumeLayout(false);
             this.panelCopyright.PerformLayout();
@@ -372,8 +345,6 @@ namespace PluginKirsanovNews
         private Panel panelHead;
         private Label label3;
         private ComboBox comboBoxFormat;
-        private ComboBox comboBoxLayers;
-        private CheckBox checkBoxLayers;
         IPlugin myPlugin = null;
 
         public IPluginHost PluginHost
@@ -447,7 +418,7 @@ namespace PluginKirsanovNews
             Image imageTitle = null; // Название
             Image ImageBlur = null; // Размытое фото
 
-            // Считываем изображение основного дизайна
+            // Считываем изображениt основного дизайна
             try
             {
                 imageMain = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "main.png"))));
@@ -558,6 +529,7 @@ namespace PluginKirsanovNews
             mergeImage.sourceTop = imageMain;
             imageOut = mergeImage.MergeImage();
 
+
             // Помещаем фон названия новости
             if (imageTitle != null && textBoxT1.Text != "") {
 
@@ -613,24 +585,6 @@ namespace PluginKirsanovNews
                 //textAutor.debug = true;
                 imageOut = textAutor.DrawTextWithEffects();
             }
-
-            // Помещаем дополнительный слой
-            if (checkBoxLayers.Checked)
-            {
-                try
-                {
-                    mergeImage.sourceBottom = imageOut;
-                    mergeImage.sourceTop = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "layers", comboBoxLayers.SelectedItem.ToString() + ".png"))));
-                    mergeImage.top = 0;
-                    mergeImage.left = 0;
-                    imageOut = mergeImage.MergeImage();
-                }
-                catch
-                {
-
-                }
-            }
-
             myHost.ReciveImage(imageOut);
             this.Enabled = true;
         }
@@ -664,33 +618,6 @@ namespace PluginKirsanovNews
 
             }
         }
-
-        // Загрузка списка дополнительных слоев для заголовка новости
-        private void LoadingLayers()
-        {
-            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            bool layers = false;
-            if (Directory.Exists(Path.Combine(path, "layers")))
-            {
-                string[] files = Directory.GetFiles(Path.Combine(path, "layers"), "*.png");
-                if (files.Length > 0)
-                {
-                    for (int i = 0; i < files.Length; i++)
-                    {
-                        comboBoxLayers.Items.Add(files[i].Replace(Path.Combine(path, "layers\\"), "").Replace(".png", ""));
-                        layers = true;
-                    }
-                    comboBoxLayers.SelectedIndex = 0;
-                }
-            }
-            if (layers == false)
-            {
-                comboBoxLayers.Visible = false;
-                checkBoxLayers.Visible = false;
-                checkBoxLayers.Enabled = false;
-            }
-        }
-
         // Расчет размера шрифта
         private void textBoxT1_TextChanged(object sender, EventArgs e)
         {
@@ -738,12 +665,6 @@ namespace PluginKirsanovNews
                     break;
             }
             myHost.RenderEditor();
-        }
-
-        // Переключение состояния возможности выбора слоев
-        private void checkBoxLayers_CheckedChanged(object sender, EventArgs e)
-        {
-                comboBoxLayers.Enabled = checkBoxLayers.Checked;
         }
     }
 }

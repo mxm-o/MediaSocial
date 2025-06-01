@@ -73,14 +73,14 @@ namespace PhotoEdit
 
         public Image ChangeSaturation()
         {
-            if (saturation == 0) return image;
+            //if (saturation == 1) return image;
 
             // Создаем матрицу цветов
             float saturationComplement = 1.0f - saturation;
             float saturationRed = 0.3086f * saturationComplement;
             float saturationGreen = 0.6094f * saturationComplement;
             float saturationBlue = 0.0820f * saturationComplement;
-            // Create a new ColorMatrix and set the temperature values
+            // Создаем новую матрицу цветов и устанавливаем значения насыщенности
             ColorMatrix colorMatrix = new ColorMatrix(new float[][]
             {
                 new float[] { saturationRed + saturation, saturationRed, saturationRed, 0, 0 },

@@ -4,15 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1A561CEE-05DE-4220-86D0-37D694E1F09A}</ProjectGuid>
+    <ProjectGuid>{2D6312BD-5C35-431E-98EB-9D769723B73B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PhotoEdit</RootNamespace>
-    <AssemblyName>PhotoEdit</AssemblyName>
+    <RootNamespace>PluginKirsanovGoodMorningNewYears</RootNamespace>
+    <AssemblyName>PluginKirsanovGoodMorningNewYears</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,37 +31,40 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Kaliko.ImageLibrary, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ImageLibrary.3.0.2\lib\net45\Kaliko.ImageLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlurImage.cs" />
-    <Compile Include="CalculateFontSize.cs" />
-    <Compile Include="CheckFont.cs" />
-    <Compile Include="ImageBlur.cs" />
-    <Compile Include="Merge.cs" />
-    <Compile Include="ModifyImage.cs" />
-    <Compile Include="PhotoEdit.cs" />
-    <Compile Include="PhotoGenerate.cs" />
+    <Compile Include="ctlMain.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PluginKirsanovGoodMorningNewYears.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resize.cs" />
-    <Compile Include="RotateImage.cs" />
-    <Compile Include="SaveImage.cs" />
-    <Compile Include="TextGenerate.cs" />
+    <Compile Include="SunSetRise.cs" />
+    <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\PhotoEdit\PhotoEdit.csproj">
+      <Project>{1a561cee-05de-4220-86d0-37d694e1f09a}</Project>
+      <Name>PhotoEdit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PluginInterface\PluginInterface.csproj">
+      <Project>{4e9eeae3-9c91-43b6-bd7c-afde5455941d}</Project>
+      <Name>PluginInterface</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ctlMain.resx">
+      <DependentUpon>ctlMain.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y "$(TargetDir)$(TargetName).dll" "$(SolutionDir)$(SolutionName)\$(OutDir)Plugins\$(TargetName)\$(TargetName).dll"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

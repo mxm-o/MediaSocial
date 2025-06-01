@@ -351,7 +351,6 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.AutoSize = true;
             this.groupBox1.Controls.Add(this.trackBarZoom);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label9);
@@ -1007,7 +1006,7 @@
             // CopyToolStripMenuItem
             // 
             this.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem";
-            this.CopyToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.CopyToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.CopyToolStripMenuItem.Text = "Копировать";
             this.CopyToolStripMenuItem.Click += new System.EventHandler(this.CopyToolStripMenuItem_Click);
             // 
@@ -1015,19 +1014,19 @@
             // 
             this.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem";
             this.PasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.PasteToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.PasteToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.PasteToolStripMenuItem.Text = "Вставить";
             this.PasteToolStripMenuItem.Click += new System.EventHandler(this.PasteToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(160, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(168, 6);
             // 
             // PhotoEditorToolStripMenuItem
             // 
             this.PhotoEditorToolStripMenuItem.Name = "PhotoEditorToolStripMenuItem";
-            this.PhotoEditorToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.PhotoEditorToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.PhotoEditorToolStripMenuItem.Text = "ФотоРедактор";
             this.PhotoEditorToolStripMenuItem.Click += new System.EventHandler(this.PhotoEditorToolStripMenuItem_Click);
             // 
@@ -1225,7 +1224,6 @@
             this.tabPluginModule.ResumeLayout(false);
             this.tabPluginEditor.ResumeLayout(false);
             this.panelEditor.ResumeLayout(false);
-            this.panelEditor.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarZoom)).EndInit();

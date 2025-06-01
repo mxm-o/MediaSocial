@@ -25,6 +25,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginKirsanovNews", "Plugi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginKirsanovCalendar", "PluginKirsanovCalendar\PluginKirsanovCalendar.csproj", "{CA1A9586-3DB1-4B00-A05D-B77613091D9C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginKirsanovNewsNewYears", "PluginKirsanovNewsNewYears\PluginKirsanovNewsNewYears.csproj", "{DA54A1AD-7BC1-43EC-83C2-788EB3BB52DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginKirsanovGoodMorningNewYears", "PluginKirsanovGoodMorningNewYears\PluginKirsanovGoodMorningNewYears.csproj", "{2D6312BD-5C35-431E-98EB-9D769723B73B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +79,14 @@ Global
 		{CA1A9586-3DB1-4B00-A05D-B77613091D9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA1A9586-3DB1-4B00-A05D-B77613091D9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA1A9586-3DB1-4B00-A05D-B77613091D9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA54A1AD-7BC1-43EC-83C2-788EB3BB52DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA54A1AD-7BC1-43EC-83C2-788EB3BB52DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA54A1AD-7BC1-43EC-83C2-788EB3BB52DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA54A1AD-7BC1-43EC-83C2-788EB3BB52DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D6312BD-5C35-431E-98EB-9D769723B73B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D6312BD-5C35-431E-98EB-9D769723B73B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D6312BD-5C35-431E-98EB-9D769723B73B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D6312BD-5C35-431E-98EB-9D769723B73B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -17,6 +17,9 @@ namespace PhotoEdit
             } else if (checkKaliko())
             {
                 image = BlurKaliko(image, blurAmount);
+            } else
+            {
+                image = ImageBlur.ApplyBlur(image, blurAmount);
             }
 
             return image;

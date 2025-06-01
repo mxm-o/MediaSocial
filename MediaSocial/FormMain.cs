@@ -564,7 +564,7 @@ namespace MediaSocial
             item.Id = Id;
             item.Brightness = (trackBarBrightness.Value + 100) / 100f;
             item.Contrast = (trackBarContrast.Value + 100) / 100f;
-            item.Saturation = trackBarSaturation.Value / 10f;
+            item.Saturation = (trackBarSaturation.Value / 100f) * 2 + 1;
             item.Tone = trackBarTone.Value;
             item.Temperature = trackBarTemperature.Value / 100f;
             item.Rotate = Convert.ToInt16(numericUpDownRotate.Value < 0 ? (360 + numericUpDownRotate.Value) : numericUpDownRotate.Value);
@@ -655,9 +655,13 @@ namespace MediaSocial
             return image;
         }
 
+        // Сброс параметров редактора
+
         private void btnEditorReset_Click(object sender, EventArgs e)
         {
             ResetEditorSetting();
+
+            if (checkBoxAuto.Checked) EditorOk();
         }
 
         private void ResetEditorSetting()
@@ -674,6 +678,8 @@ namespace MediaSocial
 
             numericUpDownRotate.Value = 0;
         }
+
+        // Загрузка параметров редактора
 
         private void LoadEditorSetting(int id)
         {
@@ -715,10 +721,15 @@ namespace MediaSocial
         {
             numericUpDownRotate.Value = calcRotateBox(numericUpDownRotate.Value, -90);
         }
-
-        private decimal calcRotateBox(decimal value, decimal x)
+        /// <summary>
+        /// Расчет вращения размера вращения
+        /// </summary>
+        /// <param name="value">прежнее значение</param>
+        /// <param name="valueNew">значение на какое увеличивается</param>
+        /// <returns></returns>
+        private decimal calcRotateBox(decimal value, decimal valueNew)
         {
-            value += x;
+            value += valueNew;
             if (value >= 360) value -= 360;
             if (value < 0) value += 360;
             return value;
@@ -732,8 +743,6 @@ namespace MediaSocial
             trackBarBrightness.Value = Convert.ToInt16(br * 100 - 100);
         }
         // Окончание вращения изображения
-
-
         private void buttonImgSaveClear_Click(object sender, EventArgs e)
         {
             textBoxSaveNameFile.Text = "";
@@ -838,14 +847,17 @@ namespace MediaSocial
             }
         }
 
+        // Фокус на PictureBox при попадании на него курсора мыши (когда открыта страница редактора фото)
         private void pictureBox_MouseEnter(object sender, EventArgs e)
         {
-            pictureBox.Focus();
+            if (tabControlPlugins.SelectedTab == tabPluginEditor) pictureBox.Focus();
         }
+
+        // Убираем фокус с PictureBox при убирании с него курсора мыши (когда открыта страница редактора фото)
 
         private void pictureBox_MouseLeave(object sender, EventArgs e)
         {
-            this.Focus();
+            if (tabControlPlugins.SelectedTab == tabPluginEditor) this.Focus();
         }
 
         // Меняем картинку отображаемую в программе
