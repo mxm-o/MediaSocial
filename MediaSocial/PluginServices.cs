@@ -188,6 +188,24 @@ namespace MediaSocial
             return Global.ImageIndexNow;
         }
 
+        public bool IsExecuting(bool isExecuting)
+        { 
+            Global.IsExecuting = isExecuting;
+            return Global.IsExecuting;
+        }
+
+        public int Progress(int progress)
+        {
+            Global.Progress = progress;
+            return Global.Progress;
+        }
+
+        public string Message(string message)
+        {
+            Global.Message = message;
+            return Global.Message;
+        }
+
         public void RenderEditor()
         {
             Global.renderEditor = true;

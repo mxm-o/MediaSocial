@@ -61,5 +61,46 @@ namespace MediaSocial
             if (EditorChanged != null)
                 EditorChanged(null, EventArgs.Empty);
         }
+
+        public static event EventHandler StateChanged;
+
+        private static bool _isExecuting;
+        public static bool IsExecuting
+        {
+            get { return _isExecuting; }
+            set
+            {
+                _isExecuting = value;
+                OnStateChanged();
+            }
+        }
+
+        private static int _progress;
+        public static int Progress
+        {
+            get { return _progress; }
+            set
+            {
+                _progress = value;
+                OnStateChanged();
+            }
+        }
+
+        private static string _message;
+        public static string Message
+        {
+            get { return _message; }
+            set
+            {
+                _message = value;
+                OnStateChanged();
+            }
+        }
+
+        protected static  void OnStateChanged()
+        {
+            if (StateChanged != null)
+                StateChanged(null, EventArgs.Empty);
+        }
     }
 }

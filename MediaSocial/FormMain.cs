@@ -63,6 +63,8 @@ namespace MediaSocial
             Global.ImageOutChanged += Global_ImageOutChanged;
             // Подписываем на событие изменения размера изображения
             Global.EditorChanged += Global_EditorChanged;
+            // Подписываемся на событие изменения состояния плагина
+            Global.StateChanged += Global_StateChanged;
             // Выбираем первый плагин если он есть
             if (toolStripCmbPlugin.Items.Count > 0)
             {
@@ -524,6 +526,21 @@ namespace MediaSocial
             {
                 EditorOk();
                 Global.renderEditor = false;
+            }
+        }
+
+        // Обработка состояния плагина
+        private void Global_StateChanged(object sender, EventArgs e)
+        {
+            if (Global.IsExecuting)
+            {
+                panelImg.Enabled = false;
+                toolStripStatusLabel1.Text = $"Выполняется операция... {Global.Progress}%";
+            }
+            else
+            {
+                panelImg.Enabled = radioButtonRender.Enabled;
+                toolStripStatusLabel1.Text =  "Готово";
             }
         }
 

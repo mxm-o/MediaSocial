@@ -33,6 +33,12 @@ namespace PluginInterface
         void RenderEditor();
 
         int IndexImage();
+
+        bool IsExecuting(bool IsExecute);
+
+        int Progress(int Progress);
+
+        string Message(string Message);
     }
 
     public class ListSizes

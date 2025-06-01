@@ -7,6 +7,7 @@ using PluginInterface;
 using PhotoEdit;
 using System.Reflection;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace PluginKirsanovNews
 {
@@ -111,7 +112,7 @@ namespace PluginKirsanovNews
             // 
             // panelCopyright
             // 
-            this.panelCopyright.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.panelCopyright.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelCopyright.Controls.Add(this.textBoxT2);
             this.panelCopyright.Controls.Add(this.labelT2);
@@ -122,7 +123,7 @@ namespace PluginKirsanovNews
             // 
             // textBoxT2
             // 
-            this.textBoxT2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxT2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxT2.Location = new System.Drawing.Point(7, 20);
             this.textBoxT2.MaxLength = 150;
@@ -143,7 +144,7 @@ namespace PluginKirsanovNews
             // 
             // panelTitle
             // 
-            this.panelTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.panelTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelTitle.Controls.Add(this.comboBoxLayers);
             this.panelTitle.Controls.Add(this.checkBoxLayers);
@@ -162,7 +163,7 @@ namespace PluginKirsanovNews
             // 
             // comboBoxLayers
             // 
-            this.comboBoxLayers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.comboBoxLayers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxLayers.Enabled = false;
@@ -204,7 +205,7 @@ namespace PluginKirsanovNews
             // 
             // comboBoxImages
             // 
-            this.comboBoxImages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.comboBoxImages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxImages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxImages.FormattingEnabled = true;
@@ -257,7 +258,7 @@ namespace PluginKirsanovNews
             // 
             // textBoxT1
             // 
-            this.textBoxT1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxT1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxT1.Location = new System.Drawing.Point(7, 20);
             this.textBoxT1.MaxLength = 300;
@@ -290,7 +291,7 @@ namespace PluginKirsanovNews
             // 
             // panelHead
             // 
-            this.panelHead.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.panelHead.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelHead.Controls.Add(this.label3);
             this.panelHead.Controls.Add(this.comboBoxFormat);
@@ -313,7 +314,7 @@ namespace PluginKirsanovNews
             // 
             // comboBoxFormat
             // 
-            this.comboBoxFormat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.comboBoxFormat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFormat.FormattingEnabled = true;
@@ -411,28 +412,50 @@ namespace PluginKirsanovNews
             if (comboBoxImages.Items.Count > 0) comboBoxImages.SelectedIndex = 0;
         }
 
-        private void btnCreate_Click(object sender, EventArgs e)
+        private async void btnCreate_Click(object sender, EventArgs e)
         {
-            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            // Проверка исходных данных
-            if (checkBoxTitle.Checked && textBoxT1.Text == "")
+            // Собираем данные из UI в основном потоке
+            var parameters = new ImageCreationParams
+            {
+                TitleEnabled = checkBoxTitle.Checked,
+                TitleText = textBoxT1.Text,
+                SourceText = textBoxT2.Text,
+                SelectedImage = comboBoxImages.SelectedItem?.ToString(),
+                FormatIndex = comboBoxFormat.SelectedIndex,
+                FontSize = numericUpDown1.Value,
+                LayersEnabled = checkBoxLayers.Checked,
+                SelectedLayer = comboBoxLayers.SelectedItem?.ToString(),
+                SourceImage = myHost.SendImages()[0],
+                Path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
+            };
+
+            // Проверки в UI-потоке
+            if (parameters.TitleEnabled && string.IsNullOrEmpty(parameters.TitleText))
             {
                 MessageBox.Show("Отсутствует заголовок.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Получаем исходник фотографии
-            Image ImageSouser = myHost.SendImages()[0];
-            if (ImageSouser == null)
+            if (parameters.SourceImage == null)
             {
                 MessageBox.Show("Не выбрано изображение.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (!(File.Exists(Path.Combine(path, "main.png"))) || !(File.Exists(Path.Combine(path, "title.png"))) || !(File.Exists(Path.Combine(path, "back.png"))) || File.Exists(Path.Combine(path, comboBoxImages.SelectedItem.ToString() + ".png")))
+            string[] requiredFiles = {
+                Path.Combine(parameters.Path, "main.png"),
+                Path.Combine(parameters.Path, "title.png"),
+                Path.Combine(parameters.Path, "back.png"),
+                Path.Combine(parameters.Path, "images", parameters.SelectedImage + ".png")
+            };
+
+            foreach (var file in requiredFiles)
             {
-                MessageBox.Show("Плагин поврежден. Обратитесь к разработчику.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                if (!File.Exists(file))
+                {
+                    MessageBox.Show("Плагин поврежден. Обратитесь к разработчику.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
 
             if (!CheckFont.FontExists("Lato"))
@@ -441,198 +464,235 @@ namespace PluginKirsanovNews
                 return;
             }
 
-            // Задаем основные изображения
-            Image imageMain = null;  // Дизайн
-            Image imageBack = null; // Фон
-            Image imageTitle = null; // Название
-            Image ImageBlur = null; // Размытое фото
-
-            // Считываем изображение основного дизайна
-            try
-            {
-                imageMain = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "main.png"))));
-            }
-            catch
-            {
-
-            }
-
-            if (comboBoxFormat.SelectedIndex > 0)
-            {
-                // Считываем фоновое изображение
-                try
-                {
-                    imageBack = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "back.png"))));
-                }
-                catch
-                {
-
-                }
-            }
-
-            if (checkBoxTitle.Checked && textBoxT1.Text != "")
-            {
-
-                // Считываем изображение для названия
-                try
-                {
-                    imageTitle = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "title.png"))));
-                }
-                catch
-                {
-
-                }
-            }
             this.Enabled = false;
 
-            // Генерируем новое изображение
-            PhotoGenerate photo = new PhotoGenerate();
-            photo.height = imageMain.Height;
-            photo.width = imageMain.Width;
-            photo.colorMain = Color.White;
-            Image imageOut = photo.Fill();
-
-            if (comboBoxFormat.SelectedIndex > 0)
+            myHost.IsExecuting(true);
+            myHost.Progress(0);
+            try
             {
-                // Создаем слой с размытием основного фото
-                PhotoSize resize = new PhotoSize();
-                resize.width = imageMain.Width;
-                resize.height = imageMain.Height;
-                resize.source = ImageSouser;
-                ImageBlur = resize.ScaleImage();
-                BlurImage blurImage = new BlurImage();
-                ImageBlur = blurImage.Blur(ImageBlur, 25);
+                // Запуск создания изображения в фоновом потоке
+                var result = await Task.Run(() => CreateImage(parameters));
+
+                if (result.error != null)
+                {
+                    MessageBox.Show(result.error.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (result.image != null)
+                {
+                    myHost.ReciveImage(result.image);
+                }
             }
-
-            // Раскладываем по слоям
-            Merge mergeImage = new Merge();
-
-            // На фон помещаем размытую фотографию если формат не квадрат
-            if (comboBoxFormat.SelectedIndex > 0)
+            finally
             {
-                mergeImage.sourceBottom = imageOut;
-                mergeImage.sourceTop = ImageBlur;
-                imageOut = mergeImage.MergeImage();
-                // Помещаем прозрачный синий фон
-                mergeImage.sourceBottom = imageOut;
-                mergeImage.sourceTop = imageBack;
-                imageOut = mergeImage.MergeImage();
+                this.Enabled = true;
+                myHost.IsExecuting(false);
+                myHost.Progress(100);
             }
+        }
 
-            // Помещаем основное фото
-            // Задаем координаты
-            switch (comboBoxFormat.SelectedIndex)
+        private (Image image, Exception error) CreateImage(ImageCreationParams parameters)
+        {
+            int totalProgress = 0;
+            try
             {
-                case 0:
-                    mergeImage.left = 0;
-                    mergeImage.top = 0;
-                    break;
-                case 1:
-                    mergeImage.left = 0;
-                    if (imageTitle != null && textBoxT1.Text != "")
+                // Этап 1: Загрузка основных изображений (10%)
+                myHost.Progress(10);
+                Image imageMain = LoadImageSafe(Path.Combine(parameters.Path, "main.png"));
+                Image imageBack = null;
+                Image imageTitle = null;
+
+                if (parameters.FormatIndex > 0)
+                {
+                    imageBack = LoadImageSafe(Path.Combine(parameters.Path, "back.png"));
+                }
+                if (parameters.TitleEnabled && !string.IsNullOrEmpty(parameters.TitleText))
+                {
+                    imageTitle = LoadImageSafe(Path.Combine(parameters.Path, "title.png"));
+                }
+                totalProgress = 20;
+                myHost.Progress(totalProgress);
+
+                // Этап 2: Подготовка базового изображения (5%)
+                PhotoGenerate photo = new PhotoGenerate();
+                photo.height = imageMain.Height;
+                photo.width = imageMain.Width;
+                photo.colorMain = Color.White;
+                Image imageOut = photo.Fill();
+                totalProgress += 5;
+                myHost.Progress(totalProgress);
+
+                // Этап 3: Обработка фона (10%)
+                Image ImageBlur = null;
+                if (parameters.FormatIndex > 0)
+                {
+                    PhotoSize resize = new PhotoSize();
+                    resize.width = imageMain.Width;
+                    resize.height = imageMain.Height;
+                    resize.source = parameters.SourceImage;
+                    ImageBlur = resize.ScaleImage();
+
+                    BlurImage blurImage = new BlurImage();
+                    ImageBlur = blurImage.Blur(ImageBlur, 25);
+
+                    Merge mergeImage = new Merge();
+                    mergeImage.sourceBottom = imageOut;
+                    mergeImage.sourceTop = ImageBlur;
+                    imageOut = mergeImage.MergeImage();
+
+                    mergeImage.sourceBottom = imageOut;
+                    mergeImage.sourceTop = imageBack;
+                    imageOut = mergeImage.MergeImage();
+                }
+                totalProgress += 10;
+                myHost.Progress(totalProgress);
+
+                // Этап 4: Позиционирование основного изображения (10%)
+                Merge mergeMain = new Merge();
+                switch (parameters.FormatIndex)
+                {
+                    case 0:
+                        mergeMain.left = 0;
+                        mergeMain.top = 0;
+                        break;
+                    case 1:
+                        mergeMain.left = 0;
+                        mergeMain.top = imageTitle != null ? 178 : 282;
+                        break;
+                    case 2:
+                        mergeMain.left = 239;
+                        mergeMain.top = 0;
+                        break;
+                }
+
+                mergeMain.sourceBottom = imageOut;
+                mergeMain.sourceTop = parameters.SourceImage;
+                imageOut = mergeMain.MergeImage();
+                mergeMain.left = 0;
+                mergeMain.top = 0;
+
+                mergeMain.sourceBottom = imageOut;
+                mergeMain.sourceTop = imageMain;
+                imageOut = mergeMain.MergeImage();
+                totalProgress += 10;
+                myHost.Progress(totalProgress);
+
+                // Этап 5: Обработка заголовка новости (30%)
+                if (imageTitle != null && !string.IsNullOrEmpty(parameters.TitleText))
+                {
+                    // Наложение фона заголовка (5%)
+                    mergeMain.sourceBottom = imageOut;
+                    mergeMain.sourceTop = imageTitle;
+                    imageOut = mergeMain.MergeImage();
+                    totalProgress += 5;
+                    myHost.Progress(totalProgress);
+
+                    // Добавление иконки (5%)
+                    try
                     {
-                        mergeImage.top = 178;
-                    } else
-                    {
-                        mergeImage.top = 282;
+                        var iconPath = Path.Combine(parameters.Path, "images", parameters.SelectedImage + ".png");
+                        mergeMain.sourceBottom = imageOut;
+                        mergeMain.sourceTop = LoadImageSafe(iconPath);
+                        mergeMain.top = 1385;
+                        mergeMain.left = 85;
+                        imageOut = mergeMain.MergeImage();
                     }
-                    break;
-                case 2:
-                    mergeImage.left = 239;
-                    mergeImage.top = 0;
-                    break;
-                default:
-                    mergeImage.left = 0;
-                    mergeImage.top = 0;
-                    break;
-            }
+                    catch { /* Обработка ошибок уже есть выше */ }
+                    totalProgress += 5;
+                    myHost.Progress(totalProgress);
 
-            mergeImage.sourceBottom = imageOut;
-            mergeImage.sourceTop = ImageSouser;
-            imageOut = mergeImage.MergeImage();
-            mergeImage.left = 0;
-            mergeImage.top = 0;
-
-            // Помещаем оформление
-            mergeImage.sourceBottom = imageOut;
-            mergeImage.sourceTop = imageMain;
-            imageOut = mergeImage.MergeImage();
-
-            // Помещаем фон названия новости
-            if (imageTitle != null && textBoxT1.Text != "") {
-
-                // Помещаем  оформление фона
-                mergeImage.sourceBottom = imageOut;
-                mergeImage.sourceTop = imageTitle;
-                imageOut = mergeImage.MergeImage();
-
-                // Рисуем иконку новости
-                try
-                {
-                    mergeImage.sourceBottom = imageOut;
-                    mergeImage.sourceTop = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "images", comboBoxImages.SelectedItem.ToString() + ".png"))));
-                    mergeImage.top = 1385;
-                    mergeImage.left = 85;
-                    imageOut = mergeImage.MergeImage();
+                    // Генерация текста (20%)
+                    TextGenerate textE = new TextGenerate();
+                    textE.textString = parameters.TitleText;
+                    textE.rectH = 250;
+                    textE.rectW = 1380;
+                    textE.rectX = 375;
+                    textE.rectY = 1395;
+                    textE.source = imageOut;
+                    textE.fontSize = (float)parameters.FontSize;
+                    textE.colorText = Color.Black;
+                    textE.fontName = "Lato";
+                    textE.lineAlignment = StringAlignment.Center;
+                    imageOut = textE.DrawTextWithEffects();
+                    totalProgress += 20;
+                    myHost.Progress(totalProgress);
                 }
-                catch
+                else
                 {
-
+                    totalProgress += 30;
+                    myHost.Progress(totalProgress);
                 }
-                // Пишем текст названия
-                TextGenerate textE = new TextGenerate();
-                textE.textString = textBoxT1.Text;
-                textE.rectH = 250;
-                textE.rectW = 1380;
-                textE.rectX = 375;
-                textE.rectY = 1395;
-                textE.source = imageOut;
-                textE.fontSize = (float)numericUpDown1.Value;
-                textE.colorText = Color.Black;
-                textE.fontName = "Lato";
-                textE.lineAlignment = StringAlignment.Center;
-                //textE.debug = true;
-                imageOut = textE.DrawTextWithEffects();
 
+                // Этап 6: Добавление источника фото (15%)
+                if (!string.IsNullOrEmpty(parameters.SourceText))
+                {
+                    TextGenerate textAutor = new TextGenerate();
+                    textAutor.textString = "Фото: " + parameters.SourceText;
+                    textAutor.rectH = 100;
+                    textAutor.rectW = 920;
+                    textAutor.rectX = 820;
+                    textAutor.rectY = 1670;
+                    textAutor.fontStyle = FontStyle.Bold;
+                    textAutor.source = imageOut;
+                    textAutor.fontSize = 40;
+                    textAutor.colorText = Color.White;
+                    textAutor.stringAlignment = StringAlignment.Far;
+                    textAutor.fontName = "Lato";
+                    imageOut = textAutor.DrawTextWithEffects();
+                    totalProgress += 15;
+                    myHost.Progress(totalProgress);
+                }
+                else
+                {
+                    totalProgress += 15;
+                    myHost.Progress(totalProgress);
+                }
+
+                // Этап 7: Добавление слоев (10%)
+                if (parameters.LayersEnabled)
+                {
+                    var layerPath = Path.Combine(parameters.Path, "layers", parameters.SelectedLayer + ".png");
+                    mergeMain.sourceBottom = imageOut;
+                    mergeMain.sourceTop = LoadImageSafe(layerPath);
+                    mergeMain.top = 0;
+                    mergeMain.left = 0;
+                    imageOut = mergeMain.MergeImage();
+                }
+                totalProgress += 10;
+                myHost.Progress(totalProgress);
+
+                // Финализация (10%)
+                myHost.Progress(100);
+                return (imageOut, null);
             }
-            // Пишем автора фото (если нужно)
-            if (textBoxT2.Text != "")
+            catch (Exception ex)
             {
-                TextGenerate textAutor = new TextGenerate();
-                textAutor.textString = "Фото: " + textBoxT2.Text;
-                textAutor.rectH = 100;
-                textAutor.rectW = 920;
-                textAutor.rectX = 820;
-                textAutor.rectY = 1670;
-                textAutor.fontStyle = FontStyle.Bold;
-                textAutor.source = imageOut;
-                textAutor.fontSize = 40;
-                textAutor.colorText = Color.White;
-                textAutor.stringAlignment = StringAlignment.Far;
-                textAutor.fontName = "Lato";
-                //textAutor.debug = true;
-                imageOut = textAutor.DrawTextWithEffects();
+                // При ошибке все равно сообщаем о 100% завершении
+                myHost.Progress(100);
+                return (null, ex);
             }
+        }
 
-            // Помещаем дополнительный слой
-            if (checkBoxLayers.Checked)
-            {
-                try
-                {
-                    mergeImage.sourceBottom = imageOut;
-                    mergeImage.sourceTop = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "layers", comboBoxLayers.SelectedItem.ToString() + ".png"))));
-                    mergeImage.top = 0;
-                    mergeImage.left = 0;
-                    imageOut = mergeImage.MergeImage();
-                }
-                catch
-                {
+        private Image LoadImageSafe(string path)
+        {
+            if (!File.Exists(path))
+                throw new FileNotFoundException("File not found", path);
 
-                }
-            }
+            return Image.FromStream(new MemoryStream(File.ReadAllBytes(path)));
+        }
 
-            myHost.ReciveImage(imageOut);
-            this.Enabled = true;
+        // Класс для передачи параметров создания изображения
+        private class ImageCreationParams
+        {
+            public bool TitleEnabled { get; set; }
+            public string TitleText { get; set; }
+            public string SourceText { get; set; }
+            public string SelectedImage { get; set; }
+            public int FormatIndex { get; set; }
+            public decimal FontSize { get; set; }
+            public bool LayersEnabled { get; set; }
+            public string SelectedLayer { get; set; }
+            public Image SourceImage { get; set; }
+            public string Path { get; set; }
         }
 
         // Загрузка списка иконок для заголовка новости
@@ -743,7 +803,7 @@ namespace PluginKirsanovNews
         // Переключение состояния возможности выбора слоев
         private void checkBoxLayers_CheckedChanged(object sender, EventArgs e)
         {
-                comboBoxLayers.Enabled = checkBoxLayers.Checked;
+            comboBoxLayers.Enabled = checkBoxLayers.Checked;
         }
     }
 }
