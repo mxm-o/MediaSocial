@@ -422,7 +422,18 @@ namespace MediaSocial
                 Global.imagesRender[Global.ImageIndexNow].Pictures = renderEditor(Global.imagesSouser[Global.ImageIndexNow].Pictures, Global.ImageIndexNow);
                 Global.imagesRender[Global.ImageIndexNow].Exist = true;
 
-                showPicturebox();
+                // Обнуляем параметры редактора
+                ResetEditorSetting();
+
+                // Переводим отображение picturebox на исходное изображение (если нужно)
+                if (cmbBoxImgType.SelectedIndex != 0)
+                {
+                    cmbBoxImgType.SelectedIndex = 0;
+                } else {
+                    // Обновляем picturebox
+                    showPicturebox(); 
+                }
+                
             } else
             {
                 System.Media.SystemSounds.Exclamation.Play();
