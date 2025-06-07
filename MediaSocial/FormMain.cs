@@ -613,7 +613,7 @@ namespace MediaSocial
 
             // Добавляем в историю параметры изображения
             Global.imagesSettings.Add(item);
-
+            /*
             // Вращаем изображение
             if (item.Rotate != 0)
             {
@@ -625,7 +625,38 @@ namespace MediaSocial
                 rotateImage.angle = item.Rotate;
                 image = rotateImage.Rotate();
             }
+            */
 
+            // Вращение с обрезкой черных областей
+            if (item.Rotate != 0)
+            {
+                toolStripStatusLabel1.Text = "Поворачиваю изображение...";
+                Application.DoEvents();
+                RotateImage rotateImage = new RotateImage
+                {
+                    image = image,
+                    angle = item.Rotate
+                };
+                image = rotateImage.Rotate();
+            }
+
+            // Масштабирование и позиционирование
+            toolStripStatusLabel1.Text = "Меняю размеры изображения...";
+            Application.DoEvents();
+            PhotoSize photoSize = new PhotoSize
+            {
+                
+                source = image,
+                width = item.canvasWidth,
+                height = item.canvasHeight,
+                zoom = item.Zoom,
+                horizontal = item.Horizontal,
+                vertical = item.Vertical
+            };
+
+            image = photoSize.ScaleImage();
+
+            /*
             // Меняем размеры
             toolStripStatusLabel1.Text = "Меняю размеры изображения...";
             Application.DoEvents();
@@ -637,7 +668,7 @@ namespace MediaSocial
             photoSize.vertical = item.Vertical;
             photoSize.source = image;
             image = photoSize.ScaleImage();
-
+            */
 
             // Изменяем цвета, яркость и т.п.
             toolStripStatusLabel1.Text = "Меняю цвета изображения...";
@@ -847,6 +878,7 @@ namespace MediaSocial
         {
             if (tabControlPlugins.SelectedTab == tabPluginEditor && e.Button == MouseButtons.Left)
             {
+                /*
                 int x = (e.Location.X - (pictureBox.Width / 2)) / 2;
                 int y = (e.Location.Y - (pictureBox.Height / 2)) / 2;
                 x = x > trackBarHorisontal.Maximum ? trackBarHorisontal.Maximum : x;
@@ -856,6 +888,16 @@ namespace MediaSocial
 
                 trackBarHorisontal.Value = x;
                 trackBarVertical.Value = y;
+                */
+                int maxMove = 50; // Максимальное смещение в %
+                int x = (e.X - pictureBox.Width / 2) * 100 / (pictureBox.Width / 2);
+                int y = (e.Y - pictureBox.Height / 2) * 100 / (pictureBox.Height / 2);
+
+                trackBarHorisontal.Value =
+                    Math.Max(-maxMove, Math.Min(maxMove, x));
+
+                trackBarVertical.Value =
+                    Math.Max(-maxMove, Math.Min(maxMove, y));
             }
         }
         // Изменение размера изображения мышью
@@ -863,6 +905,14 @@ namespace MediaSocial
         {
             if (tabControlPlugins.SelectedTab == tabPluginEditor)
             {
+                int delta = e.Delta > 0 ? 5 : -5;
+                int newValue = trackBarZoom.Value + delta;
+
+                newValue = Math.Max(trackBarZoom.Minimum,
+                          Math.Min(trackBarZoom.Maximum, newValue));
+
+                trackBarZoom.Value = newValue;
+                /*
                 int delta = e.Delta * SystemInformation.MouseWheelScrollLines / 120;
                 if (delta > 0 && trackBarZoom.Value < 100)
                 {
@@ -872,6 +922,7 @@ namespace MediaSocial
                 {
                     trackBarZoom.Value--;
                 }
+                */
             }
         }
 

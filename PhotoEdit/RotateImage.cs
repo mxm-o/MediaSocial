@@ -1,49 +1,96 @@
 ﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
 
-using System.Drawing.Drawing2D;
+using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.Web;
 
 namespace PhotoEdit
 {
     public class RotateImage
     {
-        /// <summary>
-        /// Исходное изображение
-        /// </summary>
         public Image image = null;
-        /// <summary>
-        /// Угол поворота
-        /// </summary>
         public float angle = 45.0f;
 
         public Image Rotate()
         {
-            // Create a new blank bitmap to hold the rotated image
-            Bitmap rotatedImage = new Bitmap(image.Width, image.Height);
+            // Переводим угол в радианы
+            double radians = angle * Math.PI / 180.0;
+            double cos = Math.Abs(Math.Cos(radians));
+            double sin = Math.Abs(Math.Sin(radians));
 
-            // Rotate the image using a Graphics object
-            using (Graphics graphics = Graphics.FromImage(rotatedImage))
+            // Рассчитываем коэффициент масштабирования
+            double ratio = (double)image.Height / image.Width;
+
+            // Рассчитываем минимальную ширину внутреннего прямоугольника
+            double minWidthByWidth = image.Width / (cos + sin * ratio);
+            double minWidthByHeight = image.Height / (sin + cos * ratio);
+
+            // Берём минимум, чтобы покрыть внутренний прямоугольник после поворота
+            int innerWidth = (int)Math.Min(minWidthByWidth, minWidthByHeight);
+            int innerHeight = (int) (ratio * innerWidth);
+
+            // Рассчитываем размер временного холста (диагональ исходного изображения)
+            double diagonal = Math.Sqrt(image.Width * image.Width + image.Height * image.Height);
+            int tempSize = (int)Math.Ceiling(diagonal);
+
+            // Создаем новое изображение (изображение 2)
+            Bitmap rotatedImage = new Bitmap(tempSize, tempSize, PixelFormat.Format32bppArgb);
+
+            // Применяем поворот к изображению 2
+            using (Graphics g = Graphics.FromImage(rotatedImage))
             {
-                // Качество
-                graphics.CompositingMode = CompositingMode.SourceCopy;
-                graphics.SmoothingMode = SmoothingMode.HighQuality;
-                graphics.InterpolationMode = InterpolationMode.Default;
+                g.CompositingMode = CompositingMode.SourceCopy;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                g.Clear(Color.Transparent);
 
-
-                // Translate the graphics origin to the center of the image
-                graphics.TranslateTransform(image.Width / 2f, image.Height / 2f);
-
-                // Rotate the graphics object
-                graphics.RotateTransform(angle);
-
-                // Draw the image onto the new bitmap
-                graphics.DrawImage(image, new Rectangle(-image.Width / 2, -image.Height / 2, image.Width, image.Height), new Rectangle(0, 0, image.Width, image.Height), GraphicsUnit.Pixel);
-
-                // Clean up and return the new image
-                graphics.Dispose();
+                g.TranslateTransform(tempSize / 2f, tempSize / 2f);
+                g.RotateTransform(angle);
+                g.DrawImage(
+                    image,
+                    new Rectangle(-image.Width / 2, -image.Height / 2, image.Width, image.Height),
+                    new Rectangle(0, 0, image.Width, image.Height),
+                    GraphicsUnit.Pixel
+                );
             }
-            // Return the rotated image
-            return rotatedImage;
+
+            // Создаем новое изображение (изображение 1) - результирующее
+            Bitmap result = new Bitmap(innerWidth, innerHeight, PixelFormat.Format32bppArgb);
+
+            // Настройки максимального качества для изображения 1
+            using (Graphics g = Graphics.FromImage(result))
+            {
+                g.CompositingMode = CompositingMode.SourceCopy;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                // Очищаем прозрачным цветом
+                g.Clear(Color.Transparent);
+
+                // Центрируем графику в новом изображении
+                g.TranslateTransform(innerWidth / 2f, innerHeight / 2f);
+
+                // Рассчитываем смещение для рисования
+                int offsetX = -rotatedImage.Width / 2;
+                int offsetY = -rotatedImage.Height / 2;
+
+                // Рисуем повернутое изображение 2 по центру изображения 1
+                g.DrawImage(
+                    rotatedImage,
+                    new Rectangle(offsetX, offsetY, rotatedImage.Width, rotatedImage.Height),
+                    new Rectangle(0, 0, rotatedImage.Width, rotatedImage.Height),
+                    GraphicsUnit.Pixel
+                );
+            }
+
+            rotatedImage.Dispose();
+            return result;
         }
     }
 }
