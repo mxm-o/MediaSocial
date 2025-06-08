@@ -532,11 +532,6 @@ namespace PluginKirsanovNews
                     ImageBlur = resize.ScaleImage();
 
                     BlurImage blurImage = new BlurImage();
-                    BlurImage.ProgressBlurChanged += (percent) =>
-                    {
-                        totalProgress = 20 + percent/10;
-                        myHost.Progress(totalProgress);
-                    };
                     ImageBlur = blurImage.Blur(ImageBlur, 25);
 
                     Merge mergeImage = new Merge();

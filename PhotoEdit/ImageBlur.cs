@@ -5,9 +5,6 @@ using System.Threading.Tasks;
 
 public static class ImageBlur
 {
-    // Делегат для передачи прогресса (0 - 100)
-    public delegate void ProgressChangedHandler(int percent);
-    public static event ProgressChangedHandler ProgressChanged;
 
     public static Image ApplyBlur(Image image, int blurSize)
     {
@@ -24,9 +21,6 @@ public static class ImageBlur
             BlurVertical(tempBitmap, destBitmap, blurSize);
         }
 
-        // Сообщаем, что прогресс 100%
-        ProgressChanged?.Invoke(100);
-
         return destBitmap;
     }
 
@@ -41,8 +35,6 @@ public static class ImageBlur
         int bytesPerPixel = 4;
         int height = src.Height;
         int width = src.Width;
-
-        int processedLines = 0;
 
         Parallel.For(0, height, y =>
         {
@@ -94,11 +86,6 @@ public static class ImageBlur
                     }
                 }
             }
-
-            // Обновление прогресса - потокобезопасно
-            int currentLine = System.Threading.Interlocked.Increment(ref processedLines);
-            int percent = (int)((currentLine / (float)height) * 50); // 50% за горизонтальное размытие
-            ProgressChanged?.Invoke(percent);
         });
 
         src.UnlockBits(srcData);
@@ -117,8 +104,6 @@ private static unsafe void BlurVertical(Bitmap src, Bitmap dest, int radius)
     int bytesPerPixel = 4;
     int height = src.Height;
     int width = src.Width;
-
-    int processedCols = 0;
 
     Parallel.For(0, width, x =>
     {
@@ -171,10 +156,6 @@ private static unsafe void BlurVertical(Bitmap src, Bitmap dest, int radius)
                 }
             }
         }
-
-        int currentCol = System.Threading.Interlocked.Increment(ref processedCols);
-        int percent = 50 + (int)((currentCol / (float)width) * 50); // 50-100% за вертикальное размытие
-        ProgressChanged?.Invoke(percent);
     });
 
     src.UnlockBits(srcData);

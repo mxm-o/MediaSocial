@@ -11,56 +11,17 @@ namespace PhotoEdit
 
     public class BlurImage
     {
-        // Делегат для передачи прогресса (0 - 100)
-        public delegate void ProgressChangedHandler(int percent);
-        public static event ProgressChangedHandler ProgressBlurChanged;
-
         public Image Blur(Image image, int blurAmount)
         {
             if (checkFfmpeg()) {
                 image = BlurFfmpeg(image, blurAmount); 
-            } else if (checkKaliko())
+            } 
+            else
             {
-                image = BlurKaliko(image, blurAmount);
-            } else
-            {
-                ImageBlur.ProgressChanged += (percent) =>
-                {
-                    ProgressBlurChanged?.Invoke(percent);
-                };
                 image = ImageBlur.ApplyBlur(image, blurAmount);
             }
 
-            // Сообщаем, что прогресс 100%
-            ProgressBlurChanged?.Invoke(100);
-
             return image;
-        }
-
-        private Image BlurKaliko(Image image, int blurAmount)
-        {
-            if (!checkKaliko()) return image;
-            // Creating Kaliko image
-            var imageGaus = new Kaliko.ImageLibrary.KalikoImage(image);
-            var filter = new Kaliko.ImageLibrary.Filters.GaussianBlurFilter(blurAmount);
-            imageGaus.ApplyFilter(filter);
-
-            return imageGaus.GetAsBitmap();
-        }
-
-        // Проверка наличия Kaliko.ImageLibrary
-        private bool checkKaliko()
-        {
-            try
-            {
-                // Пробуем загрузить сборку
-                Assembly.Load("Kaliko.ImageLibrary");
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
         }
 
         // Проверяем наличие ffmpeg
