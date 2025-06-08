@@ -800,6 +800,7 @@ namespace MediaSocial
             var br = mi.CalcBrightness(Global.imagesSouser[Global.ImageIndexNow].Pictures);
             if (br > 2) br = 2;
             trackBarBrightness.Value = Convert.ToInt16(br * 100 - 100);
+            EditorOk();
         }
         // Окончание вращения изображения
         private void buttonImgSaveClear_Click(object sender, EventArgs e)
@@ -1011,6 +1012,7 @@ namespace MediaSocial
         private void checkBoxAuto_CheckedChanged(object sender, EventArgs e)
         {
             btnEditorOk.Enabled = !checkBoxAuto.Checked;
+            EditorOk();
         }
 
         private void tabControlPlugins_SelectedIndexChanged(object sender, EventArgs e)

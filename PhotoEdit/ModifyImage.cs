@@ -3,6 +3,8 @@
 using System;
 using System.Drawing.Imaging;
 using System.Drawing;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace PhotoEdit
 {
@@ -151,20 +153,63 @@ namespace PhotoEdit
 
         public float CalcBrightness(Image image)
         {
-            Bitmap bitmap = new Bitmap(image); // Convert Image to Bitmap
-            float totalBrightness = 0;
-            int numPixels = bitmap.Width * bitmap.Height;
-            for (int y = 0; y < bitmap.Height; y++)
+            using (Bitmap bitmap = new Bitmap(image))
             {
-                for (int x = 0; x < bitmap.Width; x++)
+                int width = bitmap.Width;
+                int height = bitmap.Height;
+                int totalPixels = width * height;
+
+                if (totalPixels == 0)
+                    return 1f;
+
+                // Блокируем биты изображения для быстрого доступа
+                BitmapData bd = bitmap.LockBits(
+                    new Rectangle(0, 0, width, height),
+                    ImageLockMode.ReadOnly,
+                    PixelFormat.Format32bppArgb);
+
+                try
                 {
-                    Color color = bitmap.GetPixel(x, y);
-                    totalBrightness += color.GetBrightness();
+                    float totalBrightness = 0f;
+                    int stride = bd.Stride;
+                    unsafe
+                    {
+                        byte* scan0 = (byte*)bd.Scan0;
+
+                        // Параллельный расчет по строкам
+                        Parallel.For(0, height, y =>
+                        {
+                            float localBrightness = 0f;
+                            byte* row = scan0 + (y * stride);
+
+                            for (int x = 0; x < width; x++)
+                            {
+                                // Формат пикселя: BGRA
+                                byte b = row[x * 4];
+                                byte g = row[x * 4 + 1];
+                                byte r = row[x * 4 + 2];
+
+                                // Формула яркости (ITU-R BT.709)
+                                float pixelBrightness = (0.2126f * r + 0.7152f * g + 0.0722f * b) / 255f;
+                                localBrightness += pixelBrightness;
+                            }
+
+                            // Атомарное добавление к общей сумме
+                            Interlocked.Exchange(ref totalBrightness, totalBrightness + localBrightness);
+                        });
+                    }
+
+                    float average = totalBrightness / totalPixels;
+                    if (average == 0) return 1f;
+
+                    float factor = 0.5f / average;
+                    return Math.Min(Math.Max(factor, 0f), 2f);
+                }
+                finally
+                {
+                    bitmap.UnlockBits(bd);
                 }
             }
-            float averageBrightness = totalBrightness / numPixels;
-            float brightnessFactor = 1 / averageBrightness;
-            return brightnessFactor;
         }
     }
 }

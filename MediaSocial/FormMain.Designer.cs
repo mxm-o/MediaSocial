@@ -497,7 +497,6 @@
             // 
             // btnAutoBr
             // 
-            this.btnAutoBr.Enabled = false;
             this.btnAutoBr.Location = new System.Drawing.Point(292, 18);
             this.btnAutoBr.Name = "btnAutoBr";
             this.btnAutoBr.Size = new System.Drawing.Size(89, 23);
