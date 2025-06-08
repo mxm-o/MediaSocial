@@ -137,7 +137,6 @@ public static class ImageBlur
                 // Обновление окна для следующего y
                 if (y < height - 1)
                 {
-                    // Удаление уходящей строки (сверху)
                     if (y >= radius)
                     {
                         byte* removeRow = (byte*)srcData.Scan0 + (y - radius) * srcData.Stride;
