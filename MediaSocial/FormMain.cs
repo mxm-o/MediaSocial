@@ -613,19 +613,6 @@ namespace MediaSocial
 
             // Добавляем в историю параметры изображения
             Global.imagesSettings.Add(item);
-            /*
-            // Вращаем изображение
-            if (item.Rotate != 0)
-            {
-                toolStripStatusLabel1.Text = "Поворачиваю изображение...";
-                Application.DoEvents();
-                // Вращаем изображение
-                RotateImage rotateImage = new RotateImage();
-                rotateImage.image = image;
-                rotateImage.angle = item.Rotate;
-                image = rotateImage.Rotate();
-            }
-            */
 
             // Вращение с обрезкой черных областей
             if (item.Rotate != 0)
@@ -655,20 +642,6 @@ namespace MediaSocial
             };
 
             image = photoSize.ScaleImage();
-
-            /*
-            // Меняем размеры
-            toolStripStatusLabel1.Text = "Меняю размеры изображения...";
-            Application.DoEvents();
-            PhotoSize photoSize = new PhotoSize();
-            photoSize.height = item.canvasHeight;
-            photoSize.width = item.canvasWidth;
-            photoSize.zoom = item.Zoom;
-            photoSize.horizontal = item.Horizontal;
-            photoSize.vertical = item.Vertical;
-            photoSize.source = image;
-            image = photoSize.ScaleImage();
-            */
 
             // Изменяем цвета, яркость и т.п.
             toolStripStatusLabel1.Text = "Меняю цвета изображения...";

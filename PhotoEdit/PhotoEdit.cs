@@ -123,6 +123,12 @@ namespace PhotoEdit
                     {
                         left = -(dstwidth - width);
                     }
+
+                    // Only adjust left offset if alignment is not Center
+                    //if (alignH != alignHorizontal.Center)
+                    //{
+                    //    left = left - width * horizontal * -1 / 100;
+                    //}
                 }
                 else
                 {
@@ -134,6 +140,11 @@ namespace PhotoEdit
                     {
                         top = -(dstheight - height);
                     }
+                    // Only adjust top offset if alignment is not Center
+                    //if (alignV != alignVertical.Center)
+                    //{
+                    //    top = top - height * vertical * -1 / 100;
+                    //}
                 }
 
                 // Применяем пользовательские сдвиги
@@ -143,24 +154,22 @@ namespace PhotoEdit
                 // Корректировка для предотвращения пустых областей
                 if (preventOverflow)
                 {
-                    // Рассчитываем минимальный масштаб для заполнения холста
-                    float minScaleX = (float)width / srcwidth * zoomedWidth / dstwidth;
-                    float minScaleY = (float)height / srcheight * zoomedHeight / dstheight;
-                    float minScale = Math.Max(minScaleX, minScaleY);
+                    // Рассчитываем масштаб для полного покрытия холста
+                    float scaleX = width / dstwidth;
+                    float scaleY = height / dstheight;
+                    float scale = Math.Max(scaleX, scaleY);
 
-                    // Если текущий масштаб меньше минимального - увеличиваем
-                    if (minScale > 1f)
+                    // Увеличиваем только если текущее изображение меньше холста
+                    if (scale > 1f)
                     {
-                        float scaleFactor = minScale;
-                        dstwidth *= scaleFactor;
-                        dstheight *= scaleFactor;
+                        dstwidth *= scale;
+                        dstheight *= scale;
                     }
 
                     // Корректируем позицию
                     float maxLeft = width - dstwidth;
                     float maxTop = height - dstheight;
 
-                    // Ограничение позиции в пределах холста
                     left = Math.Max(left, maxLeft);
                     left = Math.Min(left, 0);
                     top = Math.Max(top, maxTop);
