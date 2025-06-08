@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 
 public static class ImageBlur
 {
+    // Делегат для передачи прогресса (0 - 100)
+    public delegate void ProgressChangedHandler(int percent);
+    public static event ProgressChangedHandler ProgressChanged;
+
     public static Image ApplyBlur(Image image, int blurSize)
     {
         if (blurSize < 1) return image;
@@ -19,6 +23,9 @@ public static class ImageBlur
             BlurHorizontal(srcBitmap, tempBitmap, blurSize);
             BlurVertical(tempBitmap, destBitmap, blurSize);
         }
+
+        // Сообщаем, что прогресс 100%
+        ProgressChanged?.Invoke(100);
 
         return destBitmap;
     }
@@ -35,6 +42,8 @@ public static class ImageBlur
         int height = src.Height;
         int width = src.Width;
 
+        int processedLines = 0;
+
         Parallel.For(0, height, y =>
         {
             byte* srcRow = (byte*)srcData.Scan0 + y * srcData.Stride;
@@ -43,7 +52,6 @@ public static class ImageBlur
             int sumB = 0, sumG = 0, sumR = 0, sumA = 0;
             int count = 0;
 
-            // Инициализация окна [0, min(radius, width-1)]
             int initEnd = Math.Min(radius, width - 1);
             for (int x = 0; x <= initEnd; x++)
             {
@@ -63,10 +71,8 @@ public static class ImageBlur
                 destPixel[2] = (byte)(sumR / count);
                 destPixel[3] = (byte)(sumA / count);
 
-                // Обновление окна для следующего x
                 if (x < width - 1)
                 {
-                    // Удаление уходящего пикселя (слева)
                     if (x >= radius)
                     {
                         byte* leftPixel = srcRow + (x - radius) * bytesPerPixel;
@@ -77,7 +83,6 @@ public static class ImageBlur
                         count--;
                     }
 
-                    // Добавление нового пикселя (справа)
                     if (x + radius + 1 < width)
                     {
                         byte* rightPixel = srcRow + (x + radius + 1) * bytesPerPixel;
@@ -89,81 +94,91 @@ public static class ImageBlur
                     }
                 }
             }
+
+            // Обновление прогресса - потокобезопасно
+            int currentLine = System.Threading.Interlocked.Increment(ref processedLines);
+            int percent = (int)((currentLine / (float)height) * 50); // 50% за горизонтальное размытие
+            ProgressChanged?.Invoke(percent);
         });
 
         src.UnlockBits(srcData);
         dest.UnlockBits(destData);
     }
 
-    private static unsafe void BlurVertical(Bitmap src, Bitmap dest, int radius)
+
+private static unsafe void BlurVertical(Bitmap src, Bitmap dest, int radius)
+{
+    if (src.Width == 0 || src.Height == 0) return;
+
+    var rect = new Rectangle(0, 0, src.Width, src.Height);
+    var srcData = src.LockBits(rect, ImageLockMode.ReadOnly, src.PixelFormat);
+    var destData = dest.LockBits(rect, ImageLockMode.WriteOnly, dest.PixelFormat);
+
+    int bytesPerPixel = 4;
+    int height = src.Height;
+    int width = src.Width;
+
+    int processedCols = 0;
+
+    Parallel.For(0, width, x =>
     {
-        if (src.Width == 0 || src.Height == 0) return;
+        int sumB = 0, sumG = 0, sumR = 0, sumA = 0;
+        int count = 0;
 
-        var rect = new Rectangle(0, 0, src.Width, src.Height);
-        var srcData = src.LockBits(rect, ImageLockMode.ReadOnly, src.PixelFormat);
-        var destData = dest.LockBits(rect, ImageLockMode.WriteOnly, dest.PixelFormat);
-
-        int bytesPerPixel = 4;
-        int height = src.Height;
-        int width = src.Width;
-
-        Parallel.For(0, width, x =>
+        int initEnd = Math.Min(radius, height - 1);
+        for (int y = 0; y <= initEnd; y++)
         {
-            int sumB = 0, sumG = 0, sumR = 0, sumA = 0;
-            int count = 0;
+            byte* srcRow = (byte*)srcData.Scan0 + y * srcData.Stride;
+            byte* pixel = srcRow + x * bytesPerPixel;
+            sumB += pixel[0];
+            sumG += pixel[1];
+            sumR += pixel[2];
+            sumA += pixel[3];
+            count++;
+        }
 
-            // Инициализация окна [0, min(radius, height-1)]
-            int initEnd = Math.Min(radius, height - 1);
-            for (int y = 0; y <= initEnd; y++)
+        for (int y = 0; y < height; y++)
+        {
+            byte* destRow = (byte*)destData.Scan0 + y * destData.Stride;
+            byte* destPixel = destRow + x * bytesPerPixel;
+            destPixel[0] = (byte)(sumB / count);
+            destPixel[1] = (byte)(sumG / count);
+            destPixel[2] = (byte)(sumR / count);
+            destPixel[3] = (byte)(sumA / count);
+
+            if (y < height - 1)
             {
-                byte* srcRow = (byte*)srcData.Scan0 + y * srcData.Stride;
-                byte* pixel = srcRow + x * bytesPerPixel;
-                sumB += pixel[0];
-                sumG += pixel[1];
-                sumR += pixel[2];
-                sumA += pixel[3];
-                count++;
-            }
-
-            for (int y = 0; y < height; y++)
-            {
-                byte* destRow = (byte*)destData.Scan0 + y * destData.Stride;
-                byte* destPixel = destRow + x * bytesPerPixel;
-                destPixel[0] = (byte)(sumB / count);
-                destPixel[1] = (byte)(sumG / count);
-                destPixel[2] = (byte)(sumR / count);
-                destPixel[3] = (byte)(sumA / count);
-
-                // Обновление окна для следующего y
-                if (y < height - 1)
+                if (y >= radius)
                 {
-                    if (y >= radius)
-                    {
-                        byte* removeRow = (byte*)srcData.Scan0 + (y - radius) * srcData.Stride;
-                        byte* removePixel = removeRow + x * bytesPerPixel;
-                        sumB -= removePixel[0];
-                        sumG -= removePixel[1];
-                        sumR -= removePixel[2];
-                        sumA -= removePixel[3];
-                        count--;
-                    }
+                    byte* removeRow = (byte*)srcData.Scan0 + (y - radius) * srcData.Stride;
+                    byte* removePixel = removeRow + x * bytesPerPixel;
+                    sumB -= removePixel[0];
+                    sumG -= removePixel[1];
+                    sumR -= removePixel[2];
+                    sumA -= removePixel[3];
+                    count--;
+                }
 
-                    // Добавление новой строки (снизу)
-                    if (y + radius + 1 < height)
-                    {
-                        byte* addRow = (byte*)srcData.Scan0 + (y + radius + 1) * srcData.Stride;
-                        byte* addPixel = addRow + x * bytesPerPixel;
-                        sumB += addPixel[0];
-                        sumG += addPixel[1];
-                        sumR += addPixel[2];
-                        sumA += addPixel[3];
-                        count++;
-                    }
+                if (y + radius + 1 < height)
+                {
+                    byte* addRow = (byte*)srcData.Scan0 + (y + radius + 1) * srcData.Stride;
+                    byte* addPixel = addRow + x * bytesPerPixel;
+                    sumB += addPixel[0];
+                    sumG += addPixel[1];
+                    sumR += addPixel[2];
+                    sumA += addPixel[3];
+                    count++;
                 }
             }
-        });
+        }
 
-        src.UnlockBits(srcData);
-        dest.UnlockBits(destData);
-    }
+        int currentCol = System.Threading.Interlocked.Increment(ref processedCols);
+        int percent = 50 + (int)((currentCol / (float)width) * 50); // 50-100% за вертикальное размытие
+        ProgressChanged?.Invoke(percent);
+    });
+
+    src.UnlockBits(srcData);
+    dest.UnlockBits(destData);
+}
+
 }

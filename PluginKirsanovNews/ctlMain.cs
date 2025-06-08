@@ -509,7 +509,7 @@ namespace PluginKirsanovNews
                 {
                     imageTitle = LoadImageSafe(Path.Combine(parameters.Path, "title.png"));
                 }
-                totalProgress = 20;
+                totalProgress = 15;
                 myHost.Progress(totalProgress);
 
                 // Этап 2: Подготовка базового изображения (5%)
@@ -532,6 +532,11 @@ namespace PluginKirsanovNews
                     ImageBlur = resize.ScaleImage();
 
                     BlurImage blurImage = new BlurImage();
+                    BlurImage.ProgressBlurChanged += (percent) =>
+                    {
+                        totalProgress = 20 + percent/10;
+                        myHost.Progress(totalProgress);
+                    };
                     ImageBlur = blurImage.Blur(ImageBlur, 25);
 
                     Merge mergeImage = new Merge();
@@ -543,7 +548,7 @@ namespace PluginKirsanovNews
                     mergeImage.sourceTop = imageBack;
                     imageOut = mergeImage.MergeImage();
                 }
-                totalProgress += 10;
+                totalProgress = 30;
                 myHost.Progress(totalProgress);
 
                 // Этап 4: Позиционирование основного изображения (10%)

@@ -31,11 +31,11 @@ namespace PhotoEdit
             int innerHeight = (int) (ratio * innerWidth);
 
             // Рассчитываем размер временного холста (диагональ исходного изображения)
-            double diagonal = Math.Sqrt(image.Width * image.Width + image.Height * image.Height);
-            int tempSize = (int)Math.Ceiling(diagonal);
+            int tempWidth = (int)Math.Ceiling(image.Width * cos + image.Height * sin);
+            int tempHeight = (int)Math.Ceiling(image.Width * sin + image.Height * cos);
 
             // Создаем новое изображение (изображение 2)
-            Bitmap rotatedImage = new Bitmap(tempSize, tempSize, PixelFormat.Format32bppArgb);
+            Bitmap rotatedImage = new Bitmap(tempWidth, tempHeight, PixelFormat.Format32bppArgb);
 
             // Применяем поворот к изображению 2
             using (Graphics g = Graphics.FromImage(rotatedImage))
@@ -47,7 +47,7 @@ namespace PhotoEdit
                 g.PixelOffsetMode = PixelOffsetMode.HighQuality;
                 g.Clear(Color.Transparent);
 
-                g.TranslateTransform(tempSize / 2f, tempSize / 2f);
+                g.TranslateTransform(tempWidth / 2f, tempHeight / 2f);
                 g.RotateTransform(angle);
                 g.DrawImage(
                     image,
