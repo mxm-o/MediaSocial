@@ -1,4 +1,4 @@
-﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+﻿// Copyright © 2025 Maxim Otrokhov. All rights reserved.
 
 using MediaSocial.Classes;
 using PhotoEdit;

@@ -73,7 +73,7 @@ namespace PhotoEdit
 
         public Image ChangeSaturation()
         {
-            //if (saturation == 1) return image;
+            if (saturation == 1) return image;
 
             // Создаем матрицу цветов
             float saturationComplement = 1.0f - saturation;

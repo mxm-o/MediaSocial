@@ -1,5 +1,6 @@
 ﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
 
+using System;
 using System.Drawing;
 
 namespace PhotoEdit
@@ -33,9 +34,16 @@ namespace PhotoEdit
         /// Сдвиг итогового изображения по горизонтали
         /// </summary>
         public float horizontal = 0;
-        public enum alignVertical { 
+        /// <summary>
+        /// Положение изображения по вертикали
+        /// </summary>
+        public enum alignVertical
+        {
             Center, Top, Bottom
         };
+        /// <summary>
+        /// Положение изображения по горизонтали
+        /// </summary>
         public enum alignHorizontal
         {
             Center, Left, Right
@@ -49,6 +57,10 @@ namespace PhotoEdit
         /// </summary>
         public alignHorizontal alignH = alignHorizontal.Center;
 
+        /// <summary>
+        /// Предотвращение пустых областей на холсте
+        /// </summary>
+        public bool preventOverflow = true;
 
         /// <summary>
         /// Изменение размера изображения
@@ -59,22 +71,33 @@ namespace PhotoEdit
             Image dest = new Bitmap(width, height);
             using (Graphics gr = Graphics.FromImage(dest))
             {
-                gr.FillRectangle(Brushes.White, 0, 0, width, height);  // Очищаем экран
+                gr.FillRectangle(Brushes.White, 0, 0, width, height);
                 gr.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
 
-                float srcwidth = source.Width;  // Исходная ширина.
-                float srcheight = source.Height; // Исходная высота.
-                float dstwidth = width; // Результирующая ширина.
-                float dstheight = height; // Результирующая высота.
-                float left = 0; // x-координата результирующего изображения.
-                float top = 0; // y-координата результирующего изображения.
+                float srcwidth = source.Width;
+                float srcheight = source.Height;
+                float dstwidth = width;
+                float dstheight = height;
+                float left = 0;
+                float top = 0;
 
-                dstwidth = dstwidth + dstwidth * zoom / 100;
-                dstheight = dstheight + dstheight * zoom / 100;
+                // Применяем зум
 
+                // Предотвращение пустых областей от отрицательного зума
+                if (preventOverflow && zoom < 0) zoom = 0;
+
+                dstwidth += dstwidth * zoom / 100;
+                dstheight += dstheight * zoom / 100;
+
+                // Сохраняем исходные размеры после зума
+                float zoomedWidth = dstwidth;
+                float zoomedHeight = dstheight;
+
+                // Рассчитываем соотношения сторон
                 float ratio_x = srcwidth / dstwidth;
                 float ratio_y = srcheight / dstheight;
 
+                // Масштабирование с сохранением пропорций
                 if (ratio_x < ratio_y)
                 {
                     dstwidth = srcwidth / ratio_x;
@@ -86,9 +109,12 @@ namespace PhotoEdit
                     dstheight = srcheight / ratio_y;
                 }
 
-                if (ratio_x > ratio_y)
+                // Определяем тип ориентации
+                bool isLandscape = ratio_x > ratio_y;
+
+                // Расчет позиции с учетом выравнивания
+                if (isLandscape)
                 {
-                    // Горизонтальная фотография
                     if (alignH == alignHorizontal.Center)
                     {
                         left = -(dstwidth - width) / 2;
@@ -97,37 +123,51 @@ namespace PhotoEdit
                     {
                         left = -(dstwidth - width);
                     }
-                    // Only adjust left offset if alignment is not Center
-                    if (alignH != alignHorizontal.Center)
-                    {
-                        left = left - width * horizontal * -1 / 100;
-                    }
                 }
                 else
                 {
-                    //Вертикальная
                     if (alignV == alignVertical.Center)
                     {
                         top = -(dstheight - height) / 2;
                     }
-                    if (alignV == alignVertical.Bottom)
+                    else if (alignV == alignVertical.Bottom)
                     {
                         top = -(dstheight - height);
                     }
-
-                    // Only adjust top offset if alignment is not Center
-                    if (alignV != alignVertical.Center)
-                    {
-                        top = top - height * vertical * -1 / 100;
-                    }
                 }
 
-                left = left - width * horizontal * -1 / 100;
-                top = top - height * vertical * -1 / 100;
+                // Применяем пользовательские сдвиги
+                left += width * horizontal / 100;
+                top += height * vertical / 100;
 
+                // Корректировка для предотвращения пустых областей
+                if (preventOverflow)
+                {
+                    // Рассчитываем минимальный масштаб для заполнения холста
+                    float minScaleX = (float)width / srcwidth * zoomedWidth / dstwidth;
+                    float minScaleY = (float)height / srcheight * zoomedHeight / dstheight;
+                    float minScale = Math.Max(minScaleX, minScaleY);
+
+                    // Если текущий масштаб меньше минимального - увеличиваем
+                    if (minScale > 1f)
+                    {
+                        float scaleFactor = minScale;
+                        dstwidth *= scaleFactor;
+                        dstheight *= scaleFactor;
+                    }
+
+                    // Корректируем позицию
+                    float maxLeft = width - dstwidth;
+                    float maxTop = height - dstheight;
+
+                    // Ограничение позиции в пределах холста
+                    left = Math.Max(left, maxLeft);
+                    left = Math.Min(left, 0);
+                    top = Math.Max(top, maxTop);
+                    top = Math.Min(top, 0);
+                }
 
                 gr.DrawImage(source, left, top, dstwidth, dstheight);
-
                 return dest;
             }
         }
