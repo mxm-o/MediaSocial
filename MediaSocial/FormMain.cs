@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace MediaSocial
 {
@@ -419,8 +420,9 @@ namespace MediaSocial
                 Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures = image;
                 Global.imagesSouser[comboBoxImg.SelectedIndex].Exist = true;
 
-                Global.imagesRender[Global.ImageIndexNow].Pictures = renderEditor(Global.imagesSouser[Global.ImageIndexNow].Pictures, Global.ImageIndexNow);
-                Global.imagesRender[Global.ImageIndexNow].Exist = true;
+                //Global.imagesRender[Global.ImageIndexNow].Pictures = renderEditor(Global.imagesSouser[Global.ImageIndexNow].Pictures, Global.ImageIndexNow);
+                //EditorOk();
+                
 
                 // Обнуляем параметры редактора
                 ResetEditorSetting();
@@ -434,6 +436,8 @@ namespace MediaSocial
                     showPicturebox(); 
                 }
                 
+                EditorOk();
+                Global.imagesRender[Global.ImageIndexNow].Exist = true;
             } else
             {
                 System.Media.SystemSounds.Exclamation.Play();
@@ -565,11 +569,12 @@ namespace MediaSocial
             EditorOk();
         }
 
+        
         private void EditorOk()
         {
             try
             {
-                if (Global.imagesRender[Global.ImageIndexNow].Exist)
+                if (Global.imagesSouser[Global.ImageIndexNow].Exist)
                 {
                     if (!checkBoxAuto.Checked) btnEditorOk.Enabled = false;
                     Global.imagesRender[Global.ImageIndexNow].Pictures = renderEditor(Global.imagesSouser[Global.ImageIndexNow].Pictures, Global.ImageIndexNow);
@@ -622,7 +627,8 @@ namespace MediaSocial
                 RotateImage rotateImage = new RotateImage
                 {
                     image = image,
-                    angle = item.Rotate
+                    angle = item.Rotate,
+                    Quality = RotateImage.RenderQuality.Medium
                 };
                 image = rotateImage.Rotate();
             }
@@ -684,6 +690,205 @@ namespace MediaSocial
 
             toolStripStatusLabel1.Text = "";
             Application.DoEvents();
+            return image;
+        }
+        
+        
+        // Класс для передачи параметров рендеринга
+        private class RenderParameters
+        {
+            public Image Image { get; set; }
+            public int Id { get; set; }
+            public float Brightness { get; set; }
+            public float Contrast { get; set; }
+            public float Saturation { get; set; }
+            public int Tone { get; set; }
+            public float Temperature { get; set; }
+            public int Rotate { get; set; }
+            public int Zoom { get; set; }
+            public int Horizontal { get; set; }
+            public int Vertical { get; set; }
+            public int CanvasHeight { get; set; }
+            public int CanvasWidth { get; set; }
+            public int Step { get; set; }
+        }
+
+        // Главный метод обработки
+        private async void EditorOkAsync()
+        {
+            if (!checkBoxAuto.Checked)
+                btnEditorOk.Enabled = false;
+
+            try
+            {
+                if (Global.imagesSouser[Global.ImageIndexNow].Exist)
+                {
+                    // 1. Собираем параметры в UI-потоке
+                    var parameters = PrepareRenderParameters();
+
+                    // 2. Создаем прогресс-отчет для обновления статуса
+                    var progress = new Progress<string>(status =>
+                    {
+                        toolStripStatusLabel1.Text = status;
+                    });
+
+                    // 3. Запускаем рендеринг в фоне
+                    var renderedImage = await Task.Run(() =>
+                        SafeRenderEditor(parameters, progress)
+                    );
+
+                    // 4. Обновляем UI с результатом
+                    Global.imagesRender[Global.ImageIndexNow].Pictures = renderedImage;
+                    Global.imagesRender[Global.ImageIndexNow].Exist = true;
+                    pictureBox.Image = renderedImage;
+                }
+            }
+            catch
+            {
+                pictureBox.Image = Properties.Resources.PhotoNotExist;
+                Global.imagesRender[Global.ImageIndexNow].Exist = false;
+                Global.imagesRender[Global.ImageIndexNow].Pictures = Properties.Resources.PhotoNotExist;
+            }
+            finally
+            {
+                if (!checkBoxAuto.Checked)
+                    btnEditorOk.Enabled = true;
+            }
+        }
+
+        // Подготовка параметров (выполняется в UI-потоке)
+        private RenderParameters PrepareRenderParameters()
+        {
+            var item = new RenderParameters
+            {
+                Image = Global.imagesSouser[Global.ImageIndexNow].Pictures,
+                Id = Global.ImageIndexNow,
+                Brightness = (trackBarBrightness.Value + 100) / 100f,
+                Contrast = (trackBarContrast.Value + 100) / 100f,
+                Saturation = (trackBarSaturation.Value / 100f) * 2 + 1,
+                Tone = trackBarTone.Value,
+                Temperature = trackBarTemperature.Value / 100f,
+                Rotate = Convert.ToInt16(numericUpDownRotate.Value < 0 ?
+                        (360 + numericUpDownRotate.Value) : numericUpDownRotate.Value),
+                Zoom = trackBarZoom.Value,
+                Horizontal = trackBarHorisontal.Value,
+                Vertical = trackBarVertical.Value,
+            };
+
+            // Получаем данные из плагина
+            var plugin = Global.Plugins.AvailablePlugins.Find(toolStripCmbPlugin.Text).Instance;
+            item.CanvasHeight = plugin.SizesList[item.Id].SizeX;
+            item.CanvasWidth = plugin.SizesList[item.Id].SizeY;
+
+            // Добавляем в историю параметров
+            item.Step = Global.imagesSettings
+                .Where(img => img.Id == item.Id)
+                .DefaultIfEmpty()
+                .Max(img => img?.Step ?? 0) + 1;
+
+            Global.imagesSettings.Add(new SettingImage
+            {
+                Id = item.Id,
+                Brightness = item.Brightness,
+                Contrast = item.Contrast,
+                Saturation = item.Saturation,
+                Tone = item.Tone,
+                Temperature = item.Temperature,
+                Rotate = item.Rotate,
+                Zoom = item.Zoom,
+                Horizontal = item.Horizontal,
+                Vertical = item.Vertical,
+                canvasHeight = item.CanvasHeight,
+                canvasWidth = item.CanvasWidth,
+                Step = item.Step
+            });
+
+            return item;
+        }
+
+        // Безопасный рендеринг без UI-обращений
+        private Image SafeRenderEditor(RenderParameters item, IProgress<string> progress)
+        {
+            if (item.Image == null)
+                return Properties.Resources.PhotoNotExist;
+
+            Image image = item.Image;
+
+            if (item.Rotate != 0)
+            {
+                progress?.Report("Поворачиваю изображение...");
+                image = RotateImageQ(image, item.Rotate);
+            }
+
+            progress?.Report("Меняю размеры изображения...");
+            image = ScaleImage(image, item);
+
+            progress?.Report("Обрабатываю изображение...");
+            image = ProcessImage(image, item, progress);
+
+            GC.Collect();
+            progress?.Report("");
+
+            return image;
+        }
+
+        // Операции с изображениями (без UI)
+        private Image RotateImageQ(Image image, int angle)
+        {
+            RotateImage rotateImage = new RotateImage
+            {
+                image = image,
+                angle = angle,
+                Quality = RotateImage.RenderQuality.Medium
+            };
+            return rotateImage.Rotate();
+        }
+
+        private Image ScaleImage(Image image, RenderParameters item)
+        {
+            PhotoSize photoSize = new PhotoSize
+            {
+                source = image,
+                width = item.CanvasWidth,
+                height = item.CanvasHeight,
+                zoom = item.Zoom,
+                horizontal = item.Horizontal,
+                vertical = item.Vertical
+            };
+            return photoSize.ScaleImage();
+        }
+
+        private Image ProcessImage(Image image, RenderParameters item, IProgress<string> progress)
+        {
+            ModifyImage mi = new ModifyImage
+            {
+                brightness = item.Brightness,
+                contrast = item.Contrast,
+                hue = item.Tone,
+                saturation = item.Saturation,
+                temperature = item.Temperature
+            };
+
+            progress?.Report("Меняю яркость...");
+            mi.image = image;
+            image = mi.BrightnessImage();
+
+            progress?.Report("Меняю контрастность...");
+            mi.image = image;
+            image = mi.ContrastImage();
+
+            progress?.Report("Меняю температуру...");
+            mi.image = image;
+            image = mi.ChangeTemperature();
+
+            progress?.Report("Меняю насыщенность...");
+            mi.image = image;
+            image = mi.ChangeSaturation();
+
+            progress?.Report("Меняю оттенок...");
+            mi.image = image;
+            image = mi.ChangeHue();
+
             return image;
         }
 

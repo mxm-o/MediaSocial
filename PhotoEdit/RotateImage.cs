@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Threading.Tasks;
 
 namespace PhotoEdit
 {
@@ -11,6 +12,14 @@ namespace PhotoEdit
     {
         public Image image = null;
         public float angle = 45.0f;
+        public RenderQuality Quality { get; set; } = RenderQuality.High;
+        public enum RenderQuality
+        {
+            Low,
+            Medium,
+            High,
+            Ultra
+        }
 
         public Image Rotate()
         {
@@ -28,7 +37,7 @@ namespace PhotoEdit
 
             // Берём минимум, чтобы покрыть внутренний прямоугольник после поворота
             int innerWidth = (int)Math.Min(minWidthByWidth, minWidthByHeight);
-            int innerHeight = (int) (ratio * innerWidth);
+            int innerHeight = (int)(ratio * innerWidth);
 
             // Рассчитываем размер временного холста (диагональ исходного изображения)
             int tempWidth = (int)Math.Ceiling(image.Width * cos + image.Height * sin);
@@ -40,11 +49,9 @@ namespace PhotoEdit
             // Применяем поворот к изображению 2
             using (Graphics g = Graphics.FromImage(rotatedImage))
             {
-                g.CompositingMode = CompositingMode.SourceCopy;
-                g.CompositingQuality = CompositingQuality.HighQuality;
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.SmoothingMode = SmoothingMode.HighQuality;
-                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                // Применяем настройки качества
+                ApplyQualitySettings(g, Quality);
+
                 g.Clear(Color.Transparent);
 
                 g.TranslateTransform(tempWidth / 2f, tempHeight / 2f);
@@ -63,11 +70,8 @@ namespace PhotoEdit
             // Настройки максимального качества для изображения 1
             using (Graphics g = Graphics.FromImage(result))
             {
-                g.CompositingMode = CompositingMode.SourceCopy;
-                g.CompositingQuality = CompositingQuality.HighQuality;
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.SmoothingMode = SmoothingMode.HighQuality;
-                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                // Применяем настройки качества
+                ApplyQualitySettings(g, Quality);
 
                 // Очищаем прозрачным цветом
                 g.Clear(Color.Transparent);
@@ -90,6 +94,41 @@ namespace PhotoEdit
 
             rotatedImage.Dispose();
             return result;
+        }
+
+        private void ApplyQualitySettings(Graphics g, RenderQuality quality)
+        {
+            switch (quality)
+            {
+                case RenderQuality.Ultra:
+                    g.CompositingQuality = CompositingQuality.HighQuality;
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    g.SmoothingMode = SmoothingMode.AntiAlias;
+                    g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    break;
+
+                case RenderQuality.High:
+                    g.CompositingQuality = CompositingQuality.HighQuality;
+                    g.InterpolationMode = InterpolationMode.HighQualityBilinear;
+                    g.SmoothingMode = SmoothingMode.AntiAlias;
+                    g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    break;
+
+                case RenderQuality.Medium:
+                    g.CompositingQuality = CompositingQuality.HighSpeed;
+                    g.InterpolationMode = InterpolationMode.Bilinear;
+                    g.SmoothingMode = SmoothingMode.HighSpeed;
+                    g.PixelOffsetMode = PixelOffsetMode.HighSpeed;
+                    break;
+
+                case RenderQuality.Low:
+                default:
+                    g.CompositingQuality = CompositingQuality.HighSpeed;
+                    g.InterpolationMode = InterpolationMode.Low;
+                    g.SmoothingMode = SmoothingMode.None;
+                    g.PixelOffsetMode = PixelOffsetMode.None;
+                    break;
+            }
         }
     }
 }
