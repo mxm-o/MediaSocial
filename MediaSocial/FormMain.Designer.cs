@@ -41,29 +41,34 @@
             this.pnlPlugin = new System.Windows.Forms.Panel();
             this.tabPluginEditor = new System.Windows.Forms.TabPage();
             this.panelEditor = new System.Windows.Forms.Panel();
+            this.checkBoxAuto = new System.Windows.Forms.CheckBox();
             this.btnEditorReset = new System.Windows.Forms.Button();
             this.btnEditorCancel = new System.Windows.Forms.Button();
             this.btnEditorOk = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.trackBarZoom = new System.Windows.Forms.TrackBar();
+            this.numericUpDownRotate = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
+            this.buttonRotate270 = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
+            this.buttonRotate180 = new System.Windows.Forms.Button();
             this.trackBarHorisontal = new System.Windows.Forms.TrackBar();
+            this.buttonRotate90 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.trackBarVertical = new System.Windows.Forms.TrackBar();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.checkBoxAuto = new System.Windows.Forms.CheckBox();
-            this.btnAutoBr = new System.Windows.Forms.Button();
-            this.numericUpDownRotate = new System.Windows.Forms.NumericUpDown();
-            this.buttonRotate270 = new System.Windows.Forms.Button();
-            this.buttonRotate180 = new System.Windows.Forms.Button();
-            this.buttonRotate90 = new System.Windows.Forms.Button();
-            this.label11 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.trackBarHighlights = new System.Windows.Forms.TrackBar();
+            this.label18 = new System.Windows.Forms.Label();
+            this.trackBarMidtones = new System.Windows.Forms.TrackBar();
+            this.label17 = new System.Windows.Forms.Label();
+            this.trackBarShadows = new System.Windows.Forms.TrackBar();
+            this.label16 = new System.Windows.Forms.Label();
             this.trackBarTone = new System.Windows.Forms.TrackBar();
+            this.btnAutoBr = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.trackBarTemperature = new System.Windows.Forms.TrackBar();
             this.label1 = new System.Windows.Forms.Label();
@@ -127,6 +132,7 @@
             this.toolStripButtonEditor = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnAutoContr = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
@@ -139,11 +145,13 @@
             this.panelEditor.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarZoom)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRotate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarHorisontal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVertical)).BeginInit();
-            this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRotate)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarHighlights)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarMidtones)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarShadows)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTone)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTemperature)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSaturation)).BeginInit();
@@ -303,11 +311,11 @@
             // 
             // panelEditor
             // 
+            this.panelEditor.Controls.Add(this.checkBoxAuto);
             this.panelEditor.Controls.Add(this.btnEditorReset);
             this.panelEditor.Controls.Add(this.btnEditorCancel);
             this.panelEditor.Controls.Add(this.btnEditorOk);
             this.panelEditor.Controls.Add(this.groupBox1);
-            this.panelEditor.Controls.Add(this.groupBox3);
             this.panelEditor.Controls.Add(this.groupBox2);
             this.panelEditor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEditor.Location = new System.Drawing.Point(3, 3);
@@ -316,9 +324,20 @@
             this.panelEditor.Size = new System.Drawing.Size(659, 543);
             this.panelEditor.TabIndex = 18;
             // 
+            // checkBoxAuto
+            // 
+            this.checkBoxAuto.AutoSize = true;
+            this.checkBoxAuto.Location = new System.Drawing.Point(165, 460);
+            this.checkBoxAuto.Name = "checkBoxAuto";
+            this.checkBoxAuto.Size = new System.Drawing.Size(103, 17);
+            this.checkBoxAuto.TabIndex = 21;
+            this.checkBoxAuto.Text = "Автообработка";
+            this.checkBoxAuto.UseVisualStyleBackColor = true;
+            this.checkBoxAuto.CheckedChanged += new System.EventHandler(this.checkBoxAuto_CheckedChanged);
+            // 
             // btnEditorReset
             // 
-            this.btnEditorReset.Location = new System.Drawing.Point(84, 445);
+            this.btnEditorReset.Location = new System.Drawing.Point(84, 456);
             this.btnEditorReset.Name = "btnEditorReset";
             this.btnEditorReset.Size = new System.Drawing.Size(75, 23);
             this.btnEditorReset.TabIndex = 20;
@@ -329,7 +348,7 @@
             // btnEditorCancel
             // 
             this.btnEditorCancel.Enabled = false;
-            this.btnEditorCancel.Location = new System.Drawing.Point(165, 445);
+            this.btnEditorCancel.Location = new System.Drawing.Point(274, 456);
             this.btnEditorCancel.Name = "btnEditorCancel";
             this.btnEditorCancel.Size = new System.Drawing.Size(75, 23);
             this.btnEditorCancel.TabIndex = 19;
@@ -339,7 +358,7 @@
             // 
             // btnEditorOk
             // 
-            this.btnEditorOk.Location = new System.Drawing.Point(3, 445);
+            this.btnEditorOk.Location = new System.Drawing.Point(3, 456);
             this.btnEditorOk.Name = "btnEditorOk";
             this.btnEditorOk.Size = new System.Drawing.Size(75, 23);
             this.btnEditorOk.TabIndex = 18;
@@ -352,17 +371,22 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.trackBarZoom);
+            this.groupBox1.Controls.Add(this.numericUpDownRotate);
             this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.buttonRotate270);
             this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.buttonRotate180);
             this.groupBox1.Controls.Add(this.trackBarHorisontal);
+            this.groupBox1.Controls.Add(this.buttonRotate90);
             this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.trackBarVertical);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(653, 152);
+            this.groupBox1.Size = new System.Drawing.Size(653, 173);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Положение изображения";
@@ -381,6 +405,24 @@
             this.trackBarZoom.TabIndex = 17;
             this.trackBarZoom.ValueChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
             // 
+            // numericUpDownRotate
+            // 
+            this.numericUpDownRotate.Location = new System.Drawing.Point(66, 145);
+            this.numericUpDownRotate.Maximum = new decimal(new int[] {
+            359,
+            0,
+            0,
+            0});
+            this.numericUpDownRotate.Minimum = new decimal(new int[] {
+            359,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownRotate.Name = "numericUpDownRotate";
+            this.numericUpDownRotate.Size = new System.Drawing.Size(57, 20);
+            this.numericUpDownRotate.TabIndex = 28;
+            this.numericUpDownRotate.ValueChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
+            // 
             // label8
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -391,6 +433,16 @@
             this.label8.TabIndex = 19;
             this.label8.Text = "Больше";
             // 
+            // buttonRotate270
+            // 
+            this.buttonRotate270.Location = new System.Drawing.Point(238, 143);
+            this.buttonRotate270.Name = "buttonRotate270";
+            this.buttonRotate270.Size = new System.Drawing.Size(43, 23);
+            this.buttonRotate270.TabIndex = 27;
+            this.buttonRotate270.Text = "-90";
+            this.buttonRotate270.UseVisualStyleBackColor = true;
+            this.buttonRotate270.Click += new System.EventHandler(this.buttonRotate270_Click);
+            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -399,6 +451,16 @@
             this.label9.Size = new System.Drawing.Size(48, 13);
             this.label9.TabIndex = 18;
             this.label9.Text = "Меньше";
+            // 
+            // buttonRotate180
+            // 
+            this.buttonRotate180.Location = new System.Drawing.Point(184, 143);
+            this.buttonRotate180.Name = "buttonRotate180";
+            this.buttonRotate180.Size = new System.Drawing.Size(49, 23);
+            this.buttonRotate180.TabIndex = 26;
+            this.buttonRotate180.Text = "+180";
+            this.buttonRotate180.UseVisualStyleBackColor = true;
+            this.buttonRotate180.Click += new System.EventHandler(this.buttonRotate180_Click);
             // 
             // trackBarHorisontal
             // 
@@ -414,6 +476,16 @@
             this.trackBarHorisontal.TabIndex = 14;
             this.trackBarHorisontal.ValueChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
             // 
+            // buttonRotate90
+            // 
+            this.buttonRotate90.Location = new System.Drawing.Point(131, 143);
+            this.buttonRotate90.Name = "buttonRotate90";
+            this.buttonRotate90.Size = new System.Drawing.Size(48, 23);
+            this.buttonRotate90.TabIndex = 25;
+            this.buttonRotate90.Text = "+90";
+            this.buttonRotate90.UseVisualStyleBackColor = true;
+            this.buttonRotate90.Click += new System.EventHandler(this.buttonRotate90_Click);
+            // 
             // label4
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -423,6 +495,15 @@
             this.label4.Size = new System.Drawing.Size(44, 13);
             this.label4.TabIndex = 16;
             this.label4.Text = "Вправо";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(7, 147);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(50, 13);
+            this.label11.TabIndex = 23;
+            this.label11.Text = "Поворот";
             // 
             // label7
             // 
@@ -466,107 +547,19 @@
             this.label5.TabIndex = 12;
             this.label5.Text = "Выше";
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.Controls.Add(this.checkBoxAuto);
-            this.groupBox3.Controls.Add(this.btnAutoBr);
-            this.groupBox3.Controls.Add(this.numericUpDownRotate);
-            this.groupBox3.Controls.Add(this.buttonRotate270);
-            this.groupBox3.Controls.Add(this.buttonRotate180);
-            this.groupBox3.Controls.Add(this.buttonRotate90);
-            this.groupBox3.Controls.Add(this.label11);
-            this.groupBox3.Location = new System.Drawing.Point(3, 387);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(653, 52);
-            this.groupBox3.TabIndex = 17;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Другое";
-            // 
-            // checkBoxAuto
-            // 
-            this.checkBoxAuto.AutoSize = true;
-            this.checkBoxAuto.Location = new System.Drawing.Point(387, 21);
-            this.checkBoxAuto.Name = "checkBoxAuto";
-            this.checkBoxAuto.Size = new System.Drawing.Size(103, 17);
-            this.checkBoxAuto.TabIndex = 21;
-            this.checkBoxAuto.Text = "Автообработка";
-            this.checkBoxAuto.UseVisualStyleBackColor = true;
-            this.checkBoxAuto.CheckedChanged += new System.EventHandler(this.checkBoxAuto_CheckedChanged);
-            // 
-            // btnAutoBr
-            // 
-            this.btnAutoBr.Location = new System.Drawing.Point(292, 18);
-            this.btnAutoBr.Name = "btnAutoBr";
-            this.btnAutoBr.Size = new System.Drawing.Size(89, 23);
-            this.btnAutoBr.TabIndex = 29;
-            this.btnAutoBr.Text = "Авто Яркость";
-            this.btnAutoBr.UseVisualStyleBackColor = true;
-            this.btnAutoBr.Click += new System.EventHandler(this.btnAutoBr_Click);
-            // 
-            // numericUpDownRotate
-            // 
-            this.numericUpDownRotate.Location = new System.Drawing.Point(70, 21);
-            this.numericUpDownRotate.Maximum = new decimal(new int[] {
-            359,
-            0,
-            0,
-            0});
-            this.numericUpDownRotate.Minimum = new decimal(new int[] {
-            359,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDownRotate.Name = "numericUpDownRotate";
-            this.numericUpDownRotate.Size = new System.Drawing.Size(57, 20);
-            this.numericUpDownRotate.TabIndex = 28;
-            this.numericUpDownRotate.ValueChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
-            // 
-            // buttonRotate270
-            // 
-            this.buttonRotate270.Location = new System.Drawing.Point(243, 18);
-            this.buttonRotate270.Name = "buttonRotate270";
-            this.buttonRotate270.Size = new System.Drawing.Size(43, 23);
-            this.buttonRotate270.TabIndex = 27;
-            this.buttonRotate270.Text = "-90";
-            this.buttonRotate270.UseVisualStyleBackColor = true;
-            this.buttonRotate270.Click += new System.EventHandler(this.buttonRotate270_Click);
-            // 
-            // buttonRotate180
-            // 
-            this.buttonRotate180.Location = new System.Drawing.Point(188, 18);
-            this.buttonRotate180.Name = "buttonRotate180";
-            this.buttonRotate180.Size = new System.Drawing.Size(49, 23);
-            this.buttonRotate180.TabIndex = 26;
-            this.buttonRotate180.Text = "+180";
-            this.buttonRotate180.UseVisualStyleBackColor = true;
-            this.buttonRotate180.Click += new System.EventHandler(this.buttonRotate180_Click);
-            // 
-            // buttonRotate90
-            // 
-            this.buttonRotate90.Location = new System.Drawing.Point(134, 18);
-            this.buttonRotate90.Name = "buttonRotate90";
-            this.buttonRotate90.Size = new System.Drawing.Size(48, 23);
-            this.buttonRotate90.TabIndex = 25;
-            this.buttonRotate90.Text = "+90";
-            this.buttonRotate90.UseVisualStyleBackColor = true;
-            this.buttonRotate90.Click += new System.EventHandler(this.buttonRotate90_Click);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(8, 23);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(50, 13);
-            this.label11.TabIndex = 23;
-            this.label11.Text = "Поворот";
-            // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.btnAutoContr);
+            this.groupBox2.Controls.Add(this.trackBarHighlights);
+            this.groupBox2.Controls.Add(this.label18);
+            this.groupBox2.Controls.Add(this.trackBarMidtones);
+            this.groupBox2.Controls.Add(this.label17);
+            this.groupBox2.Controls.Add(this.trackBarShadows);
+            this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Controls.Add(this.trackBarTone);
+            this.groupBox2.Controls.Add(this.btnAutoBr);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.trackBarTemperature);
             this.groupBox2.Controls.Add(this.label1);
@@ -576,12 +569,81 @@
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.trackBarBrightness);
             this.groupBox2.Controls.Add(this.label12);
-            this.groupBox2.Location = new System.Drawing.Point(3, 161);
+            this.groupBox2.Location = new System.Drawing.Point(3, 182);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(653, 220);
+            this.groupBox2.Size = new System.Drawing.Size(653, 268);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Цвета изображения";
+            // 
+            // trackBarHighlights
+            // 
+            this.trackBarHighlights.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarHighlights.AutoSize = false;
+            this.trackBarHighlights.BackColor = System.Drawing.SystemColors.Control;
+            this.trackBarHighlights.Location = new System.Drawing.Point(70, 111);
+            this.trackBarHighlights.Maximum = 100;
+            this.trackBarHighlights.Minimum = -100;
+            this.trackBarHighlights.Name = "trackBarHighlights";
+            this.trackBarHighlights.Size = new System.Drawing.Size(526, 25);
+            this.trackBarHighlights.TabIndex = 34;
+            this.trackBarHighlights.ValueChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(7, 118);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(62, 13);
+            this.label18.TabIndex = 35;
+            this.label18.Text = "Подсветка";
+            // 
+            // trackBarMidtones
+            // 
+            this.trackBarMidtones.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarMidtones.AutoSize = false;
+            this.trackBarMidtones.BackColor = System.Drawing.SystemColors.Control;
+            this.trackBarMidtones.Location = new System.Drawing.Point(70, 80);
+            this.trackBarMidtones.Maximum = 100;
+            this.trackBarMidtones.Minimum = -100;
+            this.trackBarMidtones.Name = "trackBarMidtones";
+            this.trackBarMidtones.Size = new System.Drawing.Size(526, 25);
+            this.trackBarMidtones.TabIndex = 32;
+            this.trackBarMidtones.ValueChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(8, 87);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(50, 13);
+            this.label17.TabIndex = 33;
+            this.label17.Text = "Средние";
+            // 
+            // trackBarShadows
+            // 
+            this.trackBarShadows.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarShadows.AutoSize = false;
+            this.trackBarShadows.BackColor = System.Drawing.SystemColors.Control;
+            this.trackBarShadows.Location = new System.Drawing.Point(70, 50);
+            this.trackBarShadows.Maximum = 100;
+            this.trackBarShadows.Minimum = -100;
+            this.trackBarShadows.Name = "trackBarShadows";
+            this.trackBarShadows.Size = new System.Drawing.Size(526, 25);
+            this.trackBarShadows.TabIndex = 30;
+            this.trackBarShadows.ValueChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(8, 56);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(32, 13);
+            this.label16.TabIndex = 31;
+            this.label16.Text = "Тени";
             // 
             // trackBarTone
             // 
@@ -589,17 +651,27 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBarTone.AutoSize = false;
             this.trackBarTone.BackColor = System.Drawing.SystemColors.Control;
-            this.trackBarTone.Location = new System.Drawing.Point(70, 179);
+            this.trackBarTone.Location = new System.Drawing.Point(70, 236);
             this.trackBarTone.Maximum = 360;
             this.trackBarTone.Name = "trackBarTone";
-            this.trackBarTone.Size = new System.Drawing.Size(574, 34);
+            this.trackBarTone.Size = new System.Drawing.Size(526, 25);
             this.trackBarTone.TabIndex = 21;
             this.trackBarTone.ValueChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
+            // 
+            // btnAutoBr
+            // 
+            this.btnAutoBr.Location = new System.Drawing.Point(602, 19);
+            this.btnAutoBr.Name = "btnAutoBr";
+            this.btnAutoBr.Size = new System.Drawing.Size(42, 23);
+            this.btnAutoBr.TabIndex = 29;
+            this.btnAutoBr.Text = "Авто";
+            this.btnAutoBr.UseVisualStyleBackColor = true;
+            this.btnAutoBr.Click += new System.EventHandler(this.btnAutoBr_Click);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 191);
+            this.label3.Location = new System.Drawing.Point(7, 240);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 22;
@@ -611,18 +683,18 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBarTemperature.AutoSize = false;
             this.trackBarTemperature.BackColor = System.Drawing.SystemColors.Control;
-            this.trackBarTemperature.Location = new System.Drawing.Point(70, 139);
+            this.trackBarTemperature.Location = new System.Drawing.Point(70, 205);
             this.trackBarTemperature.Maximum = 100;
             this.trackBarTemperature.Minimum = -100;
             this.trackBarTemperature.Name = "trackBarTemperature";
-            this.trackBarTemperature.Size = new System.Drawing.Size(574, 34);
+            this.trackBarTemperature.Size = new System.Drawing.Size(526, 25);
             this.trackBarTemperature.TabIndex = 19;
             this.trackBarTemperature.MouseCaptureChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 151);
+            this.label1.Location = new System.Drawing.Point(7, 209);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(37, 13);
             this.label1.TabIndex = 20;
@@ -634,18 +706,18 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBarSaturation.AutoSize = false;
             this.trackBarSaturation.BackColor = System.Drawing.SystemColors.Control;
-            this.trackBarSaturation.Location = new System.Drawing.Point(70, 99);
+            this.trackBarSaturation.Location = new System.Drawing.Point(70, 174);
             this.trackBarSaturation.Maximum = 100;
             this.trackBarSaturation.Minimum = -100;
             this.trackBarSaturation.Name = "trackBarSaturation";
-            this.trackBarSaturation.Size = new System.Drawing.Size(574, 34);
+            this.trackBarSaturation.Size = new System.Drawing.Size(526, 25);
             this.trackBarSaturation.TabIndex = 17;
             this.trackBarSaturation.ValueChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 111);
+            this.label2.Location = new System.Drawing.Point(7, 174);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(47, 13);
             this.label2.TabIndex = 18;
@@ -657,18 +729,18 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBarContrast.AutoSize = false;
             this.trackBarContrast.BackColor = System.Drawing.SystemColors.Control;
-            this.trackBarContrast.Location = new System.Drawing.Point(70, 59);
+            this.trackBarContrast.Location = new System.Drawing.Point(70, 142);
             this.trackBarContrast.Maximum = 100;
             this.trackBarContrast.Minimum = -100;
             this.trackBarContrast.Name = "trackBarContrast";
-            this.trackBarContrast.Size = new System.Drawing.Size(574, 34);
+            this.trackBarContrast.Size = new System.Drawing.Size(526, 25);
             this.trackBarContrast.TabIndex = 14;
             this.trackBarContrast.ValueChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(7, 71);
+            this.label10.Location = new System.Drawing.Point(7, 144);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(54, 13);
             this.label10.TabIndex = 15;
@@ -684,14 +756,14 @@
             this.trackBarBrightness.Maximum = 100;
             this.trackBarBrightness.Minimum = -100;
             this.trackBarBrightness.Name = "trackBarBrightness";
-            this.trackBarBrightness.Size = new System.Drawing.Size(574, 34);
+            this.trackBarBrightness.Size = new System.Drawing.Size(526, 25);
             this.trackBarBrightness.TabIndex = 11;
             this.trackBarBrightness.ValueChanged += new System.EventHandler(this.trackBarVertical_ValueChanged);
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(7, 31);
+            this.label12.Location = new System.Drawing.Point(7, 26);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(50, 13);
             this.label12.TabIndex = 12;
@@ -1199,6 +1271,16 @@
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
             // 
+            // btnAutoContr
+            // 
+            this.btnAutoContr.Location = new System.Drawing.Point(602, 144);
+            this.btnAutoContr.Name = "btnAutoContr";
+            this.btnAutoContr.Size = new System.Drawing.Size(42, 23);
+            this.btnAutoContr.TabIndex = 36;
+            this.btnAutoContr.Text = "Авто";
+            this.btnAutoContr.UseVisualStyleBackColor = true;
+            this.btnAutoContr.Click += new System.EventHandler(this.btnAutoContr_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1223,16 +1305,18 @@
             this.tabPluginModule.ResumeLayout(false);
             this.tabPluginEditor.ResumeLayout(false);
             this.panelEditor.ResumeLayout(false);
+            this.panelEditor.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarZoom)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRotate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarHorisontal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVertical)).EndInit();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRotate)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarHighlights)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarMidtones)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarShadows)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTone)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTemperature)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSaturation)).EndInit();
@@ -1302,7 +1386,6 @@
         private System.Windows.Forms.Panel pnlPlugin;
         private System.Windows.Forms.TabPage tabPluginEditor;
         private System.Windows.Forms.TabPage tabPluginSave;
-        private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button buttonRotate90;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -1355,6 +1438,13 @@
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.ComboBox cmbBoxImgType;
         private System.Windows.Forms.CheckBox checkBoxAuto;
+        private System.Windows.Forms.TrackBar trackBarShadows;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TrackBar trackBarMidtones;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TrackBar trackBarHighlights;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Button btnAutoContr;
     }
 }
 

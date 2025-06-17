@@ -26,6 +26,9 @@ namespace MediaSocial.Classes
         public float Horizontal { get; set; }
         public float Zoom { get; set; }
         public float Brightness { get; set; }
+        public float Shadows { get; set; }
+        public float Midtones { get; set; }
+        public float Highlights { get; set; }
         public float Contrast { get; set; }
         public float Saturation { get; set; }
         public float Temperature { get; set; }

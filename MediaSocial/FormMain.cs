@@ -596,6 +596,9 @@ namespace MediaSocial
             SettingImage item = new SettingImage();
             item.Id = Id;
             item.Brightness = (trackBarBrightness.Value + 100) / 100f;
+            item.Shadows = (trackBarShadows.Value + 100) / 100f;
+            item.Midtones = (trackBarMidtones.Value + 100) / 100f;
+            item.Highlights = (trackBarHighlights.Value + 100) / 100f;
             item.Contrast = (trackBarContrast.Value + 100) / 100f;
             item.Saturation = (trackBarSaturation.Value / 100f) * 2 + 1;
             item.Tone = trackBarTone.Value;
@@ -649,6 +652,12 @@ namespace MediaSocial
 
             image = photoSize.ScaleImage();
 
+            // Расширенная яркость
+            toolStripStatusLabel1.Text = "Меняю яркость...";
+            Application.DoEvents();
+            ExtendedBrightness extendedBrightness = new ExtendedBrightness();
+            image = extendedBrightness.AdjustBrightness(image, item.Shadows, item.Midtones, item.Highlights);
+
             // Изменяем цвета, яркость и т.п.
             toolStripStatusLabel1.Text = "Меняю цвета изображения...";
             Application.DoEvents();
@@ -700,6 +709,9 @@ namespace MediaSocial
             public Image Image { get; set; }
             public int Id { get; set; }
             public float Brightness { get; set; }
+            public float Shadows { get; set; }
+            public float Midtones { get; set; }
+            public float Highlights { get; set; }
             public float Contrast { get; set; }
             public float Saturation { get; set; }
             public int Tone { get; set; }
@@ -764,6 +776,9 @@ namespace MediaSocial
                 Image = Global.imagesSouser[Global.ImageIndexNow].Pictures,
                 Id = Global.ImageIndexNow,
                 Brightness = (trackBarBrightness.Value + 100) / 100f,
+                Shadows = (trackBarShadows.Value + 100) / 100f,
+                Midtones = (trackBarMidtones.Value + 100) / 100f,
+                Highlights = (trackBarHighlights.Value + 100) / 100f,
                 Contrast = (trackBarContrast.Value + 100) / 100f,
                 Saturation = (trackBarSaturation.Value / 100f) * 2 + 1,
                 Tone = trackBarTone.Value,
@@ -790,6 +805,9 @@ namespace MediaSocial
             {
                 Id = item.Id,
                 Brightness = item.Brightness,
+                Shadows = item.Shadows,
+                Midtones = item.Midtones,
+                Highlights = item.Highlights,
                 Contrast = item.Contrast,
                 Saturation = item.Saturation,
                 Tone = item.Tone,
@@ -826,6 +844,9 @@ namespace MediaSocial
             progress?.Report("Обрабатываю изображение...");
             image = ProcessImage(image, item, progress);
 
+            progress?.Report("Обрабатываю изображение...");
+            image = ExtBrightness(image, item);
+
             GC.Collect();
             progress?.Report("");
 
@@ -856,6 +877,13 @@ namespace MediaSocial
                 vertical = item.Vertical
             };
             return photoSize.ScaleImage();
+        }
+
+        private Image ExtBrightness(Image image, RenderParameters item)
+        {
+            ExtendedBrightness extendedBrightness = new ExtendedBrightness();
+            image = extendedBrightness.AdjustBrightness(image, item.Shadows, item.Midtones, item.Highlights);
+            return image;
         }
 
         private Image ProcessImage(Image image, RenderParameters item, IProgress<string> progress)
@@ -908,6 +936,9 @@ namespace MediaSocial
             trackBarZoom.Value = 0;
 
             trackBarBrightness.Value = 0;
+            trackBarShadows.Value = 0;
+            trackBarMidtones.Value = 0;
+            trackBarHighlights.Value = 0;
             trackBarContrast.Value = 0;
             trackBarSaturation.Value = 0;
             trackBarTemperature.Value = 0;
@@ -931,6 +962,9 @@ namespace MediaSocial
                 trackBarZoom.Value = Convert.ToInt16(filteredImages.FirstOrDefault(img => img.Step == filteredImages.First().Step)?.Zoom);
 
                 trackBarBrightness.Value = Convert.ToInt16(filteredImages.FirstOrDefault(img => img.Step == filteredImages.First().Step)?.Brightness * 100 - 100);
+                trackBarShadows.Value = Convert.ToInt16(filteredImages.FirstOrDefault(img => img.Step == filteredImages.First().Step)?.Shadows * 100 - 100);
+                trackBarMidtones.Value = Convert.ToInt16(filteredImages.FirstOrDefault(img => img.Step == filteredImages.First().Step)?.Midtones * 100 - 100);
+                trackBarHighlights.Value = Convert.ToInt16(filteredImages.FirstOrDefault(img => img.Step == filteredImages.First().Step)?.Highlights * 100 - 100);
                 trackBarContrast.Value = Convert.ToInt16(filteredImages.FirstOrDefault(img => img.Step == filteredImages.First().Step)?.Contrast * 100 - 100);
                 trackBarSaturation.Value = Convert.ToInt16(filteredImages.FirstOrDefault(img => img.Step == filteredImages.First().Step)?.Saturation * 10);
                 trackBarTemperature.Value = Convert.ToInt16(filteredImages.FirstOrDefault(img => img.Step == filteredImages.First().Step)?.Temperature * 100);
@@ -972,14 +1006,28 @@ namespace MediaSocial
             return value;
         }
 
+        // Кнопка автояркости
         private void btnAutoBr_Click(object sender, EventArgs e)
         {
+            if (Global.imagesSouser[Global.ImageIndexNow].Exist == false) return;
             ModifyImage mi = new ModifyImage();
             var br = mi.CalcBrightness(Global.imagesSouser[Global.ImageIndexNow].Pictures);
             if (br > 2) br = 2;
             trackBarBrightness.Value = Convert.ToInt16(br * 100 - 100);
-            EditorOk();
+            if (checkBoxAuto.Checked) EditorOk();
         }
+        
+        // Кнопка автоконтрастности
+        private void btnAutoContr_Click(object sender, EventArgs e)
+        {
+            if (Global.imagesSouser[Global.ImageIndexNow].Exist == false) return;
+            ModifyImage mi = new ModifyImage();
+            var br = mi.CalcContrast(Global.imagesSouser[Global.ImageIndexNow].Pictures);
+            if (br > 2) br = 2;
+            trackBarContrast.Value = Convert.ToInt16(br * 100 - 100);
+            if (checkBoxAuto.Checked) EditorOk();
+        }
+
         // Окончание вращения изображения
         private void buttonImgSaveClear_Click(object sender, EventArgs e)
         {
@@ -1023,6 +1071,7 @@ namespace MediaSocial
             }
         }
 
+        // Кнопка быстрое сохранение
         private void buttonImgSaveQuick_Click(object sender, EventArgs e)
         {
             toolStripStatusLabel1.Text = "Сохранение файла";
@@ -1032,6 +1081,7 @@ namespace MediaSocial
             toolStripStatusLabel1.Text = "Готово";
         }
 
+        // Кнопка сохранение
         private void buttonImgSave_Click(object sender, EventArgs e)
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
@@ -1052,6 +1102,7 @@ namespace MediaSocial
                 }
             }
         }
+
         // Изменение положения изображения мышью
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)
         {
@@ -1079,6 +1130,7 @@ namespace MediaSocial
                     Math.Max(-maxMove, Math.Min(maxMove, y));
             }
         }
+
         // Изменение размера изображения мышью
         private void pictureBox_MouseWheel(object sender, MouseEventArgs e)
         {
@@ -1112,7 +1164,6 @@ namespace MediaSocial
         }
 
         // Убираем фокус с PictureBox при убирании с него курсора мыши (когда открыта страница редактора фото)
-
         private void pictureBox_MouseLeave(object sender, EventArgs e)
         {
             if (tabControlPlugins.SelectedTab == tabPluginEditor) this.Focus();
@@ -1124,6 +1175,7 @@ namespace MediaSocial
             showPicturebox();
         }
 
+        // Отображение изображения в Picturebox приложения
         private void showPicturebox()
         {
             if (pictureBox.InvokeRequired)

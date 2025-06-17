@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace PhotoEdit
 {
@@ -209,6 +210,139 @@ namespace PhotoEdit
                 {
                     bitmap.UnlockBits(bd);
                 }
+            }
+        }
+
+        public double CalcContrast(Image image)
+        {
+
+            using (Bitmap bmp = new Bitmap(image))
+            {
+                int width = bmp.Width;
+                int height = bmp.Height;
+                int totalPixels = width * height;
+
+                if (totalPixels == 0)
+                    return 0;
+
+                if (bmp.PixelFormat != PixelFormat.Format24bppRgb &&
+                    bmp.PixelFormat != PixelFormat.Format32bppArgb)
+                {
+                    return CalculateForConverted(bmp);
+                }
+
+                int[] histogram = new int[256];
+                int pixelSize = Image.GetPixelFormatSize(bmp.PixelFormat) / 8;
+
+                BitmapData bmpData = bmp.LockBits(
+                    new Rectangle(0, 0, width, height),
+                    ImageLockMode.ReadOnly,
+                    bmp.PixelFormat
+                );
+
+                try
+                {
+                    unsafe
+                    {
+                        byte* ptr = (byte*)bmpData.Scan0;
+                        int stride = bmpData.Stride;
+
+                        Parallel.For(0, height, y =>
+                        {
+                            byte* row = ptr + (y * stride);
+                            int[] localHist = new int[256];
+
+                            for (int x = 0; x < width; x++)
+                            {
+                                int offset = x * pixelSize;
+                                byte r = row[offset + 2];
+                                byte g = row[offset + 1];
+                                byte b = row[offset];
+
+                                int brightness = (r * 299 + g * 587 + b * 114) / 1000;
+                                if (brightness < 0) brightness = 0;
+                                if (brightness > 255) brightness = 255;
+
+                                localHist[brightness]++;
+                            }
+
+                            lock (histogram)
+                            {
+                                for (int i = 0; i < 256; i++)
+                                    histogram[i] += localHist[i];
+                            }
+                        });
+                    }
+                }
+                finally
+                {
+                    bmp.UnlockBits(bmpData);
+                }
+
+                // Рассчет пороговых значений с более широкими границами
+                double lowerThreshold = totalPixels * 0.01;   // 1% вместо 0.5%
+                double upperThreshold = totalPixels * 0.99;   // 99% вместо 99.5%
+
+                int minBrightness = 0;
+                int maxBrightness = 245;
+                int accumulated = 0;
+
+                // Поиск нижнего процентиля (1%)
+                for (int i = 0; i < 256; i++)
+                {
+                    accumulated += histogram[i];
+                    if (accumulated >= lowerThreshold)
+                    {
+                        minBrightness = i;
+                        break;
+                    }
+                }
+
+                accumulated = 0;
+                // Поиск верхнего процентиля (99%)
+                for (int i = 255; i >= 0; i--)
+                {
+                    accumulated += histogram[i];
+                    if (accumulated >= totalPixels - upperThreshold)
+                    {
+                        maxBrightness = i;
+                        break;
+                    }
+                }
+
+                double currentRange = maxBrightness - minBrightness;
+                if (currentRange <= 0)
+                    return 0;
+
+                // Корректный расчет контраста
+                double normalizedRange = currentRange / 255.0;
+                double contrastValue = 1.0;
+
+                // Плавная коррекция контраста
+                if (normalizedRange < 0.25)
+                    contrastValue = 1.0 + (1.0 - normalizedRange * 2);
+                else if (normalizedRange < 0.5)
+                    contrastValue = 1.0 + (0.5 - normalizedRange);
+                else if (normalizedRange > 0.9)
+                    contrastValue = 0.9 / normalizedRange;
+
+                // Ограничение диапазона
+                return Math.Max(0.1, Math.Min(2.0, contrastValue));
+            }
+        }
+
+        private double CalculateForConverted(Bitmap bmp)
+        {
+            using (Bitmap converted = new Bitmap(
+                bmp.Width,
+                bmp.Height,
+                PixelFormat.Format24bppRgb))
+            {
+                using (Graphics g = Graphics.FromImage(converted))
+                {
+                    g.DrawImage(bmp, 0, 0);
+                }
+                return CalcContrast(converted);
             }
         }
     }

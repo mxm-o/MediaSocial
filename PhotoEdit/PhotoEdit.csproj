@@ -48,6 +48,7 @@
     <Compile Include="BlurImage.cs" />
     <Compile Include="CalculateFontSize.cs" />
     <Compile Include="CheckFont.cs" />
+    <Compile Include="ExtendedBrightness.cs" />
     <Compile Include="ImageBlur.cs" />
     <Compile Include="Merge.cs" />
     <Compile Include="ModifyImage.cs" />
