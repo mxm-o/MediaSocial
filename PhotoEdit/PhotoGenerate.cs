@@ -46,11 +46,15 @@ namespace PhotoEdit
             using (Graphics graphics = Graphics.FromImage(dest))
             {
                 // Заливка прямоугольника
-                SolidBrush drawBrush = new SolidBrush(colorMain);
-                graphics.FillRectangle(drawBrush, 0, 0, width, height);
+                using (SolidBrush drawBrush = new SolidBrush(colorMain))
+                {
+                    graphics.FillRectangle(drawBrush, 0, 0, width, height);
+                }
                 // Внутренняя обводка прямоугольника
-                Pen pen = new Pen(colorPen, widthPen);
-                graphics.DrawRectangle(pen, 0, 0, width, height);
+                using (Pen pen = new Pen(colorPen, widthPen))
+                {
+                    graphics.DrawRectangle(pen, 0, 0, width, height);
+                }
             }
             return dest;
         }
@@ -71,8 +75,10 @@ namespace PhotoEdit
                 brush.SetSigmaBellShape(0.5f);
                 graphics.FillRectangle(brush, new Rectangle(0, 0, width, height));
                 // Внутренняя обводка прямоугольника
-                Pen pen = new Pen(colorPen, widthPen);
-                graphics.DrawRectangle(pen, 0, 0, width, height);
+                using (Pen pen = new Pen(colorPen, widthPen))
+                {
+                    graphics.DrawRectangle(pen, 0, 0, width, height);
+                }
             }
 
             return dest;

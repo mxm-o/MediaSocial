@@ -23,6 +23,9 @@ namespace PhotoEdit
 
         public Image Rotate()
         {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image), "Исходное изображение не может быть null.");
+
             // Переводим угол в радианы
             double radians = angle * Math.PI / 180.0;
             double cos = Math.Abs(Math.Cos(radians));

@@ -39,6 +39,9 @@ namespace PhotoEdit
         // Изменяем Яркость
         public Image BrightnessImage()
         {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image), "Исходное изображение не может быть null.");
+
             if (brightness == 1) return image;
 
             // Создаем матрицу цветов
@@ -58,6 +61,9 @@ namespace PhotoEdit
         // Изменяем контраст
         public Image ContrastImage()
         {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image), "Исходное изображение не может быть null.");
+
             if (contrast == 1) return image;
 
             // Создаем матрицу цветов
@@ -76,6 +82,9 @@ namespace PhotoEdit
 
         public Image ChangeSaturation()
         {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image), "Исходное изображение не может быть null.");
+
             if (saturation == 1) return image;
 
             // Создаем матрицу цветов
@@ -100,6 +109,9 @@ namespace PhotoEdit
         // Меняем температуру
         public Image ChangeTemperature()
         {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image), "Исходное изображение не может быть null.");
+
             if (temperature == 0) return image;
 
             // Create a new ColorMatrix and set the temperature values
@@ -117,6 +129,9 @@ namespace PhotoEdit
 
         public Image ChangeHue()
         {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image), "Исходное изображение не может быть null.");
+
             if (hue == 0) return image;
 
             float cos = (float)Math.Cos(hue * Math.PI / 180.0);
@@ -136,20 +151,20 @@ namespace PhotoEdit
         private Image GenerateImage(ColorMatrix colorMatrix)
         {
             // Создаем ImageAttributes с матрицей цветов
-            ImageAttributes imageAttributes = new ImageAttributes();
-            imageAttributes.SetColorMatrix(colorMatrix);
+            using (ImageAttributes imageAttributes = new ImageAttributes())
+            {
+                imageAttributes.SetColorMatrix(colorMatrix);
 
-            // Создаем новое изображение и отрисовываем на нем оригинальное изображение с примененными настройками яркости
-            Bitmap resultBitmap = new Bitmap(image.Width, image.Height);
-            Graphics graphics = Graphics.FromImage(resultBitmap);
-            graphics.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, imageAttributes);
+                // Создаем новое изображение и отрисовываем на нем оригинальное изображение с примененными настройками яркости
+                Bitmap resultBitmap = new Bitmap(image.Width, image.Height);
+                using (Graphics graphics = Graphics.FromImage(resultBitmap))
+                {
+                    graphics.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, imageAttributes);
+                }
 
-            // Clean up and return the new image
-            graphics.Dispose();
-            imageAttributes.Dispose();
-
-            // Возвращаем измененное изображение
-            return resultBitmap;
+                // Возвращаем измененное изображение
+                return resultBitmap;
+            }
         }
 
         public float CalcBrightness(Image image)

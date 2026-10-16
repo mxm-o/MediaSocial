@@ -20,23 +20,31 @@ namespace PhotoEdit
 
         public void SaveImage()
         {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image), "Изображение для сохранения не может быть null.");
+            if (string.IsNullOrEmpty(savePath))
+                throw new ArgumentNullException(nameof(savePath), "Путь для сохранения изображения не может быть пустым.");
+
             // Create an encoder parameter for the image quality
-            EncoderParameter qualityParameter = new EncoderParameter(Encoder.Quality, quality);
-
-            // Get the codec for the specified image format
-            ImageCodecInfo imageCodecInfo = GetEncoderInfo(ConvertFormat(saveFormat));
-
-            // Create an encoder parameters object and add the image quality parameter
-            EncoderParameters encoderParameters = new EncoderParameters(1);
-            encoderParameters.Param[0] = qualityParameter;
-            try
+            using (EncoderParameter qualityParameter = new EncoderParameter(Encoder.Quality, quality))
             {
-                // Save the image to the specified file path using the specified image format and quality
-                image.Save(savePath, imageCodecInfo, encoderParameters);
+                // Get the codec for the specified image format
+                ImageCodecInfo imageCodecInfo = GetEncoderInfo(ConvertFormat(saveFormat));
 
-            } catch (Exception ex)
-            {
-                throw new ArgumentException("Path : " + ex.ToString());
+                // Create an encoder parameters object and add the image quality parameter
+                using (EncoderParameters encoderParameters = new EncoderParameters(1))
+                {
+                    encoderParameters.Param[0] = qualityParameter;
+                    try
+                    {
+                        // Save the image to the specified file path using the specified image format and quality
+                        image.Save(savePath, imageCodecInfo, encoderParameters);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new ArgumentException("Ошибка сохранения изображения: " + ex.Message, ex);
+                    }
+                }
             }
         }
 

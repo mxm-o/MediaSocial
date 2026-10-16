@@ -1,5 +1,6 @@
 ﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
 
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
@@ -79,33 +80,52 @@ namespace PhotoEdit
 
         public Image DrawTextWithEffects()
         {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source), "Исходное изображение не может быть null.");
+
             if (textString == "") return source;
 
-            // Исходное изображение
-            Graphics e = Graphics.FromImage(source);
-            // Качество изображения
-            e.SmoothingMode = SmoothingMode.AntiAlias;
-            // Качество изображения
-            e.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            // Создайте экземпляр класса Font для текста и задайте ему нужный размер и стиль
-            Font font = new Font(fontName, fontSize, fontStyle);
-            // Отображаем текст с тенью и обводкой в прямоугольнике
-            Rectangle rect = new Rectangle(rectX, rectY, rectW, rectH);
-
-            if (debug)
+            // Создаем клон, чтобы не модифицировать исходное изображение
+            using (Bitmap canvas = new Bitmap(source.Width, source.Height))
+            using (Graphics e = Graphics.FromImage(canvas))
             {
-                Pen pen = new Pen(Color.Black, 2);
-                pen.Alignment = PenAlignment.Inset; //<-- this
-                e.DrawRectangle(pen, rect);
+                // Качество изображения
+                e.SmoothingMode = SmoothingMode.AntiAlias;
+                // Качество изображения
+                e.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                // Рисуем исходное изображение на холсте
+                e.DrawImage(source, 0, 0, source.Width, source.Height);
+
+                // Создайте экземпляр класса Font для текста и задайте ему нужный размер и стиль
+                using (Font font = new Font(fontName, fontSize, fontStyle))
+                // Отображаем текст с тенью и обводкой в прямоугольнике
+                {
+                    Rectangle rect = new Rectangle(rectX, rectY, rectW, rectH);
+
+                    if (debug)
+                    {
+                        using (Pen pen = new Pen(Color.Black, 2))
+                        {
+                            pen.Alignment = PenAlignment.Inset; //<-- this
+                            e.DrawRectangle(pen, rect);
+                        }
+                    }
+
+                    DrawTextWithBorderAndShadow(e, textString, rect, font, colorText, colorStroke, colorShadow, wightStroke, wightShadow);
+
+                    // Возвращаем новый экземпляр изображения с наложенным текстом
+                    return (Image)canvas.Clone();
+                }
             }
-
-            DrawTextWithBorderAndShadow(e, textString, rect, font, colorText, colorStroke, colorShadow, wightStroke, wightShadow);
-
-            return source;
         }
 
         private void DrawTextWithBorderAndShadow(Graphics graphics, string text, Rectangle rect, Font font, Color textColor, Color borderColor, Color shadowColor, int wightStroke, int wightShadow)
         {
+            if (graphics == null) throw new ArgumentNullException(nameof(graphics));
+            if (text == null) throw new ArgumentNullException(nameof(text));
+            if (font == null) throw new ArgumentNullException(nameof(font));
+
             using (StringFormat sf = new StringFormat())
             {
                 // Устанавливаем формат отображения текста в центре прямоугольника
@@ -119,23 +139,31 @@ namespace PhotoEdit
                     using (SolidBrush shadowBrush = new SolidBrush(shadowColor))
                     {
                         Rectangle shadowRect = new Rectangle(rect.X + wightShadow + wightStroke, rect.Y + wightShadow + wightStroke, rect.Width, rect.Height);
-                        GraphicsPath gpShadow = new GraphicsPath();
-                        gpShadow.AddString(text, font.FontFamily, (int)font.Style, font.Size, shadowRect, sf);
-                        graphics.FillPath(shadowBrush, gpShadow);
-                        //graphics.DrawString(text, font, shadowBrush, shadowRect, sf);
+                        using (GraphicsPath gpShadow = new GraphicsPath())
+                        {
+                            gpShadow.AddString(text, font.FontFamily, (int)font.Style, font.Size, shadowRect, sf);
+                            graphics.FillPath(shadowBrush, gpShadow);
+                            //graphics.DrawString(text, font, shadowBrush, shadowRect, sf);
+                        }
                     }
                 }
 
-                GraphicsPath gp = new GraphicsPath();
-                // Создаем путь для букв
-                gp.AddString(text, font.FontFamily, (int)font.Style, font.Size, rect, sf);
-                // Цвет обводки
-                Pen pen = new Pen(borderColor, wightStroke);
-                // Рисуем путь
-                graphics.DrawPath(pen, gp);
-                // Заполняем буквы
-                SolidBrush brushColor = new SolidBrush(textColor);
-                graphics.FillPath(brushColor, gp);
+                using (GraphicsPath gp = new GraphicsPath())
+                {
+                    // Создаем путь для букв
+                    gp.AddString(text, font.FontFamily, (int)font.Style, font.Size, rect, sf);
+                    // Цвет обводки
+                    using (Pen pen = new Pen(borderColor, wightStroke))
+                    {
+                        // Рисуем путь
+                        graphics.DrawPath(pen, gp);
+                    }
+                    // Заполняем буквы
+                    using (SolidBrush brushColor = new SolidBrush(textColor))
+                    {
+                        graphics.FillPath(brushColor, gp);
+                    }
+                }
             }
         }
     }

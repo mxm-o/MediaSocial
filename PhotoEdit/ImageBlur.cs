@@ -10,18 +10,22 @@ public static class ImageBlur
     {
         if (blurSize < 1) return image;
 
-        var bitmap = new Bitmap(image);
-        var format = PixelFormat.Format32bppArgb;
-        var srcBitmap = bitmap.Clone(new Rectangle(0, 0, bitmap.Width, bitmap.Height), format);
-        var destBitmap = new Bitmap(srcBitmap.Width, srcBitmap.Height, format);
-
-        using (var tempBitmap = new Bitmap(srcBitmap.Width, srcBitmap.Height, format))
+        using (var bitmap = new Bitmap(image))
         {
-            BlurHorizontal(srcBitmap, tempBitmap, blurSize);
-            BlurVertical(tempBitmap, destBitmap, blurSize);
-        }
+            var format = PixelFormat.Format32bppArgb;
+            using (var srcBitmap = bitmap.Clone(new Rectangle(0, 0, bitmap.Width, bitmap.Height), format))
+            {
+                var destBitmap = new Bitmap(srcBitmap.Width, srcBitmap.Height, format);
 
-        return destBitmap;
+                using (var tempBitmap = new Bitmap(srcBitmap.Width, srcBitmap.Height, format))
+                {
+                    BlurHorizontal(srcBitmap, tempBitmap, blurSize);
+                    BlurVertical(tempBitmap, destBitmap, blurSize);
+                }
+
+                return destBitmap;
+            }
+        }
     }
 
     private static unsafe void BlurHorizontal(Bitmap src, Bitmap dest, int radius)

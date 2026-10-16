@@ -13,6 +13,9 @@ namespace PhotoEdit
     {
         public Image Blur(Image image, int blurAmount)
         {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image), "Изображение для размытия не может быть null.");
+
             if (checkFfmpeg()) {
                 image = BlurFfmpeg(image, blurAmount); 
             } 
@@ -80,15 +83,29 @@ namespace PhotoEdit
             // Обрабатываем полученное изображение
             try
             {
-                Stream fileStream = new FileStream(outputFile, FileMode.Open);
-                image = Image.FromStream(fileStream);
-                fileStream.Close();
+                using (Stream fileStream = new FileStream(outputFile, FileMode.Open))
+                {
+                    image = Image.FromStream(fileStream);
+                }
                 File.Delete(outputFile);
                 File.Delete(inputFile);
             }
-            catch
+            catch (Exception ex)
             {
+                // Удаляем временные файлы даже при ошибке
+                try
+                {
+                    if (File.Exists(outputFile)) File.Delete(outputFile);
+                }
+                catch { }
 
+                try
+                {
+                    if (File.Exists(inputFile)) File.Delete(inputFile);
+                }
+                catch { }
+
+                throw new InvalidOperationException("Ошибка обработки изображения через FFmpeg", ex);
             }
 
             return image;

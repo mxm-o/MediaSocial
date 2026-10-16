@@ -20,6 +20,9 @@ namespace PhotoEdit
         //   The adjusted image with modified brightness.
         public Image AdjustBrightness(Image inputImage, float shadowsFactor, float midtonesFactor, float highlightsFactor)
         {
+            if (inputImage == null)
+                throw new ArgumentNullException(nameof(inputImage), "Входное изображение не может быть null.");
+
             // Проверка необходимости обработки
             if (shadowsFactor == 1f && midtonesFactor == 1f && highlightsFactor == 1f)
             {

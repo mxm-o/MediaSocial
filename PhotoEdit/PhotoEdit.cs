@@ -68,6 +68,9 @@ namespace PhotoEdit
         /// <returns></returns>
         public Image ScaleImage()
         {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source), "Исходное изображение не может быть null.");
+
             Image dest = new Bitmap(width, height);
             using (Graphics gr = Graphics.FromImage(dest))
             {

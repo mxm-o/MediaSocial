@@ -1,5 +1,6 @@
 ﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
 
+using System;
 using System.Drawing;
 
 namespace PhotoEdit
@@ -15,17 +16,19 @@ namespace PhotoEdit
 
         public Image ResizeImage()
         {
-            Bitmap canvas = new Bitmap(canvasWidth, canvasHeight);
-            Graphics graphics = Graphics.FromImage(canvas);
-            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            int newWidth = (int)(sourceImage.Width * scaleFactor);
-            int newHeight = (int)(sourceImage.Height * scaleFactor);
+            if (sourceImage == null)
+                throw new ArgumentNullException(nameof(sourceImage), "Исходное изображение не может быть null.");
 
-            graphics.DrawImage(sourceImage, posX, posY, newWidth, newHeight);
-            
-            // Clean up and return the new image
-            graphics.Dispose();
-            
+            Bitmap canvas = new Bitmap(canvasWidth, canvasHeight);
+            using (Graphics graphics = Graphics.FromImage(canvas))
+            {
+                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                int newWidth = (int)(sourceImage.Width * scaleFactor);
+                int newHeight = (int)(sourceImage.Height * scaleFactor);
+
+                graphics.DrawImage(sourceImage, posX, posY, newWidth, newHeight);
+            }
+
             return canvas;
         }
     }
