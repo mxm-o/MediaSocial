@@ -1,4 +1,4 @@
-// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+п»ї// Copyright В© 2023 Maxim Otrokhov. All rights reserved.
 
 using System;
 using System.Drawing;
@@ -79,7 +79,7 @@ namespace PluginKirsanovGoodMorningNewYears
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 11;
-            this.btnClear.Text = "Очистить";
+            this.btnClear.Text = "РћС‡РёСЃС‚РёС‚СЊ";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
@@ -89,7 +89,7 @@ namespace PluginKirsanovGoodMorningNewYears
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(75, 23);
             this.btnCreate.TabIndex = 10;
-            this.btnCreate.Text = "Создать";
+            this.btnCreate.Text = "РЎРѕР·РґР°С‚СЊ";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
@@ -123,7 +123,7 @@ namespace PluginKirsanovGoodMorningNewYears
             this.labelT2.Name = "labelT2";
             this.labelT2.Size = new System.Drawing.Size(86, 13);
             this.labelT2.TabIndex = 0;
-            this.labelT2.Text = "Источник фото:";
+            this.labelT2.Text = "РСЃС‚РѕС‡РЅРёРє С„РѕС‚Рѕ:";
             // 
             // panel1
             // 
@@ -143,7 +143,7 @@ namespace PluginKirsanovGoodMorningNewYears
             this.labelT1.Name = "labelT1";
             this.labelT1.Size = new System.Drawing.Size(33, 13);
             this.labelT1.TabIndex = 0;
-            this.labelT1.Text = "Дата";
+            this.labelT1.Text = "Р”Р°С‚Р°";
             // 
             // dateTimePicker
             // 
@@ -221,7 +221,7 @@ namespace PluginKirsanovGoodMorningNewYears
         private void btnCreate_Click(object sender, EventArgs e)
         {
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            // Считываем шаблонное изображение
+            // РЎС‡РёС‚С‹РІР°РµРј С€Р°Р±Р»РѕРЅРЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ
             Image imageMain = null;
             try
             {
@@ -231,98 +231,98 @@ namespace PluginKirsanovGoodMorningNewYears
 
             }
 
-            // Получаем исходник фотографии
+            // РџРѕР»СѓС‡Р°РµРј РёСЃС…РѕРґРЅРёРє С„РѕС‚РѕРіСЂР°С„РёРё
             Image ImageSouser = myHost.SendImages()[0];
             if (ImageSouser == null)
             {
-                MessageBox.Show("Не выбрано изображение.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("РќРµ РІС‹Р±СЂР°РЅРѕ РёР·РѕР±СЂР°Р¶РµРЅРёРµ.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             if (!CheckFont.FontExists("Lato"))
             {
-                MessageBox.Show("В системе отсутствуют нужные шрифты. Проверьте наличие требуемых шрифтов к данному дизайну.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Р’ СЃРёСЃС‚РµРјРµ РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РЅСѓР¶РЅС‹Рµ С€СЂРёС„С‚С‹. РџСЂРѕРІРµСЂСЊС‚Рµ РЅР°Р»РёС‡РёРµ С‚СЂРµР±СѓРµРјС‹С… С€СЂРёС„С‚РѕРІ Рє РґР°РЅРЅРѕРјСѓ РґРёР·Р°Р№РЅСѓ.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             Enabled = false;
 
-            // Генерируем новое изображение
+            // Р“РµРЅРµСЂРёСЂСѓРµРј РЅРѕРІРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ
             PhotoGenerate photo = new PhotoGenerate();
-            photo.height = imageMain.Height;
-            photo.width = imageMain.Width;
-            photo.colorMain = Color.White;
+            photo.Height = imageMain.Height;
+            photo.Width = imageMain.Width;
+            photo.ColorMain = Color.White;
             Image imageOut = photo.Fill();
-            // Раскладываем по слоям
+            // Р Р°СЃРєР»Р°РґС‹РІР°РµРј РїРѕ СЃР»РѕСЏРј
             Merge mergeImage = new Merge();
             mergeImage.sourceBottom = imageOut;
             mergeImage.sourceTop = ImageSouser;
             mergeImage.top = 140;
             mergeImage.left = 22;
-            imageOut = mergeImage.MergeImage(); // На фон помещаем фотографию
+            imageOut = mergeImage.MergeImage(); // РќР° С„РѕРЅ РїРѕРјРµС‰Р°РµРј С„РѕС‚РѕРіСЂР°С„РёСЋ
             mergeImage.sourceBottom = imageOut;
             mergeImage.sourceTop = imageMain;
             mergeImage.top = 0;
             mergeImage.left = 0;
-            imageOut = mergeImage.MergeImage(); // Помещаем оформление
-            // Пишем дату
+            imageOut = mergeImage.MergeImage(); // РџРѕРјРµС‰Р°РµРј РѕС„РѕСЂРјР»РµРЅРёРµ
+            // РџРёС€РµРј РґР°С‚Сѓ
             TextGenerate textE = new TextGenerate();
-            textE.textString = dateTimePicker.Value.ToString("d MMMM yyyy");
-            textE.rectH = 100;
-            textE.rectW = 1000;
-            textE.rectX = 430;
-            textE.rectY = 30;
-            textE.source = imageOut;
-            textE.fontSize = 90;
-            textE.colorText = Color.White;
-            textE.fontName = "Lato";
-            textE.lineAlignment = StringAlignment.Center;
-            textE.stringAlignment = StringAlignment.Far;
+            textE.TextString = dateTimePicker.Value.ToString("d MMMM yyyy");
+            textE.RectH = 100;
+            textE.RectW = 1000;
+            textE.RectX = 430;
+            textE.RectY = 30;
+            textE.Source = imageOut;
+            textE.FontSize = 90;
+            textE.ColorText = Color.White;
+            textE.FontName = "Lato";
+            textE.LineAlignment = StringAlignment.Center;
+            textE.StringAlignment = StringAlignment.Far;
             //textE.debug = true;
             imageOut = textE.DrawTextWithEffects();
-            // Пишем восход
+            // РџРёС€РµРј РІРѕСЃС…РѕРґ
             TextGenerate textSet = new TextGenerate();
             SunSetRise sunSet = new SunSetRise();
             sunSet.dt = dateTimePicker.Value;
-            textSet.textString = sunSet.SunRise();
-            textSet.rectH = 80;
-            textSet.rectW = 250;
-            textSet.rectX = 170;
-            textSet.rectY = 1290;
-            textSet.source = imageOut;
-            textSet.fontSize = 80;
-            textSet.colorText = Color.White;
-            textSet.fontName = "Lato";
-            textSet.lineAlignment = StringAlignment.Center;
-            textSet.stringAlignment = StringAlignment.Center;
+            textSet.TextString = sunSet.SunRise();
+            textSet.RectH = 80;
+            textSet.RectW = 250;
+            textSet.RectX = 170;
+            textSet.RectY = 1290;
+            textSet.Source = imageOut;
+            textSet.FontSize = 80;
+            textSet.ColorText = Color.White;
+            textSet.FontName = "Lato";
+            textSet.LineAlignment = StringAlignment.Center;
+            textSet.StringAlignment = StringAlignment.Center;
             //textSet.debug = true;
             imageOut = textSet.DrawTextWithEffects();
-            // Пишем закат
-            textSet.textString = sunSet.SunSet();
-            textSet.rectY = 1400;
-            textSet.source = imageOut;
+            // РџРёС€РµРј Р·Р°РєР°С‚
+            textSet.TextString = sunSet.SunSet();
+            textSet.RectY = 1400;
+            textSet.Source = imageOut;
             imageOut = textSet.DrawTextWithEffects();
-            // Пишем Долготу
-            textSet.textString = sunSet.DayDuration();
-            textSet.rectY = 1510;
-            textSet.source = imageOut;
+            // РџРёС€РµРј Р”РѕР»РіРѕС‚Сѓ
+            textSet.TextString = sunSet.DayDuration();
+            textSet.RectY = 1510;
+            textSet.Source = imageOut;
             imageOut = textSet.DrawTextWithEffects();
 
-            // Пишем автора фото (если нужно)
+            // РџРёС€РµРј Р°РІС‚РѕСЂР° С„РѕС‚Рѕ (РµСЃР»Рё РЅСѓР¶РЅРѕ)
             if (textBoxT2.Text != "")
             {
                 TextGenerate textAutor = new TextGenerate();
-                textAutor.textString = "Фото: " + textBoxT2.Text;
-                textAutor.rectH = 100;
-                textAutor.rectW = 920;
-                textAutor.rectX = 820;
-                textAutor.rectY = 1670;
-                textAutor.fontStyle = FontStyle.Bold;
-                textAutor.source = imageOut;
-                textAutor.fontSize = 40;
-                textAutor.colorText = Color.White;
-                textAutor.stringAlignment = StringAlignment.Far;
-                textAutor.fontName = "Lato";
+                textAutor.TextString = "Р¤РѕС‚Рѕ: " + textBoxT2.Text;
+                textAutor.RectH = 100;
+                textAutor.RectW = 920;
+                textAutor.RectX = 820;
+                textAutor.RectY = 1670;
+                textAutor.FontStyle = FontStyle.Bold;
+                textAutor.Source = imageOut;
+                textAutor.FontSize = 40;
+                textAutor.ColorText = Color.White;
+                textAutor.StringAlignment = StringAlignment.Far;
+                textAutor.FontName = "Lato";
                 //textAutor.debug = true;
                 imageOut = textAutor.DrawTextWithEffects();
             }

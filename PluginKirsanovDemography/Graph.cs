@@ -13,13 +13,13 @@ namespace PluginKirsanovDemography
         {
             // Генерируем новое изображение
             PhotoGenerate photo = new PhotoGenerate();
-            photo.height = 140;
-            photo.width = 620;
-            photo.colorMain = Color.White;
+            photo.Height = 140;
+            photo.Width = 620;
+            photo.ColorMain = Color.White;
             Image imageOut = photo.Fill();
             // Рисуем нижний график на всю ширину
-            photo.width = 350;
-            photo.colorMain = value1 >= value2 ? Color.FromArgb(50, 141, 212) : Color.FromArgb(62, 181, 241);
+            photo.Width = 350;
+            photo.ColorMain = value1 >= value2 ? Color.FromArgb(50, 141, 212) : Color.FromArgb(62, 181, 241);
             Image image1 = photo.Fill();
             // Рисуем верхний график на % ширины
             Image image2 = null;
@@ -27,14 +27,14 @@ namespace PluginKirsanovDemography
             {
                 try
                 {
-                    photo.width = value1 >= value2 ? (350 / value1 * value2) : (350 / value2 * value1);
+                    photo.Width = value1 >= value2 ? (350 / value1 * value2) : (350 / value2 * value1);
                 }
                 catch
                 {
-                    photo.width = 1;
+                    photo.Width = 1;
                 }
-                if (photo.width <= 0) photo.width = 1;
-                photo.colorMain = value1 <= value2 ? Color.FromArgb(50, 141, 212) : Color.FromArgb(62, 181, 241);
+                if (photo.Width <= 0) photo.Width = 1;
+                photo.ColorMain = value1 <= value2 ? Color.FromArgb(50, 141, 212) : Color.FromArgb(62, 181, 241);
                 image2 = photo.Fill();
             }
             // Объединяем слои
@@ -50,31 +50,31 @@ namespace PluginKirsanovDemography
             }
             // Пишем цифры
             TextGenerate textAutor = new TextGenerate();
-            textAutor.textString = value1.ToString();
-            textAutor.rectH = 110;
-            textAutor.rectW = 130;
-            textAutor.rectX = 350;
-            textAutor.rectY = 0;
-            textAutor.source = imageOut;
-            textAutor.fontSize = 60;
-            textAutor.colorText = Color.Black;
-            textAutor.stringAlignment = StringAlignment.Far;
-            textAutor.lineAlignment = StringAlignment.Far;
-            textAutor.fontName = "Lato";
+            textAutor.TextString = value1.ToString();
+            textAutor.RectH = 110;
+            textAutor.RectW = 130;
+            textAutor.RectX = 350;
+            textAutor.RectY = 0;
+            textAutor.Source = imageOut;
+            textAutor.FontSize = 60;
+            textAutor.ColorText = Color.Black;
+            textAutor.StringAlignment = StringAlignment.Far;
+            textAutor.LineAlignment = StringAlignment.Far;
+            textAutor.FontName = "Lato";
             //textAutor.debug = true;
             imageOut = textAutor.DrawTextWithEffects();
             // Пишем цифры
-            textAutor.textString = ((value1 - value2) > 0 ? "+" : "") + (value1 - value2).ToString();
-            textAutor.rectH = 105;
-            textAutor.rectW = 135;
-            textAutor.rectX = 475;
-            textAutor.rectY = 0;
-            textAutor.source = imageOut;
-            textAutor.fontSize = 44;
-            textAutor.colorText = Color.FromArgb(116, 116, 116);
-            textAutor.stringAlignment = StringAlignment.Near;
-            textAutor.lineAlignment = StringAlignment.Far;
-            textAutor.fontName = "Lato";
+            textAutor.TextString = ((value1 - value2) > 0 ? "+" : "") + (value1 - value2).ToString();
+            textAutor.RectH = 105;
+            textAutor.RectW = 135;
+            textAutor.RectX = 475;
+            textAutor.RectY = 0;
+            textAutor.Source = imageOut;
+            textAutor.FontSize = 44;
+            textAutor.ColorText = Color.FromArgb(116, 116, 116);
+            textAutor.StringAlignment = StringAlignment.Near;
+            textAutor.LineAlignment = StringAlignment.Far;
+            textAutor.FontName = "Lato";
             //textAutor.debug = true;
             imageOut = textAutor.DrawTextWithEffects();
 
@@ -85,9 +85,9 @@ namespace PluginKirsanovDemography
         {
             // Генерируем новое изображение
             PhotoGenerate photo = new PhotoGenerate();
-            photo.height = 140;
-            photo.width = 620;
-            photo.colorMain = Color.White;
+            photo.Height = 140;
+            photo.Width = 620;
+            photo.ColorMain = Color.White;
             Image imageOut = photo.Fill();
             // Определяем максимальную ширину 
             int maxGirl = Math.Max(girlNow, girlOld);
@@ -97,43 +97,43 @@ namespace PluginKirsanovDemography
             // Рисуем нижний график на всю ширину
             try
             {
-                photo.width = 350 / maxBorn * (girlNow > girlOld ? girlNow : girlOld);
+                photo.Width = 350 / maxBorn * (girlNow > girlOld ? girlNow : girlOld);
             }
             catch
             {
-                photo.width = 1;
+                photo.Width = 1;
             }
-            photo.height = 70;
-            photo.colorMain = girlNow >= girlOld ? Color.FromArgb(215, 86, 156) : Color.FromArgb(220, 120, 173);
+            photo.Height = 70;
+            photo.ColorMain = girlNow >= girlOld ? Color.FromArgb(215, 86, 156) : Color.FromArgb(220, 120, 173);
             Image imageGirlNow = photo.Fill();
             // Рисуем верхний график на % ширины
             Image imageGirlOld = null;
             if (girlOld != 0)
             {
                 //photo.width = girlNow >= girlOld ? (350 / girlNow * girlOld) : (350 / girlOld * girlNow);
-                photo.width = 350 / maxBorn * (girlNow <= girlOld ? girlNow : girlOld);
-                if (photo.width <= 0) photo.width = 1;
-                photo.colorMain = girlNow <= girlOld ? Color.FromArgb(215, 86, 156) : Color.FromArgb(220, 120, 173);
+                photo.Width = 350 / maxBorn * (girlNow <= girlOld ? girlNow : girlOld);
+                if (photo.Width <= 0) photo.Width = 1;
+                photo.ColorMain = girlNow <= girlOld ? Color.FromArgb(215, 86, 156) : Color.FromArgb(220, 120, 173);
                 imageGirlOld = photo.Fill();
             }
             // Рисуем нижний график на всю ширину
             try
             {
-                photo.width = 350 / maxBorn * (boyNow > boyOld ? boyNow : boyOld);
+                photo.Width = 350 / maxBorn * (boyNow > boyOld ? boyNow : boyOld);
             }
             catch
             {
-                photo.width = 1;
+                photo.Width = 1;
             }
-            photo.colorMain = boyNow >= boyOld ? Color.FromArgb(50, 141, 212) : Color.FromArgb(62, 181, 241);
+            photo.ColorMain = boyNow >= boyOld ? Color.FromArgb(50, 141, 212) : Color.FromArgb(62, 181, 241);
             Image imageBoyNow = photo.Fill();
             // Рисуем верхний график на % ширины
             Image imageBoyOld = null;
             if (girlOld != 0)
             {
-                photo.width = boyNow >= boyOld ? (350 / boyNow * boyOld) : (350 / boyOld * boyNow);
-                if (photo.width <= 0) photo.width = 1;
-                photo.colorMain = boyNow <= boyOld ? Color.FromArgb(50, 141, 212) : Color.FromArgb(62, 181, 241);
+                photo.Width = boyNow >= boyOld ? (350 / boyNow * boyOld) : (350 / boyOld * boyNow);
+                if (photo.Width <= 0) photo.Width = 1;
+                photo.ColorMain = boyNow <= boyOld ? Color.FromArgb(50, 141, 212) : Color.FromArgb(62, 181, 241);
                 imageBoyOld = photo.Fill();
             }
             // Объединяем слои
@@ -159,62 +159,62 @@ namespace PluginKirsanovDemography
             }
             // Пишем цифры
             TextGenerate textGirlNow = new TextGenerate();
-            textGirlNow.textString = girlNow.ToString();
-            textGirlNow.rectH = 85;
-            textGirlNow.rectW = 130;
-            textGirlNow.rectX = 350;
-            textGirlNow.rectY = 0;
-            textGirlNow.source = imageOut;
-            textGirlNow.fontSize = 60;
-            textGirlNow.colorText = Color.Black;
-            textGirlNow.stringAlignment = StringAlignment.Far;
-            textGirlNow.lineAlignment = StringAlignment.Far;
-            textGirlNow.fontName = "Lato";
+            textGirlNow.TextString = girlNow.ToString();
+            textGirlNow.RectH = 85;
+            textGirlNow.RectW = 130;
+            textGirlNow.RectX = 350;
+            textGirlNow.RectY = 0;
+            textGirlNow.Source = imageOut;
+            textGirlNow.FontSize = 60;
+            textGirlNow.ColorText = Color.Black;
+            textGirlNow.StringAlignment = StringAlignment.Far;
+            textGirlNow.LineAlignment = StringAlignment.Far;
+            textGirlNow.FontName = "Lato";
             //textGirlNow.debug = true;
             imageOut = textGirlNow.DrawTextWithEffects();
             // Пишем цифры
             TextGenerate textGirlOld = new TextGenerate();
-            textGirlOld.textString = ((girlNow - girlOld) > 0 ? "+" : "") + (girlNow - girlOld).ToString();
-            textGirlOld.rectH = 80;
-            textGirlOld.rectW = 135;
-            textGirlOld.rectX = 475;
-            textGirlOld.rectY = 0;
-            textGirlOld.source = imageOut;
-            textGirlOld.fontSize = 44;
-            textGirlOld.colorText = Color.FromArgb(116, 116, 116);
-            textGirlOld.stringAlignment = StringAlignment.Near;
-            textGirlOld.lineAlignment = StringAlignment.Far;
-            textGirlOld.fontName = "Lato";
+            textGirlOld.TextString = ((girlNow - girlOld) > 0 ? "+" : "") + (girlNow - girlOld).ToString();
+            textGirlOld.RectH = 80;
+            textGirlOld.RectW = 135;
+            textGirlOld.RectX = 475;
+            textGirlOld.RectY = 0;
+            textGirlOld.Source = imageOut;
+            textGirlOld.FontSize = 44;
+            textGirlOld.ColorText = Color.FromArgb(116, 116, 116);
+            textGirlOld.StringAlignment = StringAlignment.Near;
+            textGirlOld.LineAlignment = StringAlignment.Far;
+            textGirlOld.FontName = "Lato";
             //textGirlOld.debug = true;
             imageOut = textGirlOld.DrawTextWithEffects();
             // Пишем цифры
             TextGenerate textBoyNow = new TextGenerate();
-            textBoyNow.textString = boyNow.ToString();
-            textBoyNow.rectH = 85;
-            textBoyNow.rectW = 130;
-            textBoyNow.rectX = 350;
-            textBoyNow.rectY = 70;
-            textBoyNow.source = imageOut;
-            textBoyNow.fontSize = 60;
-            textBoyNow.colorText = Color.Black;
-            textBoyNow.stringAlignment = StringAlignment.Far;
-            textBoyNow.lineAlignment = StringAlignment.Far;
-            textBoyNow.fontName = "Lato";
+            textBoyNow.TextString = boyNow.ToString();
+            textBoyNow.RectH = 85;
+            textBoyNow.RectW = 130;
+            textBoyNow.RectX = 350;
+            textBoyNow.RectY = 70;
+            textBoyNow.Source = imageOut;
+            textBoyNow.FontSize = 60;
+            textBoyNow.ColorText = Color.Black;
+            textBoyNow.StringAlignment = StringAlignment.Far;
+            textBoyNow.LineAlignment = StringAlignment.Far;
+            textBoyNow.FontName = "Lato";
             //textBoyNow.debug = true;
             imageOut = textBoyNow.DrawTextWithEffects();
             // Пишем цифры
             TextGenerate textBoyOld = new TextGenerate();
-            textBoyOld.textString = ((boyNow - boyOld) > 0 ? "+" : "") + (boyNow - boyOld).ToString();
-            textBoyOld.rectH = 80;
-            textBoyOld.rectW = 135;
-            textBoyOld.rectX = 475;
-            textBoyOld.rectY = 70;
-            textBoyOld.source = imageOut;
-            textBoyOld.fontSize = 44;
-            textBoyOld.colorText = Color.FromArgb(116, 116, 116);
-            textBoyOld.stringAlignment = StringAlignment.Near;
-            textBoyOld.lineAlignment = StringAlignment.Far;
-            textBoyOld.fontName = "Lato";
+            textBoyOld.TextString = ((boyNow - boyOld) > 0 ? "+" : "") + (boyNow - boyOld).ToString();
+            textBoyOld.RectH = 80;
+            textBoyOld.RectW = 135;
+            textBoyOld.RectX = 475;
+            textBoyOld.RectY = 70;
+            textBoyOld.Source = imageOut;
+            textBoyOld.FontSize = 44;
+            textBoyOld.ColorText = Color.FromArgb(116, 116, 116);
+            textBoyOld.StringAlignment = StringAlignment.Near;
+            textBoyOld.LineAlignment = StringAlignment.Far;
+            textBoyOld.FontName = "Lato";
             //textBoyOld.debug = true;
             imageOut = textBoyOld.DrawTextWithEffects();
             return imageOut;
@@ -224,9 +224,9 @@ namespace PluginKirsanovDemography
         {
             // Генерируем новое изображение
             PhotoGenerate photo = new PhotoGenerate();
-            photo.height = 150;
-            photo.width = 620;
-            photo.colorMain = Color.White;
+            photo.Height = 150;
+            photo.Width = 620;
+            photo.ColorMain = Color.White;
             Image imageOut = photo.Fill();
             // Рисуем верхний график
             int widht = 350;
@@ -240,11 +240,11 @@ namespace PluginKirsanovDemography
             }
 
             if (widht <= 130) widht = 130;
-            photo.width = widht;
+            photo.Width = widht;
 
-            photo.height = 70;
+            photo.Height = 70;
 
-            photo.colorMain = Color.FromArgb(50, 141, 212);
+            photo.ColorMain = Color.FromArgb(50, 141, 212);
             Image image1 = photo.Fill();
             // Рисуем нижний график
             Image image2 = null;
@@ -260,9 +260,9 @@ namespace PluginKirsanovDemography
             }
 
             if (widht <= 130) widht = 130;
-            photo.width = widht;
-            photo.height = 70;
-            photo.colorMain = Color.FromArgb(62, 181, 241);
+            photo.Width = widht;
+            photo.Height = 70;
+            photo.ColorMain = Color.FromArgb(62, 181, 241);
 
             image2 = photo.Fill();
 
@@ -279,61 +279,61 @@ namespace PluginKirsanovDemography
 
             // Пишем цифры знчениие 1
             TextGenerate textAutor = new TextGenerate();
-            textAutor.textString = value1.ToString();
-            textAutor.rectH = 70;
-            textAutor.rectW = 230;
-            textAutor.rectX = 350;
-            textAutor.rectY = 10;
-            textAutor.source = imageOut;
-            textAutor.fontSize = 60;
-            textAutor.colorText = Color.Black;
-            textAutor.stringAlignment = StringAlignment.Center;
-            textAutor.lineAlignment = StringAlignment.Center;
-            textAutor.fontName = "Lato";
+            textAutor.TextString = value1.ToString();
+            textAutor.RectH = 70;
+            textAutor.RectW = 230;
+            textAutor.RectX = 350;
+            textAutor.RectY = 10;
+            textAutor.Source = imageOut;
+            textAutor.FontSize = 60;
+            textAutor.ColorText = Color.Black;
+            textAutor.StringAlignment = StringAlignment.Center;
+            textAutor.LineAlignment = StringAlignment.Center;
+            textAutor.FontName = "Lato";
             //textAutor.debug = true;
             imageOut = textAutor.DrawTextWithEffects();
             // Пишем год знчениие 1
             textAutor = new TextGenerate();
-            textAutor.textString = yearNow.ToString();
-            textAutor.rectH = 70;
-            textAutor.rectW = 130;
-            textAutor.rectX = 0;
-            textAutor.rectY = 10;
-            textAutor.source = imageOut;
-            textAutor.fontSize = 40;
-            textAutor.colorText = Color.White;
-            textAutor.stringAlignment = StringAlignment.Center;
-            textAutor.lineAlignment = StringAlignment.Center;
-            textAutor.fontName = "Lato";
+            textAutor.TextString = yearNow.ToString();
+            textAutor.RectH = 70;
+            textAutor.RectW = 130;
+            textAutor.RectX = 0;
+            textAutor.RectY = 10;
+            textAutor.Source = imageOut;
+            textAutor.FontSize = 40;
+            textAutor.ColorText = Color.White;
+            textAutor.StringAlignment = StringAlignment.Center;
+            textAutor.LineAlignment = StringAlignment.Center;
+            textAutor.FontName = "Lato";
             //textAutor.debug = true;
             imageOut = textAutor.DrawTextWithEffects();
             // Пишем цифры значение 2
-            textAutor.textString = value2.ToString();
-            textAutor.rectH = 70;
-            textAutor.rectW = 230;
-            textAutor.rectX = 350;
-            textAutor.rectY = 80;
-            textAutor.source = imageOut;
-            textAutor.fontSize = 60;
-            textAutor.colorText = Color.Black;
-            textAutor.stringAlignment = StringAlignment.Center;
-            textAutor.lineAlignment = StringAlignment.Center;
-            textAutor.fontName = "Lato";
+            textAutor.TextString = value2.ToString();
+            textAutor.RectH = 70;
+            textAutor.RectW = 230;
+            textAutor.RectX = 350;
+            textAutor.RectY = 80;
+            textAutor.Source = imageOut;
+            textAutor.FontSize = 60;
+            textAutor.ColorText = Color.Black;
+            textAutor.StringAlignment = StringAlignment.Center;
+            textAutor.LineAlignment = StringAlignment.Center;
+            textAutor.FontName = "Lato";
             //textAutor.debug = true;
             imageOut = textAutor.DrawTextWithEffects();
             // Пишем год знчениие 2
             textAutor = new TextGenerate();
-            textAutor.textString = (yearNow - 1).ToString();
-            textAutor.rectH = 70;
-            textAutor.rectW = 130;
-            textAutor.rectX = 0;
-            textAutor.rectY = 80;
-            textAutor.source = imageOut;
-            textAutor.fontSize = 40;
-            textAutor.colorText = Color.White;
-            textAutor.stringAlignment = StringAlignment.Center;
-            textAutor.lineAlignment = StringAlignment.Center;
-            textAutor.fontName = "Lato";
+            textAutor.TextString = (yearNow - 1).ToString();
+            textAutor.RectH = 70;
+            textAutor.RectW = 130;
+            textAutor.RectX = 0;
+            textAutor.RectY = 80;
+            textAutor.Source = imageOut;
+            textAutor.FontSize = 40;
+            textAutor.ColorText = Color.White;
+            textAutor.StringAlignment = StringAlignment.Center;
+            textAutor.LineAlignment = StringAlignment.Center;
+            textAutor.FontName = "Lato";
             //textAutor.debug = true;
             imageOut = textAutor.DrawTextWithEffects();
 

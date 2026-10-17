@@ -10,30 +10,80 @@ namespace PhotoEdit
     /// </summary>
     public class PhotoSize
     {
+        private Image _source = null;
+        private int _width = 800;
+        private int _height = 800;
+        private float _zoom = 0;
+        private float _vertical = 0;
+        private float _horizontal = 0;
+        private alignVertical _alignV = alignVertical.Center;
+        private alignHorizontal _alignH = alignHorizontal.Center;
+        private bool _preventOverflow = true;
+
         /// <summary>
         /// Исходное изображение
         /// </summary>
-        public Image source = null;
+        public Image Source
+        {
+            get => _source;
+            set => _source = value;
+        }
+
         /// <summary>
-        /// Ширина итогового изображения в пикселях
+        /// Ширина итогового изображения в пикселях (должна быть > 0)
         /// </summary>
-        public int width = 800;
+        public int Width
+        {
+            get => _width;
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException(nameof(value), "Ширина изображения должна быть больше 0.");
+                _width = value;
+            }
+        }
+
         /// <summary>
-        /// Высота итогового изображения в пикселях
+        /// Высота итогового изображения в пикселях (должна быть > 0)
         /// </summary>
-        public int height = 800;
+        public int Height
+        {
+            get => _height;
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException(nameof(value), "Высота изображения должна быть больше 0.");
+                _height = value;
+            }
+        }
+
         /// <summary>
-        /// Увеличение (+) или уменьшение (-/отрицательное значение) итогового изображения
+        /// Увеличение (+) или уменьшение (-/отрицательное значение) итогового изображения в процентах
         /// </summary>
-        public float zoom = 0;
+        public float Zoom
+        {
+            get => _zoom;
+            set => _zoom = value;
+        }
+
         /// <summary>
-        /// Сдвиг итогового изображения по вертикали
+        /// Сдвиг итогового изображения по вертикали в процентах
         /// </summary>
-        public float vertical = 0;
+        public float Vertical
+        {
+            get => _vertical;
+            set => _vertical = value;
+        }
+
         /// <summary>
-        /// Сдвиг итогового изображения по горизонтали
+        /// Сдвиг итогового изображения по горизонтали в процентах
         /// </summary>
-        public float horizontal = 0;
+        public float Horizontal
+        {
+            get => _horizontal;
+            set => _horizontal = value;
+        }
+
         /// <summary>
         /// Положение изображения по вертикали
         /// </summary>
@@ -41,6 +91,7 @@ namespace PhotoEdit
         {
             Center, Top, Bottom
         };
+
         /// <summary>
         /// Положение изображения по горизонтали
         /// </summary>
@@ -48,19 +99,33 @@ namespace PhotoEdit
         {
             Center, Left, Right
         };
+
         /// <summary>
         /// Положение по вертикали
         /// </summary>
-        public alignVertical alignV = alignVertical.Center;
+        public alignVertical AlignV
+        {
+            get => _alignV;
+            set => _alignV = value;
+        }
+
         /// <summary>
         /// Положение по горизонтали
         /// </summary>
-        public alignHorizontal alignH = alignHorizontal.Center;
+        public alignHorizontal AlignH
+        {
+            get => _alignH;
+            set => _alignH = value;
+        }
 
         /// <summary>
         /// Предотвращение пустых областей на холсте
         /// </summary>
-        public bool preventOverflow = true;
+        public bool PreventOverflow
+        {
+            get => _preventOverflow;
+            set => _preventOverflow = value;
+        }
 
         /// <summary>
         /// Изменение размера изображения
@@ -68,29 +133,29 @@ namespace PhotoEdit
         /// <returns></returns>
         public Image ScaleImage()
         {
-            if (source == null)
-                throw new ArgumentNullException(nameof(source), "Исходное изображение не может быть null.");
+            if (Source == null)
+                throw new ArgumentNullException(nameof(Source), "Исходное изображение не может быть null.");
 
-            Image dest = new Bitmap(width, height);
+            Image dest = new Bitmap(Width, Height);
             using (Graphics gr = Graphics.FromImage(dest))
             {
-                gr.FillRectangle(Brushes.White, 0, 0, width, height);
+                gr.FillRectangle(Brushes.White, 0, 0, Width, Height);
                 gr.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
 
-                float srcwidth = source.Width;
-                float srcheight = source.Height;
-                float dstwidth = width;
-                float dstheight = height;
+                float srcwidth = Source.Width;
+                float srcheight = Source.Height;
+                float dstwidth = Width;
+                float dstheight = Height;
                 float left = 0;
                 float top = 0;
 
                 // Применяем зум
 
                 // Предотвращение пустых областей от отрицательного зума
-                if (preventOverflow && zoom < 0) zoom = 0;
+                if (PreventOverflow && Zoom < 0) Zoom = 0;
 
-                dstwidth += dstwidth * zoom / 100;
-                dstheight += dstheight * zoom / 100;
+                dstwidth += dstwidth * Zoom / 100;
+                dstheight += dstheight * Zoom / 100;
 
                 // Сохраняем исходные размеры после зума
                 float zoomedWidth = dstwidth;
@@ -118,48 +183,48 @@ namespace PhotoEdit
                 // Расчет позиции с учетом выравнивания
                 if (isLandscape)
                 {
-                    if (alignH == alignHorizontal.Center)
+                    if (AlignH == alignHorizontal.Center)
                     {
-                        left = -(dstwidth - width) / 2;
+                        left = -(dstwidth - Width) / 2;
                     }
-                    else if (alignH == alignHorizontal.Right)
+                    else if (AlignH == alignHorizontal.Right)
                     {
-                        left = -(dstwidth - width);
+                        left = -(dstwidth - Width);
                     }
 
                     // Only adjust left offset if alignment is not Center
-                    //if (alignH != alignHorizontal.Center)
+                    //if (AlignH != alignHorizontal.Center)
                     //{
-                    //    left = left - width * horizontal * -1 / 100;
+                    //    left = left - Width * Horizontal * -1 / 100;
                     //}
                 }
                 else
                 {
-                    if (alignV == alignVertical.Center)
+                    if (AlignV == alignVertical.Center)
                     {
-                        top = -(dstheight - height) / 2;
+                        top = -(dstheight - Height) / 2;
                     }
-                    else if (alignV == alignVertical.Bottom)
+                    else if (AlignV == alignVertical.Bottom)
                     {
-                        top = -(dstheight - height);
+                        top = -(dstheight - Height);
                     }
                     // Only adjust top offset if alignment is not Center
-                    //if (alignV != alignVertical.Center)
+                    //if (AlignV != alignVertical.Center)
                     //{
-                    //    top = top - height * vertical * -1 / 100;
+                    //    top = top - Height * Vertical * -1 / 100;
                     //}
                 }
 
                 // Применяем пользовательские сдвиги
-                left += width * horizontal / 100;
-                top += height * vertical / 100;
+                left += Width * Horizontal / 100;
+                top += Height * Vertical / 100;
 
                 // Корректировка для предотвращения пустых областей
-                if (preventOverflow)
+                if (PreventOverflow)
                 {
                     // Рассчитываем масштаб для полного покрытия холста
-                    float scaleX = width / dstwidth;
-                    float scaleY = height / dstheight;
+                    float scaleX = Width / dstwidth;
+                    float scaleY = Height / dstheight;
                     float scale = Math.Max(scaleX, scaleY);
 
                     // Увеличиваем только если текущее изображение меньше холста
@@ -170,8 +235,8 @@ namespace PhotoEdit
                     }
 
                     // Корректируем позицию
-                    float maxLeft = width - dstwidth;
-                    float maxTop = height - dstheight;
+                    float maxLeft = Width - dstwidth;
+                    float maxTop = Height - dstheight;
 
                     left = Math.Max(left, maxLeft);
                     left = Math.Min(left, 0);
@@ -179,7 +244,7 @@ namespace PhotoEdit
                     top = Math.Min(top, 0);
                 }
 
-                gr.DrawImage(source, left, top, dstwidth, dstheight);
+                gr.DrawImage(Source, left, top, dstwidth, dstheight);
                 return dest;
             }
         }

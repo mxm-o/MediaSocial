@@ -1,4 +1,4 @@
-// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+п»ї// Copyright В© 2023 Maxim Otrokhov. All rights reserved.
 
 using System;
 using System.Drawing;
@@ -79,7 +79,7 @@ namespace Plugin1D
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 11;
-            this.btnClear.Text = "Очистить";
+            this.btnClear.Text = "РћС‡РёСЃС‚РёС‚СЊ";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
@@ -89,7 +89,7 @@ namespace Plugin1D
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(75, 23);
             this.btnCreate.TabIndex = 10;
-            this.btnCreate.Text = "Создать";
+            this.btnCreate.Text = "РЎРѕР·РґР°С‚СЊ";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
@@ -122,7 +122,7 @@ namespace Plugin1D
             this.labelT2.Name = "labelT2";
             this.labelT2.Size = new System.Drawing.Size(86, 13);
             this.labelT2.TabIndex = 0;
-            this.labelT2.Text = "Источник фото:";
+            this.labelT2.Text = "РСЃС‚РѕС‡РЅРёРє С„РѕС‚Рѕ:";
             // 
             // panel1
             // 
@@ -144,7 +144,7 @@ namespace Plugin1D
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Размер шрифта";
+            this.label1.Text = "Р Р°Р·РјРµСЂ С€СЂРёС„С‚Р°";
             // 
             // numericUpDown1
             // 
@@ -171,7 +171,7 @@ namespace Plugin1D
             this.labelT1.Name = "labelT1";
             this.labelT1.Size = new System.Drawing.Size(61, 13);
             this.labelT1.TabIndex = 0;
-            this.labelT1.Text = "Заголовок";
+            this.labelT1.Text = "Р—Р°РіРѕР»РѕРІРѕРє";
             // 
             // ctlMain
             // 
@@ -246,25 +246,25 @@ namespace Plugin1D
             Image[] img = myHost.SendImages();
 
             PhotoGenerate photo = new PhotoGenerate();
-            photo.height = 900;
-            photo.width = 800;
-            photo.colorMain = Color.Yellow;
-            photo.colorSecond = Color.Goldenrod;
-            photo.colorPen = Color.CornflowerBlue;
-            photo.widthPen = 2;
+            photo.Height = 900;
+            photo.Width = 800;
+            photo.ColorMain = Color.Yellow;
+            photo.ColorSecond = Color.Goldenrod;
+            photo.ColorPen = Color.CornflowerBlue;
+            photo.WidthPen = 2;
             Image retImage = photo.Fill();
 
             TextGenerate textE = new TextGenerate();
-            textE.textString = "Новости";
-            textE.rectH = 800;
-            textE.rectW = 700;
-            textE.source = retImage;
-            textE.fontSize = 100;
-            textE.colorText = Color.White;
-            textE.colorStroke = Color.Red;
-            textE.wightStroke = 4;
-            textE.colorShadow = Color.Black;
-            textE.wightShadow = 2;
+            textE.TextString = "РќРѕРІРѕСЃС‚Рё";
+            textE.RectH = 800;
+            textE.RectW = 700;
+            textE.Source = retImage;
+            textE.FontSize = 100;
+            textE.ColorText = Color.White;
+            textE.ColorStroke = Color.Red;
+            textE.WidthStroke = 4;
+            textE.ColorShadow = Color.Black;
+            textE.WidthShadow = 2;
             retImage = textE.DrawTextWithEffects();
 
             myHost.ReciveImage(retImage);

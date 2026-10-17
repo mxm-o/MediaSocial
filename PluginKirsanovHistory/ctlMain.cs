@@ -1,4 +1,4 @@
-// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+п»ї// Copyright В© 2023 Maxim Otrokhov. All rights reserved.
 
 using System;
 using System.Drawing;
@@ -75,7 +75,7 @@ namespace PluginKirsanovHistory
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 11;
-            this.btnClear.Text = "Очистить";
+            this.btnClear.Text = "РћС‡РёСЃС‚РёС‚СЊ";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
@@ -85,7 +85,7 @@ namespace PluginKirsanovHistory
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(75, 23);
             this.btnCreate.TabIndex = 10;
-            this.btnCreate.Text = "Создать";
+            this.btnCreate.Text = "РЎРѕР·РґР°С‚СЊ";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
@@ -119,7 +119,7 @@ namespace PluginKirsanovHistory
             this.labelT2.Name = "labelT2";
             this.labelT2.Size = new System.Drawing.Size(60, 13);
             this.labelT2.TabIndex = 0;
-            this.labelT2.Text = "Название:";
+            this.labelT2.Text = "РќР°Р·РІР°РЅРёРµ:";
             // 
             // ctlMain
             // 
@@ -182,7 +182,7 @@ namespace PluginKirsanovHistory
         private void btnCreate_Click(object sender, EventArgs e)
         {
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            // Считываем шаблонное изображение
+            // РЎС‡РёС‚С‹РІР°РµРј С€Р°Р±Р»РѕРЅРЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ
             Image imageMain = null;
             try
             {
@@ -193,61 +193,61 @@ namespace PluginKirsanovHistory
 
             }
 
-            // Получаем исходник фотографии
+            // РџРѕР»СѓС‡Р°РµРј РёСЃС…РѕРґРЅРёРє С„РѕС‚РѕРіСЂР°С„РёРё
             Image ImageSouser = myHost.SendImages()[0];
             if (ImageSouser == null)
             {
-                MessageBox.Show("Не выбрано изображение.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("РќРµ РІС‹Р±СЂР°РЅРѕ РёР·РѕР±СЂР°Р¶РµРЅРёРµ.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             if (textBoxT2.Text == "")
             {
-                MessageBox.Show("Не указано название фото.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("РќРµ СѓРєР°Р·Р°РЅРѕ РЅР°Р·РІР°РЅРёРµ С„РѕС‚Рѕ.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             if (!CheckFont.FontExists("Lato"))
             {
-                MessageBox.Show("В системе отсутствуют нужные шрифты. Проверьте наличие требуемых шрифтов к данному дизайну.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Р’ СЃРёСЃС‚РµРјРµ РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РЅСѓР¶РЅС‹Рµ С€СЂРёС„С‚С‹. РџСЂРѕРІРµСЂСЊС‚Рµ РЅР°Р»РёС‡РёРµ С‚СЂРµР±СѓРµРјС‹С… С€СЂРёС„С‚РѕРІ Рє РґР°РЅРЅРѕРјСѓ РґРёР·Р°Р№РЅСѓ.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             Enabled = false;
 
-            // Генерируем новое изображение
+            // Р“РµРЅРµСЂРёСЂСѓРµРј РЅРѕРІРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ
             PhotoGenerate photo = new PhotoGenerate();
-            photo.height = imageMain.Height;
-            photo.width = imageMain.Width;
-            photo.colorMain = Color.White;
+            photo.Height = imageMain.Height;
+            photo.Width = imageMain.Width;
+            photo.ColorMain = Color.White;
             Image imageOut = photo.Fill();
-            // Раскладываем по слоям
+            // Р Р°СЃРєР»Р°РґС‹РІР°РµРј РїРѕ СЃР»РѕСЏРј
             Merge mergeImage = new Merge();
             mergeImage.sourceBottom = imageOut;
             mergeImage.sourceTop = ImageSouser;
             mergeImage.top = 140;
             mergeImage.left = 22;
-            imageOut = mergeImage.MergeImage(); // На фон помещаем фотографию
+            imageOut = mergeImage.MergeImage(); // РќР° С„РѕРЅ РїРѕРјРµС‰Р°РµРј С„РѕС‚РѕРіСЂР°С„РёСЋ
             mergeImage.sourceBottom = imageOut;
             mergeImage.sourceTop = imageMain;
             mergeImage.top = 0;
             mergeImage.left = 0;
-            imageOut = mergeImage.MergeImage(); // Помещаем оформление
+            imageOut = mergeImage.MergeImage(); // РџРѕРјРµС‰Р°РµРј РѕС„РѕСЂРјР»РµРЅРёРµ
 
-            // Пишем название
+            // РџРёС€РµРј РЅР°Р·РІР°РЅРёРµ
 
             TextGenerate textAutor = new TextGenerate();
-            textAutor.textString = textBoxT2.Text;
-            textAutor.rectH = 100;
-            textAutor.rectW = 1220;
-            textAutor.rectX = 540;
-            textAutor.rectY = 1670;
-            textAutor.fontStyle = FontStyle.Bold;
-            textAutor.source = imageOut;
-            textAutor.fontSize = 40;
-            textAutor.colorText = Color.White;
-            textAutor.stringAlignment = StringAlignment.Far;
-            textAutor.fontName = "Lato";
+            textAutor.TextString = textBoxT2.Text;
+            textAutor.RectH = 100;
+            textAutor.RectW = 1220;
+            textAutor.RectX = 540;
+            textAutor.RectY = 1670;
+            textAutor.FontStyle = FontStyle.Bold;
+            textAutor.Source = imageOut;
+            textAutor.FontSize = 40;
+            textAutor.ColorText = Color.White;
+            textAutor.StringAlignment = StringAlignment.Far;
+            textAutor.FontName = "Lato";
             //textAutor.debug = true;
             imageOut = textAutor.DrawTextWithEffects();
 

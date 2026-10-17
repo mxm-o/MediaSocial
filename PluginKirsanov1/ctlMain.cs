@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Drawing;
 using System.Windows.Forms;
 using PluginInterface;
@@ -86,7 +86,7 @@ namespace Plugin1D
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 11;
-            this.btnClear.Text = "Очистить";
+            this.btnClear.Text = "РћС‡РёСЃС‚РёС‚СЊ";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
@@ -96,7 +96,7 @@ namespace Plugin1D
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(75, 23);
             this.btnCreate.TabIndex = 10;
-            this.btnCreate.Text = "Создать";
+            this.btnCreate.Text = "РЎРѕР·РґР°С‚СЊ";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
@@ -130,7 +130,7 @@ namespace Plugin1D
             this.labelT2.Name = "labelT2";
             this.labelT2.Size = new System.Drawing.Size(86, 13);
             this.labelT2.TabIndex = 0;
-            this.labelT2.Text = "Источник фото:";
+            this.labelT2.Text = "РСЃС‚РѕС‡РЅРёРє С„РѕС‚Рѕ:";
             // 
             // panel1
             // 
@@ -163,7 +163,7 @@ namespace Plugin1D
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Размер шрифта";
+            this.label1.Text = "Р Р°Р·РјРµСЂ С€СЂРёС„С‚Р°";
             // 
             // numericUpDown1
             // 
@@ -207,7 +207,7 @@ namespace Plugin1D
             this.labelT1.Name = "labelT1";
             this.labelT1.Size = new System.Drawing.Size(61, 13);
             this.labelT1.TabIndex = 0;
-            this.labelT1.Text = "Заголовок";
+            this.labelT1.Text = "Р—Р°РіРѕР»РѕРІРѕРє";
             // 
             // comboBoxImages
             // 
@@ -238,7 +238,7 @@ namespace Plugin1D
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 13);
             this.label2.TabIndex = 15;
-            this.label2.Text = "Иконка новости";
+            this.label2.Text = "РРєРѕРЅРєР° РЅРѕРІРѕСЃС‚Рё";
             // 
             // ctlMain
             // 
@@ -321,19 +321,19 @@ namespace Plugin1D
         private void btnCreate_Click(object sender, EventArgs e)
         {
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            // Проверка исходных данных
+            // РџСЂРѕРІРµСЂРєР° РёСЃС…РѕРґРЅС‹С… РґР°РЅРЅС‹С…
             if (textBoxT1.Text == "")
             {
-                MessageBox.Show("Отсутствует заголовок.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("РћС‚СЃСѓС‚СЃС‚РІСѓРµС‚ Р·Р°РіРѕР»РѕРІРѕРє.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             if (!(File.Exists(Path.Combine(path, "main.png")) || File.Exists(Path.Combine(path, comboBoxImages.SelectedItem.ToString() + ".png"))))
             {
-                MessageBox.Show("Плагин поврежден. Обратитесь к разработчику.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("РџР»Р°РіРёРЅ РїРѕРІСЂРµР¶РґРµРЅ. РћР±СЂР°С‚РёС‚РµСЃСЊ Рє СЂР°Р·СЂР°Р±РѕС‚С‡РёРєСѓ.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            // Считываем шаблонное изображение
+            // РЎС‡РёС‚С‹РІР°РµРј С€Р°Р±Р»РѕРЅРЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ
             Image imageMain = null;
             try
             {
@@ -342,23 +342,23 @@ namespace Plugin1D
             {
 
             }
-            // Генерируем новое изображение
+            // Р“РµРЅРµСЂРёСЂСѓРµРј РЅРѕРІРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ
             PhotoGenerate photo = new PhotoGenerate();
-            photo.height = imageMain.Height;
-            photo.width = imageMain.Width;
-            photo.colorMain = Color.White;
+            photo.Height = imageMain.Height;
+            photo.Width = imageMain.Width;
+            photo.ColorMain = Color.White;
             Image imageOut = photo.Fill();
-            // Получаем исходник фотографии
+            // РџРѕР»СѓС‡Р°РµРј РёСЃС…РѕРґРЅРёРє С„РѕС‚РѕРіСЂР°С„РёРё
             Image ImageSouser = myHost.SendImages()[0];
-            // Раскладываем по слоям
+            // Р Р°СЃРєР»Р°РґС‹РІР°РµРј РїРѕ СЃР»РѕСЏРј
             Merge mergeImage = new Merge();
             mergeImage.sourceBottom = imageOut;
             mergeImage.sourceTop = ImageSouser;
-            imageOut = mergeImage.MergeImage(); // На фон помещаем фотографию
+            imageOut = mergeImage.MergeImage(); // РќР° С„РѕРЅ РїРѕРјРµС‰Р°РµРј С„РѕС‚РѕРіСЂР°С„РёСЋ
             mergeImage.sourceBottom = imageOut;
             mergeImage.sourceTop = imageMain;
-            imageOut = mergeImage.MergeImage(); // Помещаем оформление
-            // Рисуем иконку новости
+            imageOut = mergeImage.MergeImage(); // РџРѕРјРµС‰Р°РµРј РѕС„РѕСЂРјР»РµРЅРёРµ
+            // Р РёСЃСѓРµРј РёРєРѕРЅРєСѓ РЅРѕРІРѕСЃС‚Рё
             try
             {
                 mergeImage.sourceBottom = imageOut;
@@ -370,35 +370,35 @@ namespace Plugin1D
             {
 
             }
-            // Пишем текст названия
+            // РџРёС€РµРј С‚РµРєСЃС‚ РЅР°Р·РІР°РЅРёСЏ
             TextGenerate textE = new TextGenerate();
-            textE.textString = textBoxT1.Text;
-            textE.rectH = 250;
-            textE.rectW = 1380;
-            textE.rectX = 375;
-            textE.rectY = 1395;
-            textE.source = imageOut;
-            textE.fontSize = (float)numericUpDown1.Value;
-            textE.colorText = Color.Black;
-            textE.fontName = "Lato";
-            textE.lineAlignment = StringAlignment.Center;
+            textE.TextString = textBoxT1.Text;
+            textE.RectH = 250;
+            textE.RectW = 1380;
+            textE.RectX = 375;
+            textE.RectY = 1395;
+            textE.Source = imageOut;
+            textE.FontSize = (float)numericUpDown1.Value;
+            textE.ColorText = Color.Black;
+            textE.FontName = "Lato";
+            textE.LineAlignment = StringAlignment.Center;
             //textE.debug = true;
             imageOut = textE.DrawTextWithEffects();
-            // Пишем автора фото (если нужно)
+            // РџРёС€РµРј Р°РІС‚РѕСЂР° С„РѕС‚Рѕ (РµСЃР»Рё РЅСѓР¶РЅРѕ)
             if (textBoxT2.Text != "")
             {
                 TextGenerate textAutor = new TextGenerate();
-                textAutor.textString = "Фото: " + textBoxT2.Text;
-                textAutor.rectH = 100;
-                textAutor.rectW = 920;
-                textAutor.rectX = 820;
-                textAutor.rectY = 1670;
-                textAutor.fontStyle = FontStyle.Bold;
-                textAutor.source = imageOut;
-                textAutor.fontSize = 40;
-                textAutor.colorText = Color.White;
-                textAutor.stringAlignment = StringAlignment.Far;
-                textAutor.fontName = "Lato";
+                textAutor.TextString = "Р¤РѕС‚Рѕ: " + textBoxT2.Text;
+                textAutor.RectH = 100;
+                textAutor.RectW = 920;
+                textAutor.RectX = 820;
+                textAutor.RectY = 1670;
+                textAutor.FontStyle = FontStyle.Bold;
+                textAutor.Source = imageOut;
+                textAutor.FontSize = 40;
+                textAutor.ColorText = Color.White;
+                textAutor.StringAlignment = StringAlignment.Far;
+                textAutor.FontName = "Lato";
                 //textAutor.debug = true;
                 imageOut = textAutor.DrawTextWithEffects();
             }
@@ -406,7 +406,7 @@ namespace Plugin1D
 
         }
 
-        // Загрузка списка иконок для заголовка новости
+        // Р—Р°РіСЂСѓР·РєР° СЃРїРёСЃРєР° РёРєРѕРЅРѕРє РґР»СЏ Р·Р°РіРѕР»РѕРІРєР° РЅРѕРІРѕСЃС‚Рё
         private void LoadingImages()
         {
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -421,7 +421,7 @@ namespace Plugin1D
             }
         }
 
-        // Выбор изображения иконки новости
+        // Р’С‹Р±РѕСЂ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РёРєРѕРЅРєРё РЅРѕРІРѕСЃС‚Рё
         private void comboBoxImages_SelectedIndexChanged(object sender, EventArgs e)
         {
             string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "images");
@@ -434,21 +434,21 @@ namespace Plugin1D
 
             }
         }
-        // Расчет размера шрифта
+        // Р Р°СЃС‡РµС‚ СЂР°Р·РјРµСЂР° С€СЂРёС„С‚Р°
         private void textBoxT1_TextChanged(object sender, EventArgs e)
         {
-            // Расчет размера шрифта
+            // Р Р°СЃС‡РµС‚ СЂР°Р·РјРµСЂР° С€СЂРёС„С‚Р°
             CalculateFontSize fontSize = new CalculateFontSize();
-            fontSize.baseFontSize = 105;
-            fontSize.fontSizeRatio = 0.5;
+            fontSize.BaseFontSize = 105;
+            fontSize.FontSizeRatio = 0.5;
             StringFormat stringFormat = new StringFormat();
             stringFormat.Alignment = StringAlignment.Center;
             stringFormat.LineAlignment = StringAlignment.Center;
-            decimal fontsize = (decimal)fontSize.CalcMaxFontSize(textBoxT1.Text, "Lato", fontSize.FontSize(textBoxT1.Text), FontStyle.Regular, 1380, 250, stringFormat);
+            decimal fontsize = (decimal)fontSize.CalcMaxFontSize(textBoxT1.Text, "Lato", fontSize.GetFontSize(textBoxT1.Text), FontStyle.Regular, 1380, 250, stringFormat);
             if (fontsize < numericUpDown1.Minimum) fontsize = numericUpDown1.Minimum;
             if (fontsize > numericUpDown1.Maximum) fontsize = numericUpDown1.Maximum;
             numericUpDown1.Value = fontsize;
-            // Отображение длины текста
+            // РћС‚РѕР±СЂР°Р¶РµРЅРёРµ РґР»РёРЅС‹ С‚РµРєСЃС‚Р°
             labelTextLeght.Text = textBoxT1.Text.Length.ToString();
             labelTextLeght.ForeColor = textBoxT1.Text.Length > 60 ? Color.Red : SystemColors.ControlText;
         }

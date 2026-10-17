@@ -1,4 +1,4 @@
-// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+п»ї// Copyright В© 2023 Maxim Otrokhov. All rights reserved.
 
 using System;
 using System.Drawing;
@@ -93,7 +93,7 @@ namespace PluginKirsanovNewsNewYears
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 11;
-            this.btnClear.Text = "Очистить";
+            this.btnClear.Text = "РћС‡РёСЃС‚РёС‚СЊ";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
@@ -103,7 +103,7 @@ namespace PluginKirsanovNewsNewYears
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(75, 23);
             this.btnCreate.TabIndex = 10;
-            this.btnCreate.Text = "Создать";
+            this.btnCreate.Text = "РЎРѕР·РґР°С‚СЊ";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
@@ -137,7 +137,7 @@ namespace PluginKirsanovNewsNewYears
             this.labelT2.Name = "labelT2";
             this.labelT2.Size = new System.Drawing.Size(86, 13);
             this.labelT2.TabIndex = 0;
-            this.labelT2.Text = "Источник фото:";
+            this.labelT2.Text = "РСЃС‚РѕС‡РЅРёРє С„РѕС‚Рѕ:";
             // 
             // panelTitle
             // 
@@ -173,7 +173,7 @@ namespace PluginKirsanovNewsNewYears
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 13);
             this.label2.TabIndex = 15;
-            this.label2.Text = "Иконка новости";
+            this.label2.Text = "РРєРѕРЅРєР° РЅРѕРІРѕСЃС‚Рё";
             // 
             // comboBoxImages
             // 
@@ -204,7 +204,7 @@ namespace PluginKirsanovNewsNewYears
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Размер шрифта";
+            this.label1.Text = "Р Р°Р·РјРµСЂ С€СЂРёС„С‚Р°";
             // 
             // numericUpDown1
             // 
@@ -248,7 +248,7 @@ namespace PluginKirsanovNewsNewYears
             this.labelT1.Name = "labelT1";
             this.labelT1.Size = new System.Drawing.Size(57, 13);
             this.labelT1.TabIndex = 0;
-            this.labelT1.Text = "Название";
+            this.labelT1.Text = "РќР°Р·РІР°РЅРёРµ";
             // 
             // checkBoxTitle
             // 
@@ -257,7 +257,7 @@ namespace PluginKirsanovNewsNewYears
             this.checkBoxTitle.Name = "checkBoxTitle";
             this.checkBoxTitle.Size = new System.Drawing.Size(124, 17);
             this.checkBoxTitle.TabIndex = 13;
-            this.checkBoxTitle.Text = "Заголовок новости";
+            this.checkBoxTitle.Text = "Р—Р°РіРѕР»РѕРІРѕРє РЅРѕРІРѕСЃС‚Рё";
             this.checkBoxTitle.UseVisualStyleBackColor = true;
             this.checkBoxTitle.CheckedChanged += new System.EventHandler(this.checkBoxTitle_CheckedChanged);
             // 
@@ -282,7 +282,7 @@ namespace PluginKirsanovNewsNewYears
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(113, 13);
             this.label3.TabIndex = 17;
-            this.label3.Text = "Расположение фото:";
+            this.label3.Text = "Р Р°СЃРїРѕР»РѕР¶РµРЅРёРµ С„РѕС‚Рѕ:";
             // 
             // comboBoxFormat
             // 
@@ -291,9 +291,9 @@ namespace PluginKirsanovNewsNewYears
             this.comboBoxFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFormat.FormattingEnabled = true;
             this.comboBoxFormat.Items.AddRange(new object[] {
-            "Полный экран",
-            "Горизонтальная",
-            "Вертикальная"});
+            "РџРѕР»РЅС‹Р№ СЌРєСЂР°РЅ",
+            "Р“РѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅР°СЏ",
+            "Р’РµСЂС‚РёРєР°Р»СЊРЅР°СЏ"});
             this.comboBoxFormat.Location = new System.Drawing.Point(2, 44);
             this.comboBoxFormat.Name = "comboBoxFormat";
             this.comboBoxFormat.Size = new System.Drawing.Size(187, 21);
@@ -385,40 +385,40 @@ namespace PluginKirsanovNewsNewYears
         private void btnCreate_Click(object sender, EventArgs e)
         {
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            // Проверка исходных данных
+            // РџСЂРѕРІРµСЂРєР° РёСЃС…РѕРґРЅС‹С… РґР°РЅРЅС‹С…
             if (checkBoxTitle.Checked && textBoxT1.Text == "")
             {
-                MessageBox.Show("Отсутствует заголовок.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("РћС‚СЃСѓС‚СЃС‚РІСѓРµС‚ Р·Р°РіРѕР»РѕРІРѕРє.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Получаем исходник фотографии
+            // РџРѕР»СѓС‡Р°РµРј РёСЃС…РѕРґРЅРёРє С„РѕС‚РѕРіСЂР°С„РёРё
             Image ImageSouser = myHost.SendImages()[0];
             if (ImageSouser == null)
             {
-                MessageBox.Show("Не выбрано изображение.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("РќРµ РІС‹Р±СЂР°РЅРѕ РёР·РѕР±СЂР°Р¶РµРЅРёРµ.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             if (!(File.Exists(Path.Combine(path, "main.png"))) || !(File.Exists(Path.Combine(path, "title.png"))) || !(File.Exists(Path.Combine(path, "back.png"))) || File.Exists(Path.Combine(path, comboBoxImages.SelectedItem.ToString() + ".png")))
             {
-                MessageBox.Show("Плагин поврежден. Обратитесь к разработчику.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("РџР»Р°РіРёРЅ РїРѕРІСЂРµР¶РґРµРЅ. РћР±СЂР°С‚РёС‚РµСЃСЊ Рє СЂР°Р·СЂР°Р±РѕС‚С‡РёРєСѓ.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             if (!CheckFont.FontExists("Lato"))
             {
-                MessageBox.Show("В системе отсутствуют нужные шрифты. Проверьте наличие требуемых шрифтов к данному дизайну.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Р’ СЃРёСЃС‚РµРјРµ РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РЅСѓР¶РЅС‹Рµ С€СЂРёС„С‚С‹. РџСЂРѕРІРµСЂСЊС‚Рµ РЅР°Р»РёС‡РёРµ С‚СЂРµР±СѓРµРјС‹С… С€СЂРёС„С‚РѕРІ Рє РґР°РЅРЅРѕРјСѓ РґРёР·Р°Р№РЅСѓ.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Задаем основные изображения
-            Image imageMain = null;  // Дизайн
-            Image imageBack = null; // Фон
-            Image imageTitle = null; // Название
-            Image ImageBlur = null; // Размытое фото
+            // Р—Р°РґР°РµРј РѕСЃРЅРѕРІРЅС‹Рµ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
+            Image imageMain = null;  // Р”РёР·Р°Р№РЅ
+            Image imageBack = null; // Р¤РѕРЅ
+            Image imageTitle = null; // РќР°Р·РІР°РЅРёРµ
+            Image ImageBlur = null; // Р Р°Р·РјС‹С‚РѕРµ С„РѕС‚Рѕ
 
-            // Считываем изображениt основного дизайна
+            // РЎС‡РёС‚С‹РІР°РµРј РёР·РѕР±СЂР°Р¶РµРЅРёt РѕСЃРЅРѕРІРЅРѕРіРѕ РґРёР·Р°Р№РЅР°
             try
             {
                 imageMain = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "main.png"))));
@@ -430,7 +430,7 @@ namespace PluginKirsanovNewsNewYears
 
             if (comboBoxFormat.SelectedIndex > 0)
             {
-                // Считываем фоновое изображение
+                // РЎС‡РёС‚С‹РІР°РµРј С„РѕРЅРѕРІРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ
                 try
                 {
                     imageBack = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "back.png"))));
@@ -444,7 +444,7 @@ namespace PluginKirsanovNewsNewYears
             if (checkBoxTitle.Checked && textBoxT1.Text != "")
             {
 
-                // Считываем изображение для названия
+                // РЎС‡РёС‚С‹РІР°РµРј РёР·РѕР±СЂР°Р¶РµРЅРёРµ РґР»СЏ РЅР°Р·РІР°РЅРёСЏ
                 try
                 {
                     imageTitle = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "title.png"))));
@@ -456,42 +456,42 @@ namespace PluginKirsanovNewsNewYears
             }
             this.Enabled = false;
 
-            // Генерируем новое изображение
+            // Р“РµРЅРµСЂРёСЂСѓРµРј РЅРѕРІРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ
             PhotoGenerate photo = new PhotoGenerate();
-            photo.height = imageMain.Height;
-            photo.width = imageMain.Width;
-            photo.colorMain = Color.White;
+            photo.Height = imageMain.Height;
+            photo.Width = imageMain.Width;
+            photo.ColorMain = Color.White;
             Image imageOut = photo.Fill();
 
             if (comboBoxFormat.SelectedIndex > 0)
             {
-                // Создаем слой с размытием основного фото
+                // РЎРѕР·РґР°РµРј СЃР»РѕР№ СЃ СЂР°Р·РјС‹С‚РёРµРј РѕСЃРЅРѕРІРЅРѕРіРѕ С„РѕС‚Рѕ
                 PhotoSize resize = new PhotoSize();
-                resize.width = imageMain.Width;
-                resize.height = imageMain.Height;
-                resize.source = ImageSouser;
+                resize.Width = imageMain.Width;
+                resize.Height = imageMain.Height;
+                resize.Source = ImageSouser;
                 ImageBlur = resize.ScaleImage();
                 BlurImage blurImage = new BlurImage();
                 ImageBlur = blurImage.Blur(ImageBlur, 25);
             }
 
-            // Раскладываем по слоям
+            // Р Р°СЃРєР»Р°РґС‹РІР°РµРј РїРѕ СЃР»РѕСЏРј
             Merge mergeImage = new Merge();
 
-            // На фон помещаем размытую фотографию если формат не квадрат
+            // РќР° С„РѕРЅ РїРѕРјРµС‰Р°РµРј СЂР°Р·РјС‹С‚СѓСЋ С„РѕС‚РѕРіСЂР°С„РёСЋ РµСЃР»Рё С„РѕСЂРјР°С‚ РЅРµ РєРІР°РґСЂР°С‚
             if (comboBoxFormat.SelectedIndex > 0)
             {
                 mergeImage.sourceBottom = imageOut;
                 mergeImage.sourceTop = ImageBlur;
                 imageOut = mergeImage.MergeImage();
-                // Помещаем прозрачный синий фон
+                // РџРѕРјРµС‰Р°РµРј РїСЂРѕР·СЂР°С‡РЅС‹Р№ СЃРёРЅРёР№ С„РѕРЅ
                 mergeImage.sourceBottom = imageOut;
                 mergeImage.sourceTop = imageBack;
                 imageOut = mergeImage.MergeImage();
             }
 
-            // Помещаем основное фото
-            // Задаем координаты
+            // РџРѕРјРµС‰Р°РµРј РѕСЃРЅРѕРІРЅРѕРµ С„РѕС‚Рѕ
+            // Р—Р°РґР°РµРј РєРѕРѕСЂРґРёРЅР°С‚С‹
             switch (comboBoxFormat.SelectedIndex)
             {
                 case 0:
@@ -524,21 +524,21 @@ namespace PluginKirsanovNewsNewYears
             mergeImage.left = 0;
             mergeImage.top = 0;
 
-            // Помещаем оформление
+            // РџРѕРјРµС‰Р°РµРј РѕС„РѕСЂРјР»РµРЅРёРµ
             mergeImage.sourceBottom = imageOut;
             mergeImage.sourceTop = imageMain;
             imageOut = mergeImage.MergeImage();
 
 
-            // Помещаем фон названия новости
+            // РџРѕРјРµС‰Р°РµРј С„РѕРЅ РЅР°Р·РІР°РЅРёСЏ РЅРѕРІРѕСЃС‚Рё
             if (imageTitle != null && textBoxT1.Text != "") {
 
-                // Помещаем  оформление фона
+                // РџРѕРјРµС‰Р°РµРј  РѕС„РѕСЂРјР»РµРЅРёРµ С„РѕРЅР°
                 mergeImage.sourceBottom = imageOut;
                 mergeImage.sourceTop = imageTitle;
                 imageOut = mergeImage.MergeImage();
 
-                // Рисуем иконку новости
+                // Р РёСЃСѓРµРј РёРєРѕРЅРєСѓ РЅРѕРІРѕСЃС‚Рё
                 try
                 {
                     mergeImage.sourceBottom = imageOut;
@@ -551,37 +551,37 @@ namespace PluginKirsanovNewsNewYears
                 {
 
                 }
-                // Пишем текст названия
+                // РџРёС€РµРј С‚РµРєСЃС‚ РЅР°Р·РІР°РЅРёСЏ
                 TextGenerate textE = new TextGenerate();
-                textE.textString = textBoxT1.Text;
-                textE.rectH = 250;
-                textE.rectW = 1380;
-                textE.rectX = 375;
-                textE.rectY = 1395;
-                textE.source = imageOut;
-                textE.fontSize = (float)numericUpDown1.Value;
-                textE.colorText = Color.Black;
-                textE.fontName = "Lato";
-                textE.lineAlignment = StringAlignment.Center;
+                textE.TextString = textBoxT1.Text;
+                textE.RectH = 250;
+                textE.RectW = 1380;
+                textE.RectX = 375;
+                textE.RectY = 1395;
+                textE.Source = imageOut;
+                textE.FontSize = (float)numericUpDown1.Value;
+                textE.ColorText = Color.Black;
+                textE.FontName = "Lato";
+                textE.LineAlignment = StringAlignment.Center;
                 //textE.debug = true;
                 imageOut = textE.DrawTextWithEffects();
 
             }
-            // Пишем автора фото (если нужно)
+            // РџРёС€РµРј Р°РІС‚РѕСЂР° С„РѕС‚Рѕ (РµСЃР»Рё РЅСѓР¶РЅРѕ)
             if (textBoxT2.Text != "")
             {
                 TextGenerate textAutor = new TextGenerate();
-                textAutor.textString = "Фото: " + textBoxT2.Text;
-                textAutor.rectH = 100;
-                textAutor.rectW = 920;
-                textAutor.rectX = 820;
-                textAutor.rectY = 1670;
-                textAutor.fontStyle = FontStyle.Bold;
-                textAutor.source = imageOut;
-                textAutor.fontSize = 40;
-                textAutor.colorText = Color.White;
-                textAutor.stringAlignment = StringAlignment.Far;
-                textAutor.fontName = "Lato";
+                textAutor.TextString = "Р¤РѕС‚Рѕ: " + textBoxT2.Text;
+                textAutor.RectH = 100;
+                textAutor.RectW = 920;
+                textAutor.RectX = 820;
+                textAutor.RectY = 1670;
+                textAutor.FontStyle = FontStyle.Bold;
+                textAutor.Source = imageOut;
+                textAutor.FontSize = 40;
+                textAutor.ColorText = Color.White;
+                textAutor.StringAlignment = StringAlignment.Far;
+                textAutor.FontName = "Lato";
                 //textAutor.debug = true;
                 imageOut = textAutor.DrawTextWithEffects();
             }
@@ -589,7 +589,7 @@ namespace PluginKirsanovNewsNewYears
             this.Enabled = true;
         }
 
-        // Загрузка списка иконок для заголовка новости
+        // Р—Р°РіСЂСѓР·РєР° СЃРїРёСЃРєР° РёРєРѕРЅРѕРє РґР»СЏ Р·Р°РіРѕР»РѕРІРєР° РЅРѕРІРѕСЃС‚Рё
         private void LoadingImages()
         {
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -604,7 +604,7 @@ namespace PluginKirsanovNewsNewYears
             }
         }
 
-        // Выбор изображения иконки новости
+        // Р’С‹Р±РѕСЂ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РёРєРѕРЅРєРё РЅРѕРІРѕСЃС‚Рё
         private void comboBoxImages_SelectedIndexChanged(object sender, EventArgs e)
         {
             string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "images");
@@ -618,21 +618,21 @@ namespace PluginKirsanovNewsNewYears
 
             }
         }
-        // Расчет размера шрифта
+        // Р Р°СЃС‡РµС‚ СЂР°Р·РјРµСЂР° С€СЂРёС„С‚Р°
         private void textBoxT1_TextChanged(object sender, EventArgs e)
         {
-            // Расчет размера шрифта
+            // Р Р°СЃС‡РµС‚ СЂР°Р·РјРµСЂР° С€СЂРёС„С‚Р°
             CalculateFontSize fontSize = new CalculateFontSize();
-            fontSize.baseFontSize = 100;
-            fontSize.fontSizeRatio = 0.5;
+            fontSize.BaseFontSize = 100;
+            fontSize.FontSizeRatio = 0.5;
             StringFormat stringFormat = new StringFormat();
             stringFormat.Alignment = StringAlignment.Center;
             stringFormat.LineAlignment = StringAlignment.Center;
-            decimal fontsize = (decimal)fontSize.CalcMaxFontSize(textBoxT1.Text, "Lato", fontSize.FontSize(textBoxT1.Text), FontStyle.Regular, 1380, 250, stringFormat);
+            decimal fontsize = (decimal)fontSize.CalcMaxFontSize(textBoxT1.Text, "Lato", fontSize.GetFontSize(textBoxT1.Text), FontStyle.Regular, 1380, 250, stringFormat);
             if (fontsize < numericUpDown1.Minimum) fontsize = numericUpDown1.Minimum;
             if (fontsize > numericUpDown1.Maximum) fontsize = numericUpDown1.Maximum;
             numericUpDown1.Value = fontsize;
-            // Отображение длины текста
+            // РћС‚РѕР±СЂР°Р¶РµРЅРёРµ РґР»РёРЅС‹ С‚РµРєСЃС‚Р°
             labelTextLeght.Text = textBoxT1.Text.Length.ToString();
             labelTextLeght.ForeColor = textBoxT1.Text.Length > 60 ? Color.Red : SystemColors.ControlText;
         }

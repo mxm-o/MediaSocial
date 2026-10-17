@@ -11,44 +11,105 @@ namespace PhotoEdit
 {
     public class ModifyImage
     {
+        private Image _image = null;
+        private float _brightness = 0f;
+        private float _contrast = 0f;
+        private float _hue = 0f;
+        private float _saturation = 0f;
+        private float _temperature = 0f;
+
         /// <summary>
         /// Исходное изображение
         /// </summary>
-        public Image image = null;
+        public Image Image
+        {
+            get => _image;
+            set => _image = value;
+        }
+
         /// <summary>
-        /// значение выше 0, представляющее количество яркости, которое следует применить к изображению. Значение 1 означает отсутствие изменений яркости, тогда как значения меньше 1 уменьшают яркость, а значения больше 1 увеличивают яркость.
+        /// Значение яркости. 1 = без изменений, < 1 = темнее, > 1 = светлее. Должно быть > 0.
         /// </summary>
-        public float brightness = 0f;
+        public float Brightness
+        {
+            get => _brightness;
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException(nameof(value), "Яркость должна быть больше 0.");
+                _brightness = value;
+            }
+        }
+
         /// <summary>
-        /// значение больше 0, представляющее количество контраста, которое следует применить к изображению. Значение 1 означает отсутствие изменений контраста, тогда как значения больше 1 увеличивают контраст, а значения меньше 1 уменьшают контраст.
+        /// Значение контраста. 1 = без изменений, > 1 = больше контраста, < 1 = меньше контраста. Должно быть > 0.
         /// </summary>
-        public float contrast = 0;
+        public float Contrast
+        {
+            get => _contrast;
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException(nameof(value), "Контраст должен быть больше 0.");
+                _contrast = value;
+            }
+        }
+
         /// <summary>
-        /// значение между 0 и 360, представляющее сдвиг оттенка, который следует применить к изображению. Значение 0 означает отсутствие сдвига оттенка, тогда как значения от 0 до 59 и от 301 до 360 сдвигают оттенок в сторону красного, значения от 60 до 149 сдвигают оттенок в сторону желтого, значения от 150 до 239 сдвигают оттенок в сторону зеленого, а значения от 240 до 300 сдвигают оттенок в сторону синего.
+        /// Сдвиг оттенка в градусах (0-360). 0 = без изменений.
         /// </summary>
-        public float hue = 0;
+        public float Hue
+        {
+            get => _hue;
+            set
+            {
+                if (value < 0 || value > 360)
+                    throw new ArgumentOutOfRangeException(nameof(value), "Оттенок должен быть в диапазоне от 0 до 360.");
+                _hue = value;
+            }
+        }
+
         /// <summary>
-        /// Значение от 0 до 2, представляющее степень насыщенности цвета, которая будет применена к изображению. Значение 1 означает отсутствие изменения насыщенности, значения меньше 1 уменьшают насыщенность, а значения больше 1 увеличивают насыщенность.
+        /// Степень насыщенности. 1 = без изменений, < 1 = меньше насыщенности, > 1 = больше насыщенности. Должно быть > 0.
         /// </summary>
-        public float saturation = 0;
+        public float Saturation
+        {
+            get => _saturation;
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException(nameof(value), "Насыщенность должна быть больше 0.");
+                _saturation = value;
+            }
+        }
+
         /// <summary>
-        /// Значение от -1 до 1, представляющее количество цветовой температуры, применяемой к изображению. Значение 0 означает отсутствие изменения цветовой температуры, в то время как значения меньше 0 уменьшают температуру (что приводит к более холодному изображению), а значения больше 0 увеличивают температуру (что приводит к более теплому изображению).
+        /// Цветовая температура от -1 (холодный) до 1 (тёплый). 0 = без изменений.
         /// </summary>
-        public float temperature = 0f;
+        public float Temperature
+        {
+            get => _temperature;
+            set
+            {
+                if (value < -1f || value > 1f)
+                    throw new ArgumentOutOfRangeException(nameof(value), "Цветовая температура должна быть в диапазоне от -1 до 1.");
+                _temperature = value;
+            }
+        }
 
         // Изменяем Яркость
         public Image BrightnessImage()
         {
-            if (image == null)
-                throw new ArgumentNullException(nameof(image), "Исходное изображение не может быть null.");
+            if (Image == null)
+                throw new ArgumentNullException(nameof(Image), "Исходное изображение не может быть null.");
 
-            if (brightness == 1) return image;
+            if (Brightness == 1) return Image;
 
             // Создаем матрицу цветов
             float[][] colorMatrixElements = {
-                new float[] { brightness, 0, 0, 0, 0 },
-                new float[] { 0, brightness, 0, 0, 0 },
-                new float[] { 0, 0, brightness, 0, 0 },
+                new float[] { Brightness, 0, 0, 0, 0 },
+                new float[] { 0, Brightness, 0, 0, 0 },
+                new float[] { 0, 0, Brightness, 0, 0 },
                 new float[] { 0, 0, 0, 1, 0 },
                 new float[] { 0, 0, 0, 0, 1 }
             };
@@ -61,18 +122,18 @@ namespace PhotoEdit
         // Изменяем контраст
         public Image ContrastImage()
         {
-            if (image == null)
-                throw new ArgumentNullException(nameof(image), "Исходное изображение не может быть null.");
+            if (Image == null)
+                throw new ArgumentNullException(nameof(Image), "Исходное изображение не может быть null.");
 
-            if (contrast == 1) return image;
+            if (Contrast == 1) return Image;
 
             // Создаем матрицу цветов
             float[][] colorMatrixElements = {
-                new float[] { contrast, 0, 0, 0, 0 },
-                new float[] { 0, contrast, 0, 0, 0 },
-                new float[] { 0, 0, contrast, 0, 0 },
+                new float[] { Contrast, 0, 0, 0, 0 },
+                new float[] { 0, Contrast, 0, 0, 0 },
+                new float[] { 0, 0, Contrast, 0, 0 },
                 new float[] { 0, 0, 0, 1, 0 },
-                new float[] { 0.5f * (1 - contrast), 0.5f * (1 - contrast), 0.5f * (1 - contrast), 0, 1 }
+                new float[] { 0.5f * (1 - Contrast), 0.5f * (1 - Contrast), 0.5f * (1 - Contrast), 0, 1 }
             };
             ColorMatrix colorMatrix = new ColorMatrix(colorMatrixElements);
 
@@ -82,22 +143,22 @@ namespace PhotoEdit
 
         public Image ChangeSaturation()
         {
-            if (image == null)
-                throw new ArgumentNullException(nameof(image), "Исходное изображение не может быть null.");
+            if (Image == null)
+                throw new ArgumentNullException(nameof(Image), "Исходное изображение не может быть null.");
 
-            if (saturation == 1) return image;
+            if (Saturation == 1) return Image;
 
             // Создаем матрицу цветов
-            float saturationComplement = 1.0f - saturation;
+            float saturationComplement = 1.0f - Saturation;
             float saturationRed = 0.3086f * saturationComplement;
             float saturationGreen = 0.6094f * saturationComplement;
             float saturationBlue = 0.0820f * saturationComplement;
             // Создаем новую матрицу цветов и устанавливаем значения насыщенности
             ColorMatrix colorMatrix = new ColorMatrix(new float[][]
             {
-                new float[] { saturationRed + saturation, saturationRed, saturationRed, 0, 0 },
-                new float[] { saturationGreen, saturationGreen + saturation, saturationGreen, 0, 0 },
-                new float[] { saturationBlue, saturationBlue, saturationBlue + saturation, 0, 0 },
+                new float[] { saturationRed + Saturation, saturationRed, saturationRed, 0, 0 },
+                new float[] { saturationGreen, saturationGreen + Saturation, saturationGreen, 0, 0 },
+                new float[] { saturationBlue, saturationBlue, saturationBlue + Saturation, 0, 0 },
                 new float[] { 0, 0, 0, 1, 0 },
                 new float[] { 0, 0, 0, 0, 1 }
             });
@@ -109,10 +170,10 @@ namespace PhotoEdit
         // Меняем температуру
         public Image ChangeTemperature()
         {
-            if (image == null)
-                throw new ArgumentNullException(nameof(image), "Исходное изображение не может быть null.");
+            if (Image == null)
+                throw new ArgumentNullException(nameof(Image), "Исходное изображение не может быть null.");
 
-            if (temperature == 0) return image;
+            if (Temperature == 0) return Image;
 
             // Create a new ColorMatrix and set the temperature values
             ColorMatrix colorMatrix = new ColorMatrix(new float[][]
@@ -121,7 +182,7 @@ namespace PhotoEdit
                 new float[] {0, 1, 0, 0, 0},
                 new float[] {0, 0, 1, 0, 0},
                 new float[] {0, 0, 0, 1, 0},
-                new float[] {temperature, 0, 0, 0, 1}
+                new float[] {Temperature, 0, 0, 0, 1}
             });
 
             return GenerateImage(colorMatrix);
@@ -129,13 +190,13 @@ namespace PhotoEdit
 
         public Image ChangeHue()
         {
-            if (image == null)
-                throw new ArgumentNullException(nameof(image), "Исходное изображение не может быть null.");
+            if (Image == null)
+                throw new ArgumentNullException(nameof(Image), "Исходное изображение не может быть null.");
 
-            if (hue == 0) return image;
+            if (Hue == 0) return Image;
 
-            float cos = (float)Math.Cos(hue * Math.PI / 180.0);
-            float sin = (float)Math.Sin(hue * Math.PI / 180.0);
+            float cos = (float)Math.Cos(Hue * Math.PI / 180.0);
+            float sin = (float)Math.Sin(Hue * Math.PI / 180.0);
             ColorMatrix colorMatrix = new ColorMatrix(new float[][]
             {
                     new float[] {((1 - cos) / 2) + cos, ((1 - cos) / 2) - (0.143f * sin), ((1 - cos) / 2) + (0.140f * sin), 0, 0},
@@ -156,10 +217,10 @@ namespace PhotoEdit
                 imageAttributes.SetColorMatrix(colorMatrix);
 
                 // Создаем новое изображение и отрисовываем на нем оригинальное изображение с примененными настройками яркости
-                Bitmap resultBitmap = new Bitmap(image.Width, image.Height);
+                Bitmap resultBitmap = new Bitmap(Image.Width, Image.Height);
                 using (Graphics graphics = Graphics.FromImage(resultBitmap))
                 {
-                    graphics.DrawImage(image, new Rectangle(0, 0, image.Width, image.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, imageAttributes);
+                    graphics.DrawImage(Image, new Rectangle(0, 0, Image.Width, Image.Height), 0, 0, Image.Width, Image.Height, GraphicsUnit.Pixel, imageAttributes);
                 }
 
                 // Возвращаем измененное изображение

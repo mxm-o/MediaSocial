@@ -1,4 +1,4 @@
-// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+п»ї// Copyright В© 2023 Maxim Otrokhov. All rights reserved.
 
 using System;
 using System.Drawing;
@@ -86,7 +86,7 @@ namespace PluginKirsanovQuote
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 11;
-            this.btnClear.Text = "Очистить";
+            this.btnClear.Text = "РћС‡РёСЃС‚РёС‚СЊ";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
@@ -96,7 +96,7 @@ namespace PluginKirsanovQuote
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(75, 23);
             this.btnCreate.TabIndex = 10;
-            this.btnCreate.Text = "Создать";
+            this.btnCreate.Text = "РЎРѕР·РґР°С‚СЊ";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
@@ -130,7 +130,7 @@ namespace PluginKirsanovQuote
             this.labelT2.Name = "labelT2";
             this.labelT2.Size = new System.Drawing.Size(87, 13);
             this.labelT2.TabIndex = 0;
-            this.labelT2.Text = "Имя, Фамилия:";
+            this.labelT2.Text = "РРјСЏ, Р¤Р°РјРёР»РёСЏ:";
             // 
             // panel1
             // 
@@ -163,7 +163,7 @@ namespace PluginKirsanovQuote
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Размер шрифта";
+            this.label1.Text = "Р Р°Р·РјРµСЂ С€СЂРёС„С‚Р°";
             // 
             // numericUpDown1
             // 
@@ -207,7 +207,7 @@ namespace PluginKirsanovQuote
             this.labelT1.Name = "labelT1";
             this.labelT1.Size = new System.Drawing.Size(76, 13);
             this.labelT1.TabIndex = 0;
-            this.labelT1.Text = "Текст цитаты";
+            this.labelT1.Text = "РўРµРєСЃС‚ С†РёС‚Р°С‚С‹";
             // 
             // panel3
             // 
@@ -239,7 +239,7 @@ namespace PluginKirsanovQuote
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(68, 13);
             this.label2.TabIndex = 0;
-            this.label2.Text = "Должность:";
+            this.label2.Text = "Р”РѕР»Р¶РЅРѕСЃС‚СЊ:";
             // 
             // ctlMain
             // 
@@ -320,22 +320,22 @@ namespace PluginKirsanovQuote
         private void btnCreate_Click(object sender, EventArgs e)
         {
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            // Проверка исходных данных
+            // РџСЂРѕРІРµСЂРєР° РёСЃС…РѕРґРЅС‹С… РґР°РЅРЅС‹С…
             if (textBoxT1.Text == "" || textBoxT2.Text == "" || textBoxT3.Text == "")
             {
-                MessageBox.Show("Все текстовые поля (цитата, имя, должность) должны быть заполнены.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Р’СЃРµ С‚РµРєСЃС‚РѕРІС‹Рµ РїРѕР»СЏ (С†РёС‚Р°С‚Р°, РёРјСЏ, РґРѕР»Р¶РЅРѕСЃС‚СЊ) РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ Р·Р°РїРѕР»РЅРµРЅС‹.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             if (!CheckFont.FontExists("Lato"))
             {
-                MessageBox.Show("В системе отсутствуют нужные шрифты. Проверьте наличие требуемых шрифтов к данному дизайну.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Р’ СЃРёСЃС‚РµРјРµ РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РЅСѓР¶РЅС‹Рµ С€СЂРёС„С‚С‹. РџСЂРѕРІРµСЂСЊС‚Рµ РЅР°Р»РёС‡РёРµ С‚СЂРµР±СѓРµРјС‹С… С€СЂРёС„С‚РѕРІ Рє РґР°РЅРЅРѕРјСѓ РґРёР·Р°Р№РЅСѓ.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             this.Enabled = false;
 
-            // Считываем шаблонное изображение
+            // РЎС‡РёС‚С‹РІР°РµРј С€Р°Р±Р»РѕРЅРЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ
             Image imageMain = null;
             try
             {
@@ -345,92 +345,92 @@ namespace PluginKirsanovQuote
             {
 
             }
-            // Генерируем новое изображение
+            // Р“РµРЅРµСЂРёСЂСѓРµРј РЅРѕРІРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ
             PhotoGenerate photo = new PhotoGenerate();
-            photo.height = imageMain.Height;
-            photo.width = imageMain.Width;
-            photo.colorMain = Color.White;
+            photo.Height = imageMain.Height;
+            photo.Width = imageMain.Width;
+            photo.ColorMain = Color.White;
             Image imageOut = photo.Fill();
-            // Получаем исходник фотографии
+            // РџРѕР»СѓС‡Р°РµРј РёСЃС…РѕРґРЅРёРє С„РѕС‚РѕРіСЂР°С„РёРё
             Image ImageSouser = myHost.SendImages()[0];
-            // Раскладываем по слоям
+            // Р Р°СЃРєР»Р°РґС‹РІР°РµРј РїРѕ СЃР»РѕСЏРј
             Merge mergeImage = new Merge();
             mergeImage.sourceBottom = imageOut;
             mergeImage.sourceTop = ImageSouser;
             mergeImage.top = 1285;
             mergeImage.left = 125;
-            imageOut = mergeImage.MergeImage(); // На фон помещаем фотографию
+            imageOut = mergeImage.MergeImage(); // РќР° С„РѕРЅ РїРѕРјРµС‰Р°РµРј С„РѕС‚РѕРіСЂР°С„РёСЋ
             mergeImage.sourceBottom = imageOut;
             mergeImage.sourceTop = imageMain;
             mergeImage.top = 0;
             mergeImage.left = 0;
-            imageOut = mergeImage.MergeImage(); // Помещаем оформление
-            // Пишем имя
+            imageOut = mergeImage.MergeImage(); // РџРѕРјРµС‰Р°РµРј РѕС„РѕСЂРјР»РµРЅРёРµ
+            // РџРёС€РµРј РёРјСЏ
             TextGenerate textE = new TextGenerate();
-            textE.textString = textBoxT2.Text;
-            textE.rectH = 90;
-            textE.rectW = 1000;
-            textE.rectX = 635;
-            textE.rectY = 1470;
-            textE.source = imageOut;
-            textE.fontSize = 80; //(float)numericUpDown1.Value;
-            textE.colorText = Color.Black;
-            textE.fontName = "Lato";
-            textE.stringAlignment = StringAlignment.Near;
-            textE.lineAlignment = StringAlignment.Far;
+            textE.TextString = textBoxT2.Text;
+            textE.RectH = 90;
+            textE.RectW = 1000;
+            textE.RectX = 635;
+            textE.RectY = 1470;
+            textE.Source = imageOut;
+            textE.FontSize = 80; //(float)numericUpDown1.Value;
+            textE.ColorText = Color.Black;
+            textE.FontName = "Lato";
+            textE.StringAlignment = StringAlignment.Near;
+            textE.LineAlignment = StringAlignment.Far;
             //textE.debug = true;
             imageOut = textE.DrawTextWithEffects();
-            // Пишем должность
+            // РџРёС€РµРј РґРѕР»Р¶РЅРѕСЃС‚СЊ
             TextGenerate textAutor = new TextGenerate();
-            textAutor.textString = textBoxT3.Text;
-            textAutor.rectH = 150;
-            textAutor.rectW = 1000;
-            textAutor.rectX = 645;
-            textAutor.rectY = 1550;
-            textAutor.fontStyle = FontStyle.Regular;
-            textAutor.source = imageOut;
-            textAutor.fontSize = 40;
-            textAutor.colorText = Color.Black;
-            textAutor.stringAlignment = StringAlignment.Near;
-            textAutor.lineAlignment = StringAlignment.Near;
-            textAutor.fontName = "Lato";
+            textAutor.TextString = textBoxT3.Text;
+            textAutor.RectH = 150;
+            textAutor.RectW = 1000;
+            textAutor.RectX = 645;
+            textAutor.RectY = 1550;
+            textAutor.FontStyle = FontStyle.Regular;
+            textAutor.Source = imageOut;
+            textAutor.FontSize = 40;
+            textAutor.ColorText = Color.Black;
+            textAutor.StringAlignment = StringAlignment.Near;
+            textAutor.LineAlignment = StringAlignment.Near;
+            textAutor.FontName = "Lato";
             //textAutor.debug = true;
             imageOut = textAutor.DrawTextWithEffects();
-            // Пишем цитату
+            // РџРёС€РµРј С†РёС‚Р°С‚Сѓ
             TextGenerate textQuote = new TextGenerate();
-            textQuote.textString = textBoxT1.Text;
-            textQuote.rectH = 910;
-            textQuote.rectW = 1650;
-            textQuote.rectX = 70;
-            textQuote.rectY = 250;
-            textQuote.fontStyle = FontStyle.Regular;
-            textQuote.source = imageOut;
-            textQuote.fontSize = (float)numericUpDown1.Value;
-            textQuote.colorText = Color.Black;
-            textQuote.stringAlignment = StringAlignment.Center;
-            textQuote.lineAlignment = StringAlignment.Center;
-            textQuote.fontName = "Lato";
+            textQuote.TextString = textBoxT1.Text;
+            textQuote.RectH = 910;
+            textQuote.RectW = 1650;
+            textQuote.RectX = 70;
+            textQuote.RectY = 250;
+            textQuote.FontStyle = FontStyle.Regular;
+            textQuote.Source = imageOut;
+            textQuote.FontSize = (float)numericUpDown1.Value;
+            textQuote.ColorText = Color.Black;
+            textQuote.StringAlignment = StringAlignment.Center;
+            textQuote.LineAlignment = StringAlignment.Center;
+            textQuote.FontName = "Lato";
             //textQuote.debug = true;
             imageOut = textQuote.DrawTextWithEffects();
             myHost.ReciveImage(imageOut);
             this.Enabled = true;
         }
 
-        // Расчет размера шрифта
+        // Р Р°СЃС‡РµС‚ СЂР°Р·РјРµСЂР° С€СЂРёС„С‚Р°
         private void textBoxT1_TextChanged(object sender, EventArgs e)
         {
-            // Расчет размера шрифта
+            // Р Р°СЃС‡РµС‚ СЂР°Р·РјРµСЂР° С€СЂРёС„С‚Р°
             CalculateFontSize fontSize = new CalculateFontSize();
-            fontSize.baseFontSize = 175;
-            fontSize.fontSizeRatio = 0.5;
+            fontSize.BaseFontSize = 175;
+            fontSize.FontSizeRatio = 0.5;
             StringFormat stringFormat = new StringFormat();
             stringFormat.Alignment = StringAlignment.Center;
             stringFormat.LineAlignment = StringAlignment.Center;
-            decimal fontsize = (decimal)fontSize.CalcMaxFontSize(textBoxT1.Text, "Lato", fontSize.FontSize(textBoxT1.Text), FontStyle.Regular, 910, 1650, stringFormat);
+            decimal fontsize = (decimal)fontSize.CalcMaxFontSize(textBoxT1.Text, "Lato", fontSize.GetFontSize(textBoxT1.Text), FontStyle.Regular, 910, 1650, stringFormat);
             if (fontsize < numericUpDown1.Minimum) fontsize = numericUpDown1.Minimum;
             if (fontsize > numericUpDown1.Maximum) fontsize = numericUpDown1.Maximum;
             numericUpDown1.Value = fontsize;
-            // Отображение длины текста
+            // РћС‚РѕР±СЂР°Р¶РµРЅРёРµ РґР»РёРЅС‹ С‚РµРєСЃС‚Р°
             labelTextLeght.Text = textBoxT1.Text.Length.ToString();
             labelTextLeght.ForeColor = textBoxT1.Text.Length > 200 ? Color.Red : SystemColors.ControlText;
         }

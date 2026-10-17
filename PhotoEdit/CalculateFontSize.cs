@@ -1,20 +1,53 @@
 ﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
 
+using System;
 using System.Drawing;
 
 namespace PhotoEdit
 {
     public class CalculateFontSize
     {
-        // Declare the font size variables
-        public int baseFontSize = 14;
-        public double fontSizeRatio = 0.5;
+        private int _baseFontSize = 14;
+        private double _fontSizeRatio = 0.5;
 
-        // Declare a method to calculate the font size based on the length of text
-        public int FontSize(string text)
+        /// <summary>
+        /// Базовый размер шрифта в пикселях (должен быть > 0)
+        /// </summary>
+        public int BaseFontSize
         {
+            get => _baseFontSize;
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException(nameof(value), "Базовый размер шрифта должен быть больше 0.");
+                _baseFontSize = value;
+            }
+        }
+
+        /// <summary>
+        /// Коэффициент соотношения длины текста к размеру шрифта (должен быть > 0)
+        /// </summary>
+        public double FontSizeRatio
+        {
+            get => _fontSizeRatio;
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException(nameof(value), "Коэффициент должен быть больше 0.");
+                _fontSizeRatio = value;
+            }
+        }
+
+        /// <summary>
+        /// Метод для расчета размера шрифта на основе длины текста
+        /// </summary>
+        public int GetFontSize(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return BaseFontSize;
+
             int length = text.Length;
-            int fontSize = baseFontSize - (int)(length * fontSizeRatio);
+            int fontSize = BaseFontSize - (int)(length * FontSizeRatio);
             if (fontSize < 1) fontSize = 1;
 
             return fontSize;

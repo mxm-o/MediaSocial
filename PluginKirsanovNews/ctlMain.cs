@@ -1,4 +1,4 @@
-// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+п»ї// Copyright В© 2023 Maxim Otrokhov. All rights reserved.
 
 using System;
 using System.Drawing;
@@ -96,7 +96,7 @@ namespace PluginKirsanovNews
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 11;
-            this.btnClear.Text = "Очистить";
+            this.btnClear.Text = "РћС‡РёСЃС‚РёС‚СЊ";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
@@ -106,7 +106,7 @@ namespace PluginKirsanovNews
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(75, 23);
             this.btnCreate.TabIndex = 10;
-            this.btnCreate.Text = "Создать";
+            this.btnCreate.Text = "РЎРѕР·РґР°С‚СЊ";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
@@ -140,7 +140,7 @@ namespace PluginKirsanovNews
             this.labelT2.Name = "labelT2";
             this.labelT2.Size = new System.Drawing.Size(86, 13);
             this.labelT2.TabIndex = 0;
-            this.labelT2.Text = "Источник фото:";
+            this.labelT2.Text = "РСЃС‚РѕС‡РЅРёРє С„РѕС‚Рѕ:";
             // 
             // panelTitle
             // 
@@ -180,7 +180,7 @@ namespace PluginKirsanovNews
             this.checkBoxLayers.Name = "checkBoxLayers";
             this.checkBoxLayers.Size = new System.Drawing.Size(51, 17);
             this.checkBoxLayers.TabIndex = 16;
-            this.checkBoxLayers.Text = "Слои";
+            this.checkBoxLayers.Text = "РЎР»РѕРё";
             this.checkBoxLayers.UseVisualStyleBackColor = true;
             this.checkBoxLayers.CheckedChanged += new System.EventHandler(this.checkBoxLayers_CheckedChanged);
             // 
@@ -201,7 +201,7 @@ namespace PluginKirsanovNews
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 13);
             this.label2.TabIndex = 15;
-            this.label2.Text = "Иконка новости";
+            this.label2.Text = "РРєРѕРЅРєР° РЅРѕРІРѕСЃС‚Рё";
             // 
             // comboBoxImages
             // 
@@ -232,7 +232,7 @@ namespace PluginKirsanovNews
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Размер шрифта";
+            this.label1.Text = "Р Р°Р·РјРµСЂ С€СЂРёС„С‚Р°";
             // 
             // numericUpDown1
             // 
@@ -276,7 +276,7 @@ namespace PluginKirsanovNews
             this.labelT1.Name = "labelT1";
             this.labelT1.Size = new System.Drawing.Size(57, 13);
             this.labelT1.TabIndex = 0;
-            this.labelT1.Text = "Название";
+            this.labelT1.Text = "РќР°Р·РІР°РЅРёРµ";
             // 
             // checkBoxTitle
             // 
@@ -285,7 +285,7 @@ namespace PluginKirsanovNews
             this.checkBoxTitle.Name = "checkBoxTitle";
             this.checkBoxTitle.Size = new System.Drawing.Size(124, 17);
             this.checkBoxTitle.TabIndex = 13;
-            this.checkBoxTitle.Text = "Заголовок новости";
+            this.checkBoxTitle.Text = "Р—Р°РіРѕР»РѕРІРѕРє РЅРѕРІРѕСЃС‚Рё";
             this.checkBoxTitle.UseVisualStyleBackColor = true;
             this.checkBoxTitle.CheckedChanged += new System.EventHandler(this.checkBoxTitle_CheckedChanged);
             // 
@@ -310,7 +310,7 @@ namespace PluginKirsanovNews
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(113, 13);
             this.label3.TabIndex = 17;
-            this.label3.Text = "Расположение фото:";
+            this.label3.Text = "Р Р°СЃРїРѕР»РѕР¶РµРЅРёРµ С„РѕС‚Рѕ:";
             // 
             // comboBoxFormat
             // 
@@ -319,9 +319,9 @@ namespace PluginKirsanovNews
             this.comboBoxFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFormat.FormattingEnabled = true;
             this.comboBoxFormat.Items.AddRange(new object[] {
-            "Полный экран",
-            "Горизонтальная",
-            "Вертикальная"});
+            "РџРѕР»РЅС‹Р№ СЌРєСЂР°РЅ",
+            "Р“РѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅР°СЏ",
+            "Р’РµСЂС‚РёРєР°Р»СЊРЅР°СЏ"});
             this.comboBoxFormat.Location = new System.Drawing.Point(2, 44);
             this.comboBoxFormat.Name = "comboBoxFormat";
             this.comboBoxFormat.Size = new System.Drawing.Size(187, 21);
@@ -414,7 +414,7 @@ namespace PluginKirsanovNews
 
         private async void btnCreate_Click(object sender, EventArgs e)
         {
-            // Собираем данные из UI в основном потоке
+            // РЎРѕР±РёСЂР°РµРј РґР°РЅРЅС‹Рµ РёР· UI РІ РѕСЃРЅРѕРІРЅРѕРј РїРѕС‚РѕРєРµ
             var parameters = new ImageCreationParams
             {
                 TitleEnabled = checkBoxTitle.Checked,
@@ -429,16 +429,16 @@ namespace PluginKirsanovNews
                 Path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
             };
 
-            // Проверки в UI-потоке
+            // РџСЂРѕРІРµСЂРєРё РІ UI-РїРѕС‚РѕРєРµ
             if (parameters.TitleEnabled && string.IsNullOrEmpty(parameters.TitleText))
             {
-                MessageBox.Show("Отсутствует заголовок.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("РћС‚СЃСѓС‚СЃС‚РІСѓРµС‚ Р·Р°РіРѕР»РѕРІРѕРє.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             if (parameters.SourceImage == null)
             {
-                MessageBox.Show("Не выбрано изображение.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("РќРµ РІС‹Р±СЂР°РЅРѕ РёР·РѕР±СЂР°Р¶РµРЅРёРµ.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -453,14 +453,14 @@ namespace PluginKirsanovNews
             {
                 if (!File.Exists(file))
                 {
-                    MessageBox.Show("Плагин поврежден. Обратитесь к разработчику.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("РџР»Р°РіРёРЅ РїРѕРІСЂРµР¶РґРµРЅ. РћР±СЂР°С‚РёС‚РµСЃСЊ Рє СЂР°Р·СЂР°Р±РѕС‚С‡РёРєСѓ.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
 
             if (!CheckFont.FontExists("Lato"))
             {
-                MessageBox.Show("В системе отсутствуют нужные шрифты. Проверьте наличие требуемых шрифтов к данному дизайну.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Р’ СЃРёСЃС‚РµРјРµ РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РЅСѓР¶РЅС‹Рµ С€СЂРёС„С‚С‹. РџСЂРѕРІРµСЂСЊС‚Рµ РЅР°Р»РёС‡РёРµ С‚СЂРµР±СѓРµРјС‹С… С€СЂРёС„С‚РѕРІ Рє РґР°РЅРЅРѕРјСѓ РґРёР·Р°Р№РЅСѓ.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -470,12 +470,12 @@ namespace PluginKirsanovNews
             myHost.Progress(0);
             try
             {
-                // Запуск создания изображения в фоновом потоке
+                // Р—Р°РїСѓСЃРє СЃРѕР·РґР°РЅРёСЏ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РІ С„РѕРЅРѕРІРѕРј РїРѕС‚РѕРєРµ
                 var result = await Task.Run(() => CreateImage(parameters));
 
                 if (result.error != null)
                 {
-                    MessageBox.Show(result.error.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(result.error.Message, "РћС€РёР±РєР°", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if (result.image != null)
                 {
@@ -495,7 +495,7 @@ namespace PluginKirsanovNews
             int totalProgress = 0;
             try
             {
-                // Этап 1: Загрузка основных изображений (10%)
+                // Р­С‚Р°Рї 1: Р—Р°РіСЂСѓР·РєР° РѕСЃРЅРѕРІРЅС‹С… РёР·РѕР±СЂР°Р¶РµРЅРёР№ (10%)
                 myHost.Progress(10);
                 Image imageMain = LoadImageSafe(Path.Combine(parameters.Path, "main.png"));
                 Image imageBack = null;
@@ -512,23 +512,23 @@ namespace PluginKirsanovNews
                 totalProgress = 15;
                 myHost.Progress(totalProgress);
 
-                // Этап 2: Подготовка базового изображения (5%)
+                // Р­С‚Р°Рї 2: РџРѕРґРіРѕС‚РѕРІРєР° Р±Р°Р·РѕРІРѕРіРѕ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ (5%)
                 PhotoGenerate photo = new PhotoGenerate();
-                photo.height = imageMain.Height;
-                photo.width = imageMain.Width;
-                photo.colorMain = Color.White;
+                photo.Height = imageMain.Height;
+                photo.Width = imageMain.Width;
+                photo.ColorMain = Color.White;
                 Image imageOut = photo.Fill();
                 totalProgress += 5;
                 myHost.Progress(totalProgress);
 
-                // Этап 3: Обработка фона (10%)
+                // Р­С‚Р°Рї 3: РћР±СЂР°Р±РѕС‚РєР° С„РѕРЅР° (10%)
                 Image ImageBlur = null;
                 if (parameters.FormatIndex > 0)
                 {
                     PhotoSize resize = new PhotoSize();
-                    resize.width = imageMain.Width;
-                    resize.height = imageMain.Height;
-                    resize.source = parameters.SourceImage;
+                    resize.Width = imageMain.Width;
+                    resize.Height = imageMain.Height;
+                    resize.Source = parameters.SourceImage;
                     ImageBlur = resize.ScaleImage();
 
                     BlurImage blurImage = new BlurImage();
@@ -546,7 +546,7 @@ namespace PluginKirsanovNews
                 totalProgress = 30;
                 myHost.Progress(totalProgress);
 
-                // Этап 4: Позиционирование основного изображения (10%)
+                // Р­С‚Р°Рї 4: РџРѕР·РёС†РёРѕРЅРёСЂРѕРІР°РЅРёРµ РѕСЃРЅРѕРІРЅРѕРіРѕ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ (10%)
                 Merge mergeMain = new Merge();
                 switch (parameters.FormatIndex)
                 {
@@ -576,17 +576,17 @@ namespace PluginKirsanovNews
                 totalProgress += 10;
                 myHost.Progress(totalProgress);
 
-                // Этап 5: Обработка заголовка новости (30%)
+                // Р­С‚Р°Рї 5: РћР±СЂР°Р±РѕС‚РєР° Р·Р°РіРѕР»РѕРІРєР° РЅРѕРІРѕСЃС‚Рё (30%)
                 if (imageTitle != null && !string.IsNullOrEmpty(parameters.TitleText))
                 {
-                    // Наложение фона заголовка (5%)
+                    // РќР°Р»РѕР¶РµРЅРёРµ С„РѕРЅР° Р·Р°РіРѕР»РѕРІРєР° (5%)
                     mergeMain.sourceBottom = imageOut;
                     mergeMain.sourceTop = imageTitle;
                     imageOut = mergeMain.MergeImage();
                     totalProgress += 5;
                     myHost.Progress(totalProgress);
 
-                    // Добавление иконки (5%)
+                    // Р”РѕР±Р°РІР»РµРЅРёРµ РёРєРѕРЅРєРё (5%)
                     try
                     {
                         var iconPath = Path.Combine(parameters.Path, "images", parameters.SelectedImage + ".png");
@@ -596,22 +596,22 @@ namespace PluginKirsanovNews
                         mergeMain.left = 85;
                         imageOut = mergeMain.MergeImage();
                     }
-                    catch { /* Обработка ошибок уже есть выше */ }
+                    catch { /* РћР±СЂР°Р±РѕС‚РєР° РѕС€РёР±РѕРє СѓР¶Рµ РµСЃС‚СЊ РІС‹С€Рµ */ }
                     totalProgress += 5;
                     myHost.Progress(totalProgress);
 
-                    // Генерация текста (20%)
+                    // Р“РµРЅРµСЂР°С†РёСЏ С‚РµРєСЃС‚Р° (20%)
                     TextGenerate textE = new TextGenerate();
-                    textE.textString = parameters.TitleText;
-                    textE.rectH = 250;
-                    textE.rectW = 1380;
-                    textE.rectX = 375;
-                    textE.rectY = 1395;
-                    textE.source = imageOut;
-                    textE.fontSize = (float)parameters.FontSize;
-                    textE.colorText = Color.Black;
-                    textE.fontName = "Lato";
-                    textE.lineAlignment = StringAlignment.Center;
+                    textE.TextString = parameters.TitleText;
+                    textE.RectH = 250;
+                    textE.RectW = 1380;
+                    textE.RectX = 375;
+                    textE.RectY = 1395;
+                    textE.Source = imageOut;
+                    textE.FontSize = (float)parameters.FontSize;
+                    textE.ColorText = Color.Black;
+                    textE.FontName = "Lato";
+                    textE.LineAlignment = StringAlignment.Center;
                     imageOut = textE.DrawTextWithEffects();
                     totalProgress += 20;
                     myHost.Progress(totalProgress);
@@ -622,21 +622,21 @@ namespace PluginKirsanovNews
                     myHost.Progress(totalProgress);
                 }
 
-                // Этап 6: Добавление источника фото (15%)
+                // Р­С‚Р°Рї 6: Р”РѕР±Р°РІР»РµРЅРёРµ РёСЃС‚РѕС‡РЅРёРєР° С„РѕС‚Рѕ (15%)
                 if (!string.IsNullOrEmpty(parameters.SourceText))
                 {
                     TextGenerate textAutor = new TextGenerate();
-                    textAutor.textString = "Фото: " + parameters.SourceText;
-                    textAutor.rectH = 100;
-                    textAutor.rectW = 920;
-                    textAutor.rectX = 820;
-                    textAutor.rectY = 1670;
-                    textAutor.fontStyle = FontStyle.Bold;
-                    textAutor.source = imageOut;
-                    textAutor.fontSize = 40;
-                    textAutor.colorText = Color.White;
-                    textAutor.stringAlignment = StringAlignment.Far;
-                    textAutor.fontName = "Lato";
+                    textAutor.TextString = "Р¤РѕС‚Рѕ: " + parameters.SourceText;
+                    textAutor.RectH = 100;
+                    textAutor.RectW = 920;
+                    textAutor.RectX = 820;
+                    textAutor.RectY = 1670;
+                    textAutor.FontStyle = FontStyle.Bold;
+                    textAutor.Source = imageOut;
+                    textAutor.FontSize = 40;
+                    textAutor.ColorText = Color.White;
+                    textAutor.StringAlignment = StringAlignment.Far;
+                    textAutor.FontName = "Lato";
                     imageOut = textAutor.DrawTextWithEffects();
                     totalProgress += 15;
                     myHost.Progress(totalProgress);
@@ -647,7 +647,7 @@ namespace PluginKirsanovNews
                     myHost.Progress(totalProgress);
                 }
 
-                // Этап 7: Добавление слоев (10%)
+                // Р­С‚Р°Рї 7: Р”РѕР±Р°РІР»РµРЅРёРµ СЃР»РѕРµРІ (10%)
                 if (parameters.LayersEnabled)
                 {
                     var layerPath = Path.Combine(parameters.Path, "layers", parameters.SelectedLayer + ".png");
@@ -660,13 +660,13 @@ namespace PluginKirsanovNews
                 totalProgress += 10;
                 myHost.Progress(totalProgress);
 
-                // Финализация (10%)
+                // Р¤РёРЅР°Р»РёР·Р°С†РёСЏ (10%)
                 myHost.Progress(100);
                 return (imageOut, null);
             }
             catch (Exception ex)
             {
-                // При ошибке все равно сообщаем о 100% завершении
+                // РџСЂРё РѕС€РёР±РєРµ РІСЃРµ СЂР°РІРЅРѕ СЃРѕРѕР±С‰Р°РµРј Рѕ 100% Р·Р°РІРµСЂС€РµРЅРёРё
                 myHost.Progress(100);
                 return (null, ex);
             }
@@ -680,7 +680,7 @@ namespace PluginKirsanovNews
             return Image.FromStream(new MemoryStream(File.ReadAllBytes(path)));
         }
 
-        // Класс для передачи параметров создания изображения
+        // РљР»Р°СЃСЃ РґР»СЏ РїРµСЂРµРґР°С‡Рё РїР°СЂР°РјРµС‚СЂРѕРІ СЃРѕР·РґР°РЅРёСЏ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
         private class ImageCreationParams
         {
             public bool TitleEnabled { get; set; }
@@ -695,7 +695,7 @@ namespace PluginKirsanovNews
             public string Path { get; set; }
         }
 
-        // Загрузка списка иконок для заголовка новости
+        // Р—Р°РіСЂСѓР·РєР° СЃРїРёСЃРєР° РёРєРѕРЅРѕРє РґР»СЏ Р·Р°РіРѕР»РѕРІРєР° РЅРѕРІРѕСЃС‚Рё
         private void LoadingImages()
         {
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -710,7 +710,7 @@ namespace PluginKirsanovNews
             }
         }
 
-        // Выбор изображения иконки новости
+        // Р’С‹Р±РѕСЂ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РёРєРѕРЅРєРё РЅРѕРІРѕСЃС‚Рё
         private void comboBoxImages_SelectedIndexChanged(object sender, EventArgs e)
         {
             string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "images");
@@ -725,7 +725,7 @@ namespace PluginKirsanovNews
             }
         }
 
-        // Загрузка списка дополнительных слоев для заголовка новости
+        // Р—Р°РіСЂСѓР·РєР° СЃРїРёСЃРєР° РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹С… СЃР»РѕРµРІ РґР»СЏ Р·Р°РіРѕР»РѕРІРєР° РЅРѕРІРѕСЃС‚Рё
         private void LoadingLayers()
         {
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -751,21 +751,21 @@ namespace PluginKirsanovNews
             }
         }
 
-        // Расчет размера шрифта
+        // Р Р°СЃС‡РµС‚ СЂР°Р·РјРµСЂР° С€СЂРёС„С‚Р°
         private void textBoxT1_TextChanged(object sender, EventArgs e)
         {
-            // Расчет размера шрифта
+            // Р Р°СЃС‡РµС‚ СЂР°Р·РјРµСЂР° С€СЂРёС„С‚Р°
             CalculateFontSize fontSize = new CalculateFontSize();
-            fontSize.baseFontSize = 100;
-            fontSize.fontSizeRatio = 0.5;
+            fontSize.BaseFontSize = 100;
+            fontSize.FontSizeRatio = 0.5;
             StringFormat stringFormat = new StringFormat();
             stringFormat.Alignment = StringAlignment.Center;
             stringFormat.LineAlignment = StringAlignment.Center;
-            decimal fontsize = (decimal)fontSize.CalcMaxFontSize(textBoxT1.Text, "Lato", fontSize.FontSize(textBoxT1.Text), FontStyle.Regular, 1380, 250, stringFormat);
+            decimal fontsize = (decimal)fontSize.CalcMaxFontSize(textBoxT1.Text, "Lato", fontSize.GetFontSize(textBoxT1.Text), FontStyle.Regular, 1380, 250, stringFormat);
             if (fontsize < numericUpDown1.Minimum) fontsize = numericUpDown1.Minimum;
             if (fontsize > numericUpDown1.Maximum) fontsize = numericUpDown1.Maximum;
             numericUpDown1.Value = fontsize;
-            // Отображение длины текста
+            // РћС‚РѕР±СЂР°Р¶РµРЅРёРµ РґР»РёРЅС‹ С‚РµРєСЃС‚Р°
             labelTextLeght.Text = textBoxT1.Text.Length.ToString();
             labelTextLeght.ForeColor = textBoxT1.Text.Length > 60 ? Color.Red : SystemColors.ControlText;
         }
@@ -800,7 +800,7 @@ namespace PluginKirsanovNews
             myHost.RenderEditor();
         }
 
-        // Переключение состояния возможности выбора слоев
+        // РџРµСЂРµРєР»СЋС‡РµРЅРёРµ СЃРѕСЃС‚РѕСЏРЅРёСЏ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё РІС‹Р±РѕСЂР° СЃР»РѕРµРІ
         private void checkBoxLayers_CheckedChanged(object sender, EventArgs e)
         {
             comboBoxLayers.Enabled = checkBoxLayers.Checked;

@@ -642,12 +642,12 @@ namespace MediaSocial
             PhotoSize photoSize = new PhotoSize
             {
                 
-                source = image,
-                width = item.canvasWidth,
-                height = item.canvasHeight,
-                zoom = item.Zoom,
-                horizontal = item.Horizontal,
-                vertical = item.Vertical
+                Source = image,
+                Width = item.canvasWidth,
+                Height = item.canvasHeight,
+                Zoom = item.Zoom,
+                Horizontal = item.Horizontal,
+                Vertical = item.Vertical
             };
 
             image = photoSize.ScaleImage();
@@ -662,36 +662,36 @@ namespace MediaSocial
             toolStripStatusLabel1.Text = "Меняю цвета изображения...";
             Application.DoEvents();
             ModifyImage mi = new ModifyImage();
-            mi.brightness = item.Brightness;
-            mi.contrast = item.Contrast;
-            mi.hue = item.Tone;
-            mi.saturation = item.Saturation;
-            mi.temperature = item.Temperature;
+            mi.Brightness = item.Brightness;
+            mi.Contrast = item.Contrast;
+            mi.Hue = item.Tone;
+            mi.Saturation = item.Saturation;
+            mi.Temperature = item.Temperature;
 
 
             toolStripStatusLabel1.Text = "Меняю яркость изображения...";
             Application.DoEvents();
-            mi.image = image;
+            mi.Image = image;
             image = mi.BrightnessImage();
 
             toolStripStatusLabel1.Text = "Меняю констрастность изображения...";
             Application.DoEvents();
-            mi.image = image;
+            mi.Image = image;
             image = mi.ContrastImage();
 
             toolStripStatusLabel1.Text = "Меняю температуру изображения...";
             Application.DoEvents();
-            mi.image = image;
+            mi.Image = image;
             image = mi.ChangeTemperature();
 
             toolStripStatusLabel1.Text = "Меняю насыщенность изображения...";
             Application.DoEvents();
-            mi.image = image;
+            mi.Image = image;
             image = mi.ChangeSaturation();
 
             toolStripStatusLabel1.Text = "Меняю оттенок изображения...";
             Application.DoEvents();
-            mi.image = image;
+            mi.Image = image;
             image = mi.ChangeHue();
 
             // Закончили изменять цвета
@@ -869,12 +869,12 @@ namespace MediaSocial
         {
             PhotoSize photoSize = new PhotoSize
             {
-                source = image,
-                width = item.CanvasWidth,
-                height = item.CanvasHeight,
-                zoom = item.Zoom,
-                horizontal = item.Horizontal,
-                vertical = item.Vertical
+                Source = image,
+                Width = item.CanvasWidth,
+                Height = item.CanvasHeight,
+                Zoom = item.Zoom,
+                Horizontal = item.Horizontal,
+                Vertical = item.Vertical
             };
             return photoSize.ScaleImage();
         }
@@ -890,31 +890,31 @@ namespace MediaSocial
         {
             ModifyImage mi = new ModifyImage
             {
-                brightness = item.Brightness,
-                contrast = item.Contrast,
-                hue = item.Tone,
-                saturation = item.Saturation,
-                temperature = item.Temperature
+                Brightness = item.Brightness,
+                Contrast = item.Contrast,
+                Hue = item.Tone,
+                Saturation = item.Saturation,
+                Temperature = item.Temperature
             };
 
             progress?.Report("Меняю яркость...");
-            mi.image = image;
+            mi.Image = image;
             image = mi.BrightnessImage();
 
             progress?.Report("Меняю контрастность...");
-            mi.image = image;
+            mi.Image = image;
             image = mi.ContrastImage();
 
             progress?.Report("Меняю температуру...");
-            mi.image = image;
+            mi.Image = image;
             image = mi.ChangeTemperature();
 
             progress?.Report("Меняю насыщенность...");
-            mi.image = image;
+            mi.Image = image;
             image = mi.ChangeSaturation();
 
             progress?.Report("Меняю оттенок...");
-            mi.image = image;
+            mi.Image = image;
             image = mi.ChangeHue();
 
             return image;

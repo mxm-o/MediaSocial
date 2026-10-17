@@ -1,4 +1,4 @@
-// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+п»ї// Copyright В© 2023 Maxim Otrokhov. All rights reserved.
 
 using System;
 using System.Drawing;
@@ -83,7 +83,7 @@ namespace PluginKirsanovDemography
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 11;
-            this.btnClear.Text = "Очистить";
+            this.btnClear.Text = "РћС‡РёСЃС‚РёС‚СЊ";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
@@ -93,7 +93,7 @@ namespace PluginKirsanovDemography
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(75, 23);
             this.btnCreate.TabIndex = 10;
-            this.btnCreate.Text = "Создать";
+            this.btnCreate.Text = "РЎРѕР·РґР°С‚СЊ";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
@@ -126,7 +126,7 @@ namespace PluginKirsanovDemography
             this.labelT1.Name = "labelT1";
             this.labelT1.Size = new System.Drawing.Size(33, 13);
             this.labelT1.TabIndex = 0;
-            this.labelT1.Text = "Дата";
+            this.labelT1.Text = "Р”Р°С‚Р°";
             // 
             // panel2
             // 
@@ -160,21 +160,21 @@ namespace PluginKirsanovDemography
             // DemographyName
             // 
             this.DemographyName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.DemographyName.HeaderText = "Название";
+            this.DemographyName.HeaderText = "РќР°Р·РІР°РЅРёРµ";
             this.DemographyName.Name = "DemographyName";
             this.DemographyName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // DemographyNow
             // 
             this.DemographyNow.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.DemographyNow.HeaderText = "Параметр 1";
+            this.DemographyNow.HeaderText = "РџР°СЂР°РјРµС‚СЂ 1";
             this.DemographyNow.Name = "DemographyNow";
             this.DemographyNow.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // DemographyOld
             // 
             this.DemographyOld.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.DemographyOld.HeaderText = "Параметр 2";
+            this.DemographyOld.HeaderText = "РџР°СЂР°РјРµС‚СЂ 2";
             this.DemographyOld.Name = "DemographyOld";
             this.DemographyOld.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
@@ -185,7 +185,7 @@ namespace PluginKirsanovDemography
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(48, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Данные";
+            this.label1.Text = "Р”Р°РЅРЅС‹Рµ";
             // 
             // ctlMain
             // 
@@ -252,15 +252,15 @@ namespace PluginKirsanovDemography
 
             dataGridViewDemography.Rows.Clear();
 
-            dataGridViewDemography.Rows.Add("Год", dt.Year, dt.Year - 1);
-            //dataGridViewDemography.Rows.Add("Рождение девочки", 0, 0);
-            //dataGridViewDemography.Rows.Add("Рождение мальчики", 0, 0);
-            dataGridViewDemography.Rows.Add("Рождение", 0, 0);
-            dataGridViewDemography.Rows.Add("Смерть", 0, 0);
-            dataGridViewDemography.Rows.Add("Брак", 0, 0);
-            dataGridViewDemography.Rows.Add("Развод", 0, 0);
-            dataGridViewDemography.Rows.Add("Мужские", "Имена", "-");
-            dataGridViewDemography.Rows.Add("Женские", "Имена", "-");
+            dataGridViewDemography.Rows.Add("Р“РѕРґ", dt.Year, dt.Year - 1);
+            //dataGridViewDemography.Rows.Add("Р РѕР¶РґРµРЅРёРµ РґРµРІРѕС‡РєРё", 0, 0);
+            //dataGridViewDemography.Rows.Add("Р РѕР¶РґРµРЅРёРµ РјР°Р»СЊС‡РёРєРё", 0, 0);
+            dataGridViewDemography.Rows.Add("Р РѕР¶РґРµРЅРёРµ", 0, 0);
+            dataGridViewDemography.Rows.Add("РЎРјРµСЂС‚СЊ", 0, 0);
+            dataGridViewDemography.Rows.Add("Р‘СЂР°Рє", 0, 0);
+            dataGridViewDemography.Rows.Add("Р Р°Р·РІРѕРґ", 0, 0);
+            dataGridViewDemography.Rows.Add("РњСѓР¶СЃРєРёРµ", "РРјРµРЅР°", "-");
+            dataGridViewDemography.Rows.Add("Р–РµРЅСЃРєРёРµ", "РРјРµРЅР°", "-");
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -277,7 +277,7 @@ namespace PluginKirsanovDemography
         private void btnCreate_Click(object sender, EventArgs e)
         {
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            // Считываем шаблонное изображение
+            // РЎС‡РёС‚С‹РІР°РµРј С€Р°Р±Р»РѕРЅРЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ
             Image imageMain = null;
             try
             {
@@ -289,111 +289,111 @@ namespace PluginKirsanovDemography
 
             if (imageMain == null)
             {
-                MessageBox.Show("Плагин поврежден. Обратитесь к разработчику.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("РџР»Р°РіРёРЅ РїРѕРІСЂРµР¶РґРµРЅ. РћР±СЂР°С‚РёС‚РµСЃСЊ Рє СЂР°Р·СЂР°Р±РѕС‚С‡РёРєСѓ.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             if (!CheckFont.FontExists("Lato"))
             {
-                MessageBox.Show("В системе отсутствуют нужные шрифты. Проверьте наличие требуемых шрифтов к данному дизайну.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Р’ СЃРёСЃС‚РµРјРµ РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РЅСѓР¶РЅС‹Рµ С€СЂРёС„С‚С‹. РџСЂРѕРІРµСЂСЊС‚Рµ РЅР°Р»РёС‡РёРµ С‚СЂРµР±СѓРµРјС‹С… С€СЂРёС„С‚РѕРІ Рє РґР°РЅРЅРѕРјСѓ РґРёР·Р°Р№РЅСѓ.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             Enabled = false;
 
-            // Генерируем новое изображение
+            // Р“РµРЅРµСЂРёСЂСѓРµРј РЅРѕРІРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ
             PhotoGenerate photo = new PhotoGenerate();
-            photo.height = imageMain.Height;
-            photo.width = imageMain.Width;
-            photo.colorMain = Color.White;
+            photo.Height = imageMain.Height;
+            photo.Width = imageMain.Width;
+            photo.ColorMain = Color.White;
             Image imageOut = photo.Fill();
-            // Раскладываем по слоям
+            // Р Р°СЃРєР»Р°РґС‹РІР°РµРј РїРѕ СЃР»РѕСЏРј
             Merge mergeImage = new Merge();
             mergeImage.sourceBottom = imageOut;
             mergeImage.sourceTop = imageMain;
             mergeImage.top = 0;
             mergeImage.left = 0;
-            imageOut = mergeImage.MergeImage(); // Помещаем оформление
-            // Пишем дату
+            imageOut = mergeImage.MergeImage(); // РџРѕРјРµС‰Р°РµРј РѕС„РѕСЂРјР»РµРЅРёРµ
+            // РџРёС€РµРј РґР°С‚Сѓ
             TextGenerate textE = new TextGenerate();
-            textE.textString = "за " + dateTimePicker.Value.ToString("MMMM").ToLower() + " в Кирсанове";
-            textE.rectH = 100;
-            textE.rectW = 1300;
-            textE.rectX = 40;
-            textE.rectY = 210;
-            textE.source = imageOut;
-            textE.fontSize = 100;
-            textE.colorText = Color.White;
-            textE.fontName = "Lato";
-            textE.lineAlignment = StringAlignment.Center;
-            textE.stringAlignment = StringAlignment.Near;
+            textE.TextString = "Р·Р° " + dateTimePicker.Value.ToString("MMMM").ToLower() + " РІ РљРёСЂСЃР°РЅРѕРІРµ";
+            textE.RectH = 100;
+            textE.RectW = 1300;
+            textE.RectX = 40;
+            textE.RectY = 210;
+            textE.Source = imageOut;
+            textE.FontSize = 100;
+            textE.ColorText = Color.White;
+            textE.FontName = "Lato";
+            textE.LineAlignment = StringAlignment.Center;
+            textE.StringAlignment = StringAlignment.Near;
             //textE.debug = true;
             imageOut = textE.DrawTextWithEffects();
-            // Пишем имена мужские
+            // РџРёС€РµРј РёРјРµРЅР° РјСѓР¶СЃРєРёРµ
             TextGenerate textName = new TextGenerate();
-            textName.textString = dataGridViewDemography[1, 5].Value.ToString().Replace(","," ").Replace("  ", " ").Replace("  ", " ").Replace(" ", Environment.NewLine);
-            textName.rectH = 250;
-            textName.rectW = 600;
-            textName.rectX = 280;
-            textName.rectY = 1350;
-            textName.source = imageOut;
-            textName.fontSize = 66;
-            textName.colorText = Color.Black;
-            textName.fontName = "Lato";
-            textName.lineAlignment = StringAlignment.Center;
-            textName.stringAlignment = StringAlignment.Near;
+            textName.TextString = dataGridViewDemography[1, 5].Value.ToString().Replace(","," ").Replace("  ", " ").Replace("  ", " ").Replace(" ", Environment.NewLine);
+            textName.RectH = 250;
+            textName.RectW = 600;
+            textName.RectX = 280;
+            textName.RectY = 1350;
+            textName.Source = imageOut;
+            textName.FontSize = 66;
+            textName.ColorText = Color.Black;
+            textName.FontName = "Lato";
+            textName.LineAlignment = StringAlignment.Center;
+            textName.StringAlignment = StringAlignment.Near;
+            //textName.Debug = true;
+            imageOut = textName.DrawTextWithEffects();
+            // РџРёС€РµРј РёРјРµРЅР° Р¶РµРЅСЃРєРёРµ
+            textName.TextString = dataGridViewDemography[1, 6].Value.ToString().Replace(",", " ").Replace("  ", " ").Replace("  ", " ").Replace(" ", Environment.NewLine);
+            textName.RectH = 250;
+            textName.RectW = 580;
+            textName.RectX = 1150;
+            textName.RectY = 1350;
+            textName.Source = imageOut;
+            textName.FontSize = 66;
+            textName.ColorText = Color.Black;
+            textName.FontName = "Lato";
+            textName.LineAlignment = StringAlignment.Center;
+            textName.StringAlignment = StringAlignment.Near;
             //textName.debug = true;
             imageOut = textName.DrawTextWithEffects();
-            // Пишем имена женские
-            textName.textString = dataGridViewDemography[1, 6].Value.ToString().Replace(",", " ").Replace("  ", " ").Replace("  ", " ").Replace(" ", Environment.NewLine);
-            textName.rectH = 250;
-            textName.rectW = 580;
-            textName.rectX = 1150;
-            textName.rectY = 1350;
-            textName.source = imageOut;
-            textName.fontSize = 66;
-            textName.colorText = Color.Black;
-            textName.fontName = "Lato";
-            textName.lineAlignment = StringAlignment.Center;
-            textName.stringAlignment = StringAlignment.Near;
-            //textName.debug = true;
-            imageOut = textName.DrawTextWithEffects();
-            // Рождаемость
+            // Р РѕР¶РґР°РµРјРѕСЃС‚СЊ
             Graph graphBorn = new Graph();
             Image imageGraphBorn = graphBorn.RenderGraphYears(Convert.ToInt32(dataGridViewDemography[1, 1].Value), Convert.ToInt32(dataGridViewDemography[2, 1].Value), dateTimePicker.Value.Year);
-            // Раскладываем по слоям
+            // Р Р°СЃРєР»Р°РґС‹РІР°РµРј РїРѕ СЃР»РѕСЏРј
             Merge mergeImageGraph = new Merge();
             mergeImageGraph.sourceBottom = imageOut;
             mergeImageGraph.sourceTop = imageGraphBorn;
             mergeImageGraph.top = 500;
             mergeImageGraph.left = 280;
-            imageOut = mergeImageGraph.MergeImage(); // Помещаем оформление
-            // Смертность
+            imageOut = mergeImageGraph.MergeImage(); // РџРѕРјРµС‰Р°РµРј РѕС„РѕСЂРјР»РµРЅРёРµ
+            // РЎРјРµСЂС‚РЅРѕСЃС‚СЊ
             Graph graph = new Graph();
             Image imageGraph = graph.RenderGraphYears(Convert.ToInt16(dataGridViewDemography[1, 2].Value), Convert.ToInt16(dataGridViewDemography[2, 2].Value), dateTimePicker.Value.Year);
-            // Раскладываем по слоям
+            // Р Р°СЃРєР»Р°РґС‹РІР°РµРј РїРѕ СЃР»РѕСЏРј
             mergeImageGraph.sourceBottom = imageOut;
             mergeImageGraph.sourceTop = imageGraph;
             mergeImageGraph.top = 500;
             mergeImageGraph.left = 1150;
-            imageOut = mergeImageGraph.MergeImage(); // Помещаем оформление
-            // Браки
+            imageOut = mergeImageGraph.MergeImage(); // РџРѕРјРµС‰Р°РµРј РѕС„РѕСЂРјР»РµРЅРёРµ
+            // Р‘СЂР°РєРё
             Graph graphWedding = new Graph();
             Image imageGraphWedding = graphWedding.RenderGraphYears(Convert.ToInt16(dataGridViewDemography[1, 3].Value), Convert.ToInt16(dataGridViewDemography[2, 3].Value), dateTimePicker.Value.Year);
-            // Раскладываем по слоям
+            // Р Р°СЃРєР»Р°РґС‹РІР°РµРј РїРѕ СЃР»РѕСЏРј
             mergeImageGraph.sourceBottom = imageOut;
             mergeImageGraph.sourceTop = imageGraphWedding;
             mergeImageGraph.top = 900;
             mergeImageGraph.left = 280;
-            imageOut = mergeImageGraph.MergeImage(); // Помещаем оформление
-            // Разводы
+            imageOut = mergeImageGraph.MergeImage(); // РџРѕРјРµС‰Р°РµРј РѕС„РѕСЂРјР»РµРЅРёРµ
+            // Р Р°Р·РІРѕРґС‹
             Graph graphDivorce = new Graph();
             Image imageGraphDivorce = graphDivorce.RenderGraphYears(Convert.ToInt16(dataGridViewDemography[1, 4].Value), Convert.ToInt16(dataGridViewDemography[2, 4].Value), dateTimePicker.Value.Year);
-            // Раскладываем по слоям
+            // Р Р°СЃРєР»Р°РґС‹РІР°РµРј РїРѕ СЃР»РѕСЏРј
             mergeImageGraph.sourceBottom = imageOut;
             mergeImageGraph.sourceTop = imageGraphDivorce;
             mergeImageGraph.top = 900;
             mergeImageGraph.left = 1150;
-            imageOut = mergeImageGraph.MergeImage(); // Помещаем оформление
+            imageOut = mergeImageGraph.MergeImage(); // РџРѕРјРµС‰Р°РµРј РѕС„РѕСЂРјР»РµРЅРёРµ
 
             myHost.ReciveImage(imageOut);
             this.Enabled = true;

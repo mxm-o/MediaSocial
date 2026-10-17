@@ -1,4 +1,4 @@
-// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+п»ї// Copyright В© 2023 Maxim Otrokhov. All rights reserved.
 
 using System;
 using System.Drawing;
@@ -23,10 +23,10 @@ namespace PluginKirsanovWeatherManual
             InitializeComponent();
             // TODO: Add any initialization after the InitializeComponent call
             LoadingImages();
-            // Проверка наличия HtmlAgilityPack.dll
+            // РџСЂРѕРІРµСЂРєР° РЅР°Р»РёС‡РёСЏ HtmlAgilityPack.dll
             try
             {
-                // Пробуем загрузить сборку
+                // РџСЂРѕР±СѓРµРј Р·Р°РіСЂСѓР·РёС‚СЊ СЃР±РѕСЂРєСѓ
                 Assembly.Load("HtmlAgilityPack");
             }
             catch
@@ -101,7 +101,7 @@ namespace PluginKirsanovWeatherManual
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 11;
-            this.btnClear.Text = "Очистить";
+            this.btnClear.Text = "РћС‡РёСЃС‚РёС‚СЊ";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
@@ -111,7 +111,7 @@ namespace PluginKirsanovWeatherManual
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(75, 23);
             this.btnCreate.TabIndex = 10;
-            this.btnCreate.Text = "Создать";
+            this.btnCreate.Text = "РЎРѕР·РґР°С‚СЊ";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
@@ -143,7 +143,7 @@ namespace PluginKirsanovWeatherManual
             this.labelT1.Name = "labelT1";
             this.labelT1.Size = new System.Drawing.Size(33, 13);
             this.labelT1.TabIndex = 0;
-            this.labelT1.Text = "Дата";
+            this.labelT1.Text = "Р”Р°С‚Р°";
             // 
             // panel2
             // 
@@ -162,7 +162,7 @@ namespace PluginKirsanovWeatherManual
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(48, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Данные";
+            this.label1.Text = "Р”Р°РЅРЅС‹Рµ";
             // 
             // btnSetting
             // 
@@ -170,7 +170,7 @@ namespace PluginKirsanovWeatherManual
             this.btnSetting.Name = "btnSetting";
             this.btnSetting.Size = new System.Drawing.Size(75, 23);
             this.btnSetting.TabIndex = 14;
-            this.btnSetting.Text = "Настройки";
+            this.btnSetting.Text = "РќР°СЃС‚СЂРѕР№РєРё";
             this.btnSetting.UseVisualStyleBackColor = true;
             this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
             // 
@@ -180,7 +180,7 @@ namespace PluginKirsanovWeatherManual
             this.buttonUpdate.Name = "buttonUpdate";
             this.buttonUpdate.Size = new System.Drawing.Size(68, 23);
             this.buttonUpdate.TabIndex = 15;
-            this.buttonUpdate.Text = "Обновить";
+            this.buttonUpdate.Text = "РћР±РЅРѕРІРёС‚СЊ";
             this.buttonUpdate.UseVisualStyleBackColor = true;
             this.buttonUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
             // 
@@ -190,7 +190,7 @@ namespace PluginKirsanovWeatherManual
             this.labelUpdate.Name = "labelUpdate";
             this.labelUpdate.Size = new System.Drawing.Size(239, 13);
             this.labelUpdate.TabIndex = 16;
-            this.labelUpdate.Text = "Прогноз обновлён: ";
+            this.labelUpdate.Text = "РџСЂРѕРіРЅРѕР· РѕР±РЅРѕРІР»С‘РЅ: ";
             // 
             // panel3
             // 
@@ -221,7 +221,7 @@ namespace PluginKirsanovWeatherManual
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(30, 13);
             this.label2.TabIndex = 0;
-            this.label2.Text = "Фон";
+            this.label2.Text = "Р¤РѕРЅ";
             // 
             // button1
             // 
@@ -229,7 +229,7 @@ namespace PluginKirsanovWeatherManual
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(81, 23);
             this.button1.TabIndex = 18;
-            this.button1.Text = "Обработать";
+            this.button1.Text = "РћР±СЂР°Р±РѕС‚Р°С‚СЊ";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -334,7 +334,7 @@ namespace PluginKirsanovWeatherManual
         {
             Clear();
             generateWeathersTable();
-            labelUpdate.Text = "Прогноз обновлен: " + Global.siteTime.ToString();
+            labelUpdate.Text = "РџСЂРѕРіРЅРѕР· РѕР±РЅРѕРІР»РµРЅ: " + Global.siteTime.ToString();
         }
 
         private void generateWeathersTable()
@@ -346,20 +346,20 @@ namespace PluginKirsanovWeatherManual
         {
             foreach (DataGridViewColumn col in dataGridViewWeather.Columns)
             {
-                // Отключаем сортировку
+                // РћС‚РєР»СЋС‡Р°РµРј СЃРѕСЂС‚РёСЂРѕРІРєСѓ
                 col.SortMode = DataGridViewColumnSortMode.NotSortable;
                 col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 col.HeaderText = " 1 ";
             }
-            // прячем колонки
+            // РїСЂСЏС‡РµРј РєРѕР»РѕРЅРєРё
             dataGridViewWeather.Columns[2].Visible = false;
             dataGridViewWeather.Columns[3].Visible = false;
             dataGridViewWeather.Columns[4].Visible = false;
             dataGridViewWeather.Columns[5].Visible = false;
             dataGridViewWeather.Columns[6].Visible = false;
-            // Пишем названия
-            dataGridViewWeather.Columns[0].HeaderText = "Параметр";
-            dataGridViewWeather.Columns[1].HeaderText = "Значение";
+            // РџРёС€РµРј РЅР°Р·РІР°РЅРёСЏ
+            dataGridViewWeather.Columns[0].HeaderText = "РџР°СЂР°РјРµС‚СЂ";
+            dataGridViewWeather.Columns[1].HeaderText = "Р—РЅР°С‡РµРЅРёРµ";
             dataGridViewWeather.Columns[0].ReadOnly = true;
 
             foreach (DataGridViewRow row in dataGridViewWeather.Rows)
@@ -391,7 +391,7 @@ namespace PluginKirsanovWeatherManual
             }
         }
 
-        // Загрузка списка иконок для заголовка новости
+        // Р—Р°РіСЂСѓР·РєР° СЃРїРёСЃРєР° РёРєРѕРЅРѕРє РґР»СЏ Р·Р°РіРѕР»РѕРІРєР° РЅРѕРІРѕСЃС‚Рё
         private void LoadingImages()
         {
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -423,7 +423,7 @@ namespace PluginKirsanovWeatherManual
             bool error = false;
 
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            // Считываем шаблонное изображение
+            // РЎС‡РёС‚С‹РІР°РµРј С€Р°Р±Р»РѕРЅРЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ
             Image imageMain = null;
             Image imageFon = null;
 
@@ -434,7 +434,7 @@ namespace PluginKirsanovWeatherManual
             catch
             {
                 error = true;
-                MessageBox.Show("Ошибка целостности плагина. Обратитесь к разработчику.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("РћС€РёР±РєР° С†РµР»РѕСЃС‚РЅРѕСЃС‚Рё РїР»Р°РіРёРЅР°. РћР±СЂР°С‚РёС‚РµСЃСЊ Рє СЂР°Р·СЂР°Р±РѕС‚С‡РёРєСѓ.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             try
@@ -443,13 +443,13 @@ namespace PluginKirsanovWeatherManual
             }
             catch
             {
-                MessageBox.Show("Ошибка обработки файла фона. Укажите другой файл.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("РћС€РёР±РєР° РѕР±СЂР°Р±РѕС‚РєРё С„Р°Р№Р»Р° С„РѕРЅР°. РЈРєР°Р¶РёС‚Рµ РґСЂСѓРіРѕР№ С„Р°Р№Р».", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 LoadingImages();
                 error = true;
             }
 
             if (!CheckFont.FontExists("Lato") || !CheckFont.FontExists("linea-weather-10")) {
-                MessageBox.Show("В системе отсутствуют нужные шрифты. Проверьте наличие требуемых шрифтов к данному дизайну.", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Р’ СЃРёСЃС‚РµРјРµ РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РЅСѓР¶РЅС‹Рµ С€СЂРёС„С‚С‹. РџСЂРѕРІРµСЂСЊС‚Рµ РЅР°Р»РёС‡РёРµ С‚СЂРµР±СѓРµРјС‹С… С€СЂРёС„С‚РѕРІ Рє РґР°РЅРЅРѕРјСѓ РґРёР·Р°Р№РЅСѓ.", "РћС€РёР±РєР°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 error = true; 
             }
 
@@ -459,236 +459,236 @@ namespace PluginKirsanovWeatherManual
             }
 
             Enabled = false;
-            // Обрезаем фон
+            // РћР±СЂРµР·Р°РµРј С„РѕРЅ
             PhotoSize photoSizeFon = new PhotoSize();
-            photoSizeFon.source = imageFon;
-            photoSizeFon.height = imageMain.Height;
-            photoSizeFon.width = imageMain.Width;
+            photoSizeFon.Source = imageFon;
+            photoSizeFon.Height = imageMain.Height;
+            photoSizeFon.Width = imageMain.Width;
             Image imageOut = photoSizeFon.ScaleImage();
-            // Раскладываем по слоям
+            // Р Р°СЃРєР»Р°РґС‹РІР°РµРј РїРѕ СЃР»РѕСЏРј
             Merge mergeImage = new Merge();
             mergeImage.sourceBottom = imageOut;
             mergeImage.sourceTop = imageMain;
             mergeImage.top = 0;
             mergeImage.left = 0;
-            imageOut = mergeImage.MergeImage(); // Помещаем оформление
-            // Пишем дату
+            imageOut = mergeImage.MergeImage(); // РџРѕРјРµС‰Р°РµРј РѕС„РѕСЂРјР»РµРЅРёРµ
+            // РџРёС€РµРј РґР°С‚Сѓ
             TextGenerate textE = new TextGenerate();
-            textE.textString = dateTimePicker.Value.ToString("d MMMM yyyy").ToLower();
-            textE.rectH = 100;
-            textE.rectW = 1000;
-            textE.rectX = 45;
-            textE.rectY = 190;
-            textE.source = imageOut;
-            textE.fontSize = 100;
-            textE.colorText = Color.White;
-            textE.fontName = "Lato";
-            textE.lineAlignment = StringAlignment.Center;
-            textE.stringAlignment = StringAlignment.Near;
+            textE.TextString = dateTimePicker.Value.ToString("d MMMM yyyy").ToLower();
+            textE.RectH = 100;
+            textE.RectW = 1000;
+            textE.RectX = 45;
+            textE.RectY = 190;
+            textE.Source = imageOut;
+            textE.FontSize = 100;
+            textE.ColorText = Color.White;
+            textE.FontName = "Lato";
+            textE.LineAlignment = StringAlignment.Center;
+            textE.StringAlignment = StringAlignment.Near;
             //textE.debug = true;
             imageOut = textE.DrawTextWithEffects();
-            // Пишем градусы сегодня
+            // РџРёС€РµРј РіСЂР°РґСѓСЃС‹ СЃРµРіРѕРґРЅСЏ
             TextGenerate textName = new TextGenerate();
-            textName.textString = Global.weatherSetting[0].Value + "°C";
-            textName.rectH = 250;
-            textName.rectW = 800;
-            textName.rectX = 90;
-            textName.rectY = 550;
-            textName.source = imageOut;
-            textName.fontSize = 210;
-            textName.colorText = Color.FromArgb(50, 141, 212);
-            textName.fontName = "Lato";
-            textName.lineAlignment = StringAlignment.Center;
-            textName.stringAlignment = StringAlignment.Center;
+            textName.TextString = Global.weatherSetting[0].Value + "В°C";
+            textName.RectH = 250;
+            textName.RectW = 800;
+            textName.RectX = 90;
+            textName.RectY = 550;
+            textName.Source = imageOut;
+            textName.FontSize = 210;
+            textName.ColorText = Color.FromArgb(50, 141, 212);
+            textName.FontName = "Lato";
+            textName.LineAlignment = StringAlignment.Center;
+            textName.StringAlignment = StringAlignment.Center;
             //textName.debug = true;
             imageOut = textName.DrawTextWithEffects();
-            // Пишем облачность
-            textName.textString = WeatherType.Capitalize(Global.weatherSetting[1].Value);
-            textName.rectH = 180;
-            textName.rectW = 800;
-            textName.rectX = 90;
-            textName.rectY = 760;
-            textName.source = imageOut;
-            textName.fontSize = 60;
-            textName.colorText = Color.FromArgb(50, 141, 212);
-            textName.fontName = "Lato";
-            textName.lineAlignment = StringAlignment.Center;
-            textName.stringAlignment = StringAlignment.Center;
+            // РџРёС€РµРј РѕР±Р»Р°С‡РЅРѕСЃС‚СЊ
+            textName.TextString = WeatherType.Capitalize(Global.weatherSetting[1].Value);
+            textName.RectH = 180;
+            textName.RectW = 800;
+            textName.RectX = 90;
+            textName.RectY = 760;
+            textName.Source = imageOut;
+            textName.FontSize = 60;
+            textName.ColorText = Color.FromArgb(50, 141, 212);
+            textName.FontName = "Lato";
+            textName.LineAlignment = StringAlignment.Center;
+            textName.StringAlignment = StringAlignment.Center;
             //textName.debug = true;
             imageOut = textName.DrawTextWithEffects();
-            // Пишем другие на сегодня
+            // РџРёС€РµРј РґСЂСѓРіРёРµ РЅР° СЃРµРіРѕРґРЅСЏ
             string wind;
             if (Global.weatherSetting[4].Value == "0")
             {
-                wind = "Ветер: " + Global.weatherSetting[3].Value.ToLower() + "";
+                wind = "Р’РµС‚РµСЂ: " + Global.weatherSetting[3].Value.ToLower() + "";
             }
             else
             {
-                wind = "Ветер: " + Global.weatherSetting[3].Value.ToLower() + ", " + Global.weatherSetting[4].Value + " м/с";
+                wind = "Р’РµС‚РµСЂ: " + Global.weatherSetting[3].Value.ToLower() + ", " + Global.weatherSetting[4].Value + " Рј/СЃ";
             }
 
-            textName.textString = wind +
-                Environment.NewLine + "Атмосферное давление: " + Global.weatherSetting[5].Value + " мм" +
-                Environment.NewLine + "Влажность: " + Global.weatherSetting[6].Value + "%";
-            textName.rectH = 200;
-            textName.rectW = 800;
-            textName.rectX = 100;
-            textName.rectY = 950;
-            textName.source = imageOut;
-            textName.fontSize = 50;
-            textName.colorText = Color.Black;
-            textName.fontName = "Lato";
-            textName.lineAlignment = StringAlignment.Center;
-            textName.stringAlignment = StringAlignment.Near;
+            textName.TextString = wind +
+                Environment.NewLine + "РђС‚РјРѕСЃС„РµСЂРЅРѕРµ РґР°РІР»РµРЅРёРµ: " + Global.weatherSetting[5].Value + " РјРј" +
+                Environment.NewLine + "Р’Р»Р°Р¶РЅРѕСЃС‚СЊ: " + Global.weatherSetting[6].Value + "%";
+            textName.RectH = 200;
+            textName.RectW = 800;
+            textName.RectX = 100;
+            textName.RectY = 950;
+            textName.Source = imageOut;
+            textName.FontSize = 50;
+            textName.ColorText = Color.Black;
+            textName.FontName = "Lato";
+            textName.LineAlignment = StringAlignment.Center;
+            textName.StringAlignment = StringAlignment.Near;
             //textName.debug = true;
             imageOut = textName.DrawTextWithEffects();
-            // Символ облачности
-            textName.textString = WeatherType.ReplaceWeatherClowd(Global.weatherSetting[2].Value);
-            textName.rectH = 750;
-            textName.rectW = 750;
-            textName.rectX = 980;
-            textName.rectY = 400;
-            textName.source = imageOut;
-            textName.fontSize = 700;
-            textName.colorText = Color.FromArgb(50, 141, 212);
-            textName.fontName = "linea-weather-10";
-            textName.lineAlignment = StringAlignment.Center;
-            textName.stringAlignment = StringAlignment.Center;
+            // РЎРёРјРІРѕР» РѕР±Р»Р°С‡РЅРѕСЃС‚Рё
+            textName.TextString = WeatherType.ReplaceWeatherClowd(Global.weatherSetting[2].Value);
+            textName.RectH = 750;
+            textName.RectW = 750;
+            textName.RectX = 980;
+            textName.RectY = 400;
+            textName.Source = imageOut;
+            textName.FontSize = 700;
+            textName.ColorText = Color.FromArgb(50, 141, 212);
+            textName.FontName = "linea-weather-10";
+            textName.LineAlignment = StringAlignment.Center;
+            textName.StringAlignment = StringAlignment.Center;
             //textName.debug = true;
             imageOut = textName.DrawTextWithEffects();
-            // Пишем день недели первого дня
-            textName.textString = WeatherType.Capitalize(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(dateTimePicker.Value.AddDays(1).DayOfWeek).ToString().ToLower());
-            textName.rectH = 90;
-            textName.rectW = 510;
-            textName.rectX = 50;
-            textName.rectY = 1275;
-            textName.source = imageOut;
-            textName.fontSize = 60;
-            textName.colorText = Color.Black;
-            textName.fontName = "Lato";
-            textName.fontStyle = FontStyle.Regular;
-            textName.lineAlignment = StringAlignment.Center;
-            textName.stringAlignment = StringAlignment.Center;
+            // РџРёС€РµРј РґРµРЅСЊ РЅРµРґРµР»Рё РїРµСЂРІРѕРіРѕ РґРЅСЏ
+            textName.TextString = WeatherType.Capitalize(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(dateTimePicker.Value.AddDays(1).DayOfWeek).ToString().ToLower());
+            textName.RectH = 90;
+            textName.RectW = 510;
+            textName.RectX = 50;
+            textName.RectY = 1275;
+            textName.Source = imageOut;
+            textName.FontSize = 60;
+            textName.ColorText = Color.Black;
+            textName.FontName = "Lato";
+            textName.FontStyle = FontStyle.Regular;
+            textName.LineAlignment = StringAlignment.Center;
+            textName.StringAlignment = StringAlignment.Center;
             //textName.debug = true;
             imageOut = textName.DrawTextWithEffects();
-            // Символ облачности первого дня
-            textName.textString = WeatherType.ReplaceWeatherClowd(Global.weatherSetting[7].Value);
-            textName.rectH = 300;
-            textName.rectW = 510;
-            textName.rectX = 50;
-            textName.rectY = 1400;
-            textName.source = imageOut;
-            textName.fontSize = 250;
-            textName.colorText = Color.FromArgb(50, 141, 212);
-            textName.fontName = "linea-weather-10";
-            textName.fontStyle = FontStyle.Bold;
-            textName.lineAlignment = StringAlignment.Center;
-            textName.stringAlignment = StringAlignment.Center;
+            // РЎРёРјРІРѕР» РѕР±Р»Р°С‡РЅРѕСЃС‚Рё РїРµСЂРІРѕРіРѕ РґРЅСЏ
+            textName.TextString = WeatherType.ReplaceWeatherClowd(Global.weatherSetting[7].Value);
+            textName.RectH = 300;
+            textName.RectW = 510;
+            textName.RectX = 50;
+            textName.RectY = 1400;
+            textName.Source = imageOut;
+            textName.FontSize = 250;
+            textName.ColorText = Color.FromArgb(50, 141, 212);
+            textName.FontName = "linea-weather-10";
+            textName.FontStyle = FontStyle.Bold;
+            textName.LineAlignment = StringAlignment.Center;
+            textName.StringAlignment = StringAlignment.Center;
             //textName.debug = true;
             imageOut = textName.DrawTextWithEffects();
-            // Пишем температуру первого дня
-            textName.textString = Global.weatherSetting[8].Value + "° / " + Global.weatherSetting[9].Value + "°";
-            textName.rectH = 90;
-            textName.rectW = 510;
-            textName.rectX = 50;
-            textName.rectY = 1650;
-            textName.source = imageOut;
-            textName.fontSize = 60;
-            textName.colorText = Color.Black;
-            textName.fontName = "Lato";
-            textName.fontStyle = FontStyle.Regular;
-            textName.lineAlignment = StringAlignment.Center;
-            textName.stringAlignment = StringAlignment.Center;
+            // РџРёС€РµРј С‚РµРјРїРµСЂР°С‚СѓСЂСѓ РїРµСЂРІРѕРіРѕ РґРЅСЏ
+            textName.TextString = Global.weatherSetting[8].Value + "В° / " + Global.weatherSetting[9].Value + "В°";
+            textName.RectH = 90;
+            textName.RectW = 510;
+            textName.RectX = 50;
+            textName.RectY = 1650;
+            textName.Source = imageOut;
+            textName.FontSize = 60;
+            textName.ColorText = Color.Black;
+            textName.FontName = "Lato";
+            textName.FontStyle = FontStyle.Regular;
+            textName.LineAlignment = StringAlignment.Center;
+            textName.StringAlignment = StringAlignment.Center;
             //textName.debug = true;
             imageOut = textName.DrawTextWithEffects();
-            // Пишем день недели второго дня
-            textName.textString = WeatherType.Capitalize(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(dateTimePicker.Value.AddDays(2).DayOfWeek).ToString().ToLower());
-            textName.rectH = 90;
-            textName.rectW = 510;
-            textName.rectX = 640;
-            textName.rectY = 1275;
-            textName.source = imageOut;
-            textName.fontSize = 60;
-            textName.colorText = Color.Black;
-            textName.fontName = "Lato";
-            textName.fontStyle = FontStyle.Regular;
-            textName.lineAlignment = StringAlignment.Center;
-            textName.stringAlignment = StringAlignment.Center;
+            // РџРёС€РµРј РґРµРЅСЊ РЅРµРґРµР»Рё РІС‚РѕСЂРѕРіРѕ РґРЅСЏ
+            textName.TextString = WeatherType.Capitalize(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(dateTimePicker.Value.AddDays(2).DayOfWeek).ToString().ToLower());
+            textName.RectH = 90;
+            textName.RectW = 510;
+            textName.RectX = 640;
+            textName.RectY = 1275;
+            textName.Source = imageOut;
+            textName.FontSize = 60;
+            textName.ColorText = Color.Black;
+            textName.FontName = "Lato";
+            textName.FontStyle = FontStyle.Regular;
+            textName.LineAlignment = StringAlignment.Center;
+            textName.StringAlignment = StringAlignment.Center;
             //textName.debug = true;
             imageOut = textName.DrawTextWithEffects();
-            // Символ облачности второго дня
-            textName.textString = WeatherType.ReplaceWeatherClowd(Global.weatherSetting[10].Value);
-            textName.rectH = 300;
-            textName.rectW = 510;
-            textName.rectX = 640;
-            textName.rectY = 1400;
-            textName.source = imageOut;
-            textName.fontSize = 250;
-            textName.colorText = Color.FromArgb(50, 141, 212);
-            textName.fontName = "linea-weather-10";
-            textName.fontStyle = FontStyle.Bold;
-            textName.lineAlignment = StringAlignment.Center;
-            textName.stringAlignment = StringAlignment.Center;
+            // РЎРёРјРІРѕР» РѕР±Р»Р°С‡РЅРѕСЃС‚Рё РІС‚РѕСЂРѕРіРѕ РґРЅСЏ
+            textName.TextString = WeatherType.ReplaceWeatherClowd(Global.weatherSetting[10].Value);
+            textName.RectH = 300;
+            textName.RectW = 510;
+            textName.RectX = 640;
+            textName.RectY = 1400;
+            textName.Source = imageOut;
+            textName.FontSize = 250;
+            textName.ColorText = Color.FromArgb(50, 141, 212);
+            textName.FontName = "linea-weather-10";
+            textName.FontStyle = FontStyle.Bold;
+            textName.LineAlignment = StringAlignment.Center;
+            textName.StringAlignment = StringAlignment.Center;
             //textName.debug = true;
             imageOut = textName.DrawTextWithEffects();
-            // Пишем температуру второго дня
-            textName.textString = Global.weatherSetting[11].Value + "° / " + Global.weatherSetting[12].Value + "°";
-            textName.rectH = 90;
-            textName.rectW = 510;
-            textName.rectX = 640;
-            textName.rectY = 1650;
-            textName.source = imageOut;
-            textName.fontSize = 60;
-            textName.colorText = Color.Black;
-            textName.fontName = "Lato";
-            textName.fontStyle = FontStyle.Regular;
-            textName.lineAlignment = StringAlignment.Center;
-            textName.stringAlignment = StringAlignment.Center;
+            // РџРёС€РµРј С‚РµРјРїРµСЂР°С‚СѓСЂСѓ РІС‚РѕСЂРѕРіРѕ РґРЅСЏ
+            textName.TextString = Global.weatherSetting[11].Value + "В° / " + Global.weatherSetting[12].Value + "В°";
+            textName.RectH = 90;
+            textName.RectW = 510;
+            textName.RectX = 640;
+            textName.RectY = 1650;
+            textName.Source = imageOut;
+            textName.FontSize = 60;
+            textName.ColorText = Color.Black;
+            textName.FontName = "Lato";
+            textName.FontStyle = FontStyle.Regular;
+            textName.LineAlignment = StringAlignment.Center;
+            textName.StringAlignment = StringAlignment.Center;
             //textName.debug = true;
             imageOut = textName.DrawTextWithEffects();
-            // Пишем день недели третьего дня
-            textName.textString = WeatherType.Capitalize(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(dateTimePicker.Value.AddDays(3).DayOfWeek).ToString().ToLower());
-            textName.rectH = 90;
-            textName.rectW = 510;
-            textName.rectX = 1230;
-            textName.rectY = 1275;
-            textName.source = imageOut;
-            textName.fontSize = 60;
-            textName.colorText = Color.Black;
-            textName.fontName = "Lato";
-            textName.fontStyle = FontStyle.Regular;
-            textName.lineAlignment = StringAlignment.Center;
-            textName.stringAlignment = StringAlignment.Center;
+            // РџРёС€РµРј РґРµРЅСЊ РЅРµРґРµР»Рё С‚СЂРµС‚СЊРµРіРѕ РґРЅСЏ
+            textName.TextString = WeatherType.Capitalize(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(dateTimePicker.Value.AddDays(3).DayOfWeek).ToString().ToLower());
+            textName.RectH = 90;
+            textName.RectW = 510;
+            textName.RectX = 1230;
+            textName.RectY = 1275;
+            textName.Source = imageOut;
+            textName.FontSize = 60;
+            textName.ColorText = Color.Black;
+            textName.FontName = "Lato";
+            textName.FontStyle = FontStyle.Regular;
+            textName.LineAlignment = StringAlignment.Center;
+            textName.StringAlignment = StringAlignment.Center;
             //textName.debug = true;
             imageOut = textName.DrawTextWithEffects();
-            // Символ облачности третьего дня
-            textName.textString = WeatherType.ReplaceWeatherClowd(Global.weatherSetting[13].Value);
-            textName.rectH = 300;
-            textName.rectW = 510;
-            textName.rectX = 1230;
-            textName.rectY = 1400;
-            textName.source = imageOut;
-            textName.fontSize = 250;
-            textName.colorText = Color.FromArgb(50, 141, 212);
-            textName.fontName = "linea-weather-10";
-            textName.fontStyle = FontStyle.Bold;
-            textName.lineAlignment = StringAlignment.Center;
-            textName.stringAlignment = StringAlignment.Center;
+            // РЎРёРјРІРѕР» РѕР±Р»Р°С‡РЅРѕСЃС‚Рё С‚СЂРµС‚СЊРµРіРѕ РґРЅСЏ
+            textName.TextString = WeatherType.ReplaceWeatherClowd(Global.weatherSetting[13].Value);
+            textName.RectH = 300;
+            textName.RectW = 510;
+            textName.RectX = 1230;
+            textName.RectY = 1400;
+            textName.Source = imageOut;
+            textName.FontSize = 250;
+            textName.ColorText = Color.FromArgb(50, 141, 212);
+            textName.FontName = "linea-weather-10";
+            textName.FontStyle = FontStyle.Bold;
+            textName.LineAlignment = StringAlignment.Center;
+            textName.StringAlignment = StringAlignment.Center;
             //textName.debug = true;
             imageOut = textName.DrawTextWithEffects();
-            // Пишем температуру третьего дня
-            textName.textString = Global.weatherSetting[14].Value + "° / " + Global.weatherSetting[15].Value + "°";
-            textName.rectH = 90;
-            textName.rectW = 510;
-            textName.rectX = 1230;
-            textName.rectY = 1650;
-            textName.source = imageOut;
-            textName.fontSize = 60;
-            textName.colorText = Color.Black;
-            textName.fontName = "Lato";
-            textName.fontStyle = FontStyle.Regular;
-            textName.lineAlignment = StringAlignment.Center;
-            textName.stringAlignment = StringAlignment.Center;
+            // РџРёС€РµРј С‚РµРјРїРµСЂР°С‚СѓСЂСѓ С‚СЂРµС‚СЊРµРіРѕ РґРЅСЏ
+            textName.TextString = Global.weatherSetting[14].Value + "В° / " + Global.weatherSetting[15].Value + "В°";
+            textName.RectH = 90;
+            textName.RectW = 510;
+            textName.RectX = 1230;
+            textName.RectY = 1650;
+            textName.Source = imageOut;
+            textName.FontSize = 60;
+            textName.ColorText = Color.Black;
+            textName.FontName = "Lato";
+            textName.FontStyle = FontStyle.Regular;
+            textName.LineAlignment = StringAlignment.Center;
+            textName.StringAlignment = StringAlignment.Center;
             //textName.debug = true;
             imageOut = textName.DrawTextWithEffects();
 
@@ -709,10 +709,10 @@ namespace PluginKirsanovWeatherManual
             Setting setting = new Setting();
             setting.ShowDialog();
 
-            // Обновить данные в таблице
+            // РћР±РЅРѕРІРёС‚СЊ РґР°РЅРЅС‹Рµ РІ С‚Р°Р±Р»РёС†Рµ
             dataGridViewWeather.Refresh();
 
-            labelUpdate.Text = "Прогноз обновлен: " + Global.siteTime.ToString();
+            labelUpdate.Text = "РџСЂРѕРіРЅРѕР· РѕР±РЅРѕРІР»РµРЅ: " + Global.siteTime.ToString();
         }
 
         private void dataGridViewWeather_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -722,14 +722,14 @@ namespace PluginKirsanovWeatherManual
 
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
-            labelUpdate.Text = "Обновление прогноза...";
+            labelUpdate.Text = "РћР±РЅРѕРІР»РµРЅРёРµ РїСЂРѕРіРЅРѕР·Р°...";
             Weather weather = new Weather();
             bool error;
             weather.loadHtml(false, out error);
-            labelUpdate.Text = "Прогноз обновлен: " + Global.siteTime.ToString();
+            labelUpdate.Text = "РџСЂРѕРіРЅРѕР· РѕР±РЅРѕРІР»РµРЅ: " + Global.siteTime.ToString();
             if (error)
             {
-                MessageBox.Show("Нет доступа к указанному сайту!", "Ошибка обновления прогноза!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("РќРµС‚ РґРѕСЃС‚СѓРїР° Рє СѓРєР°Р·Р°РЅРЅРѕРјСѓ СЃР°Р№С‚Сѓ!", "РћС€РёР±РєР° РѕР±РЅРѕРІР»РµРЅРёСЏ РїСЂРѕРіРЅРѕР·Р°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -739,9 +739,9 @@ namespace PluginKirsanovWeatherManual
             bool error = false;
             if (Global.siteTime.AddHours(5) < DateTime.Now)
             {
-                labelUpdate.Text = "Обновление прогноза...";
+                labelUpdate.Text = "РћР±РЅРѕРІР»РµРЅРёРµ РїСЂРѕРіРЅРѕР·Р°...";
                 weather.loadHtml(true, out error);
-                labelUpdate.Text = "Прогноз обновлен: " + Global.siteTime.ToString();
+                labelUpdate.Text = "РџСЂРѕРіРЅРѕР· РѕР±РЅРѕРІР»РµРЅ: " + Global.siteTime.ToString();
             }
             if (!error && Global.siteHtml != "")
             {
@@ -751,7 +751,7 @@ namespace PluginKirsanovWeatherManual
             }
             else
             {
-                MessageBox.Show("Нет доступа к указанному сайту!", "Ошибка обновления прогноза!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("РќРµС‚ РґРѕСЃС‚СѓРїР° Рє СѓРєР°Р·Р°РЅРЅРѕРјСѓ СЃР°Р№С‚Сѓ!", "РћС€РёР±РєР° РѕР±РЅРѕРІР»РµРЅРёСЏ РїСЂРѕРіРЅРѕР·Р°!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
