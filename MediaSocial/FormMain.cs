@@ -352,9 +352,15 @@ namespace MediaSocial
                 if (cmbBoxImgType.SelectedIndex == 0 && Global.imagesSouser[comboBoxImg.SelectedIndex].Exist) image = Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures;
                 if (cmbBoxImgType.SelectedIndex == 1 && Global.imagesRender[comboBoxImg.SelectedIndex].Exist) image = Global.imagesRender[comboBoxImg.SelectedIndex].Pictures;
                 if (cmbBoxImgType.SelectedIndex == 2) image = Global.ImageOut;
+
+                if (image != null) Clipboard.SetImage(image);
             }
-            catch { }
-            if (image != null) Clipboard.SetImage(image);
+            catch (Exception ex)
+            {
+                //M3.2: раньше здесь был пустой catch — пишем статус и лог
+                AppLog.Write(ex, "Ошибка копирования изображения в буфер обмена");
+                toolStripStatusLabel1.Text = "Ошибка копирования изображения.";
+            }
         }
 
 
@@ -1219,9 +1225,11 @@ namespace MediaSocial
                         break;
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+                //M3.2: раньше здесь был пустой catch — картина уже заменена на PhotoNotExist, пишем статус и лог
+                AppLog.Write(ex, "Ошибка отображения изображения в редакторе");
+                toolStripStatusLabel1.Text = "Ошибка отображения изображения.";
             }
         }
 

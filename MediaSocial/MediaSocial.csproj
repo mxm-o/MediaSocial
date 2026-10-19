@@ -72,6 +72,7 @@
     <Compile Include="AboutBox1.Designer.cs">
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Classes\AppLog.cs" />
     <Compile Include="Classes\ComboboxItem.cs" />
     <Compile Include="Classes\ConverFormat.cs" />
     <Compile Include="Classes\Images.cs" />

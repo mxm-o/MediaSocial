@@ -71,7 +71,19 @@ namespace MediaSocial
             {
                 //Закрываем все экземпляры плагинов
                 //Вызываем Dispose, если нужно
-                pluginOn.Instance.Dispose();
+                //Проверка на null (M3.3): экземпляр мог не создаться, а ошибка
+                //Dispose одного плагина не должна мешать закрытию остальных
+                if (pluginOn.Instance != null)
+                {
+                    try
+                    {
+                        pluginOn.Instance.Dispose();
+                    }
+                    catch (Exception ex)
+                    {
+                        Classes.AppLog.Write(ex, "Ошибка Dispose плагина: " + pluginOn.AssemblyPath);
+                    }
+                }
 
                 //После того, как плагин все очистил, избавляемся от него
                 pluginOn.Instance = null;
@@ -83,52 +95,90 @@ namespace MediaSocial
 
         private void AddPlugin(string FileName)
         {
-            //Создаем новую сборку из файла плагина
-            Assembly pluginAssembly = Assembly.LoadFrom(FileName);
-
-            //Далее мы пройдемся по всем типам, найденным в сборке.
-            foreach (Type pluginType in pluginAssembly.GetTypes())
+            //Безопасная загрузка плагина (M1.3): одна битая/не-плагинная DLL
+            //не должна останавливать загрузку остальных плагинов
+            try
             {
-                if (pluginType.IsPublic) //Смотрим только public types
+                //Создаем новую сборку из файла плагина
+                Assembly pluginAssembly = Assembly.LoadFrom(FileName);
+
+                Type[] types;
+                try
                 {
-                    if (!pluginType.IsAbstract)  //Смотрим только неабстрактные types
+                    types = pluginAssembly.GetTypes();
+                }
+                catch (ReflectionTypeLoadException ex)
+                {
+                    //Часть типов не загрузилась (например, не та зависимость) — логируем причины и пропускаем DLL
+                    Classes.AppLog.Write(ex, "Не удалось загрузить типы сборки (пропущена): " + FileName);
+                    foreach (Exception loaderException in ex.LoaderExceptions)
                     {
-                        //Получаем тип интерфейса, какой нам нужен
-                        Type typeInterface = pluginType.GetInterface("PluginInterface.IPlugin", true);
+                        Classes.AppLog.Write(loaderException, "Причина: " + FileName);
+                    }
+                    return;
+                }
 
-                        //Создаем планин если все в порядке по параметрам у интерфейса
-                        if (typeInterface != null)
+                //Далее мы пройдемся по всем типам, найденным в сборке.
+                foreach (Type pluginType in types)
+                {
+                    if (pluginType.IsPublic) //Смотрим только public types
+                    {
+                        if (!pluginType.IsAbstract)  //Смотрим только неабстрактные types
                         {
-                            //Реализуем IPlugin interface
-                            Types.AvailablePlugin newPlugin = new Types.AvailablePlugin();
+                            //Получаем тип интерфейса, какой нам нужен
+                            Type typeInterface = pluginType.GetInterface("PluginInterface.IPlugin", true);
 
-                            //Установите имя файла, где мы его нашли
-                            newPlugin.AssemblyPath = FileName;
+                            //Создаем планин если все в порядке по параметрам у интерфейса
+                            if (typeInterface != null)
+                            {
+                                //Создание экземпляра и инициализация — в try/catch:
+                                //сбой одного плагина не мешает загрузке остальных
+                                try
+                                {
+                                    //Реализуем IPlugin interface
+                                    Types.AvailablePlugin newPlugin = new Types.AvailablePlugin();
 
-                            // Создаем новый экземпляр и сохраняем экземпляр в коллекции для последующего использования
-                             // Мы могли бы изменить это позже, чтобы не загружать экземпляр. У нас есть 2 варианта
-                             //1- Создаем один экземпляр и используем его всякий раз, когда он нам нужен... он всегда там
-                             //2- Не создавайте экземпляр, а вместо этого создавайте экземпляр всякий раз, когда мы его используем, а затем закройте его
-                             // Сейчас мы просто создадим экземпляр всех плагинов
-                            newPlugin.Instance = (IPlugin)Activator.CreateInstance(pluginAssembly.GetType(pluginType.ToString()));
+                                    //Установите имя файла, где мы его нашли
+                                    newPlugin.AssemblyPath = FileName;
 
-                            //Set the Plugin's host to this class which inherited IPluginHost
-                            newPlugin.Instance.Host = this;
+                                    // Создаем новый экземпляр и сохраняем экземпляр в коллекции для последующего использования
+                                    // Мы могли бы изменить это позже, чтобы не загружать экземпляр. У нас есть 2 варианта
+                                    //1- Создаем один экземпляр и используем его всякий раз, когда он нам нужен... он всегда там
+                                    //2- Не создавайте экземпляр, а вместо этого создавайте экземпляр всякий раз, когда мы его используем, а затем закройте его
+                                    // Сейчас мы просто создадим экземпляр всех плагинов
+                                    newPlugin.Instance = (IPlugin)Activator.CreateInstance(pluginAssembly.GetType(pluginType.ToString()));
 
-                            //Вызов подпрограммы инициализации плагина
-                            newPlugin.Instance.Initialize();
+                                    //Set the Plugin's host to this class which inherited IPluginHost
+                                    newPlugin.Instance.Host = this;
 
-                            //Добавьте новый плагин в нашу коллекцию здесь
-                            this.AvailablePlugins.Add(newPlugin);
+                                    //Вызов подпрограммы инициализации плагина
+                                    newPlugin.Instance.Initialize();
 
-                            //прибираемся
-                            newPlugin = null;
+                                    //Добавьте новый плагин в нашу коллекцию здесь
+                                    this.AvailablePlugins.Add(newPlugin);
+                                }
+                                catch (Exception ex)
+                                {
+                                    Classes.AppLog.Write(ex, "Ошибка создания или инициализации плагина (пропущена): " + FileName + ", тип " + pluginType.FullName);
+                                }
+                            }
+                            typeInterface = null; //еще раз прибираемся		
                         }
-                        typeInterface = null; //еще раз прибираемся		
                     }
                 }
             }
-            pluginAssembly = null; //вообщем вы поняли с уборкой
+            catch (BadImageFormatException)
+            {
+                //Не DLL / битый PE-заголовок — просто пропускаем, это не ошибка загрузки плагинов
+            }
+            catch (FileLoadException ex)
+            {
+                Classes.AppLog.Write(ex, "Не удалось загрузить файл сборки (пропущена): " + FileName);
+            }
+            catch (Exception ex)
+            {
+                Classes.AppLog.Write(ex, "Непредвиденная ошибка при загрузке плагина (пропущена): " + FileName);
+            }
         }
 
         /// <summary>
@@ -138,6 +188,16 @@ namespace MediaSocial
         /// <param name="Plugin">Имя плагина, вызывающий обратную связь</param>
         public void Feedback(string Feedback, IPlugin Plugin)
         {
+            //Проверка аргументов на null (M1.2): без плагина показывать нечего
+            if (Plugin == null)
+            {
+                throw new ArgumentNullException(nameof(Plugin));
+            }
+            if (Feedback == null)
+            {
+                Feedback = "";
+            }
+
             //Создание новой формы фидбека и её заполнение информацией
             //Этот метод можно вызвать из плагина с свойствами Host Property
 
@@ -163,6 +223,12 @@ namespace MediaSocial
 
         public Image[] SendImages()
         {
+            //Проверка на null (M1.2): если коллекция почему-то не инициализирована — возвращаем пустой массив
+            if (Global.imagesRender == null)
+            {
+                return new Image[0];
+            }
+
             Image[] img = new Image[Global.imagesRender.Count];
             for (var i = 0; i < Global.imagesRender.Count; i++)
             {
@@ -180,6 +246,12 @@ namespace MediaSocial
 
         public void ReciveImage(Image img)
         {
+            //Проверка аргумента на null (M1.2): плагин обязан передать результат рендера
+            if (img == null)
+            {
+                throw new ArgumentNullException(nameof(img));
+            }
+
             Global.ImageOut = img;
         }
 
