@@ -101,7 +101,13 @@ namespace PluginKirsanovDemography
 
         public void Dispose()
         {
-            //Put any cleanup code in here for when the program is stopped
+            // Освобождаем UserControl интерфейса плагина (и все его ресурсы GDI+)
+            if (myMainInterface != null)
+            {
+                myMainInterface.Dispose();
+                myMainInterface = null;
+            }
+            myHost = null;
         }
 
     }

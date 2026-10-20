@@ -40,6 +40,12 @@ namespace PluginKirsanovNewsNewYears
                 {
                     components.Dispose();
                 }
+                // Превью иконки загружается вручную из файла — освобождаем его явно
+                if (pictureBoxImage != null && pictureBoxImage.Image != null)
+                {
+                    pictureBoxImage.Image.Dispose();
+                    pictureBoxImage.Image = null;
+                }
             }
             base.Dispose(disposing);
         }
@@ -611,7 +617,13 @@ namespace PluginKirsanovNewsNewYears
             try
             {
                 Image image = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, comboBoxImages.SelectedItem.ToString() + ".png"))));
+                // Освобождаем предыдущее превью, чтобы не копить GDI-объекты при смене иконки
+                Image oldImage = pictureBoxImage.Image;
                 pictureBoxImage.Image = image;
+                if (oldImage != null)
+                {
+                    oldImage.Dispose();
+                }
             }
             catch
             {

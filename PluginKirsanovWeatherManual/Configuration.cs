@@ -76,6 +76,9 @@ namespace PluginKirsanovWeatherManual
             }
             else
             {
+                // Директория могла ещё не существовать (первый запуск) —
+                // без неё doc.Save бросил бы исключение из Dispose плагина
+                Directory.CreateDirectory(path);
                 doc.Save(Path.Combine(path, "weatherSettings.xml"));
             }
         }

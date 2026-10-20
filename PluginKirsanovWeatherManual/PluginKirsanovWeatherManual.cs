@@ -105,8 +105,22 @@ namespace PluginKirsanovWeatherManual
 
         public void Dispose()
         {
-            //Put any cleanup code in here for when the program is stopped
-            Configuration.Save();
+            // Сохраняем конфигурацию; UserControl освобождаем в finally,
+            // чтобы сбой сохранения не помешал очистке ресурсов GDI+
+            try
+            {
+                Configuration.Save();
+            }
+            finally
+            {
+                // Освобождаем UserControl интерфейса плагина (и все его ресурсы GDI+)
+                if (myMainInterface != null)
+                {
+                    myMainInterface.Dispose();
+                    myMainInterface = null;
+                }
+                myHost = null;
+            }
         }
     }
 }
