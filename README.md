@@ -162,7 +162,7 @@ Media Social Networks/
 │   ├── PluginServices.cs     # Загрузка и управление плагинами
 │   ├── Classes/              # Вспомогательные классы
 │   │   ├── Images.cs
-│   │   ├── ConverFormat.cs   # Конвертация через FFmpeg
+│   │   ├── ConverFormat.cs   # Конвертация форматов изображений
 │   │   ├── ComboboxItem.cs
 │   │   ├── PhotoEditorRender.cs
 │   │   └── RotationImage.cs  # Автоповорот по EXIF
@@ -177,7 +177,6 @@ Media Social Networks/
 │   ├── RotateImage.cs        # Поворот изображения
 │   ├── Resize.cs             # Простое изменение размера
 │   └── PhotoGenerate.cs      # Генерация градиентов и прямоугольников
-├── Plugin1D/                 # Плагин «Одна картинка»
 ├── PluginKirsanovGoodMorning/# Плагин «Доброе утро»
 ├── PluginKirsanovNews/       # Плагин «Новости»
 ├── PluginKirsanovCalendar/   # Плагин «Календарь»
@@ -186,8 +185,7 @@ Media Social Networks/
 ├── PluginKirsanovHistory/    # Плагин «История»
 ├── PluginKirsanovDemography/ # Плагин «Демография»
 ├── PluginKirsanovGoodMorningNewYears/ # Новогодний плагин
-├── PluginKirsanovNewsNewYears/        # Новогодний плагин новостей
-└── packages/                 # Локальные пакеты NuGet (HtmlAgilityPack)
+└── PluginKirsanovNewsNewYears/        # Новогодний плагин новостей
 ```
 
 ### Сборка и установка плагина
@@ -224,21 +222,6 @@ Media Social Networks/
 
 ---
 
-## ⚙️ Настройки приложения (`App.config`)
-
-Основные настройки хранятся в `App.config` и пользовательском файле конфигурации:
-
-| Настройка | Значение по умолчанию | Описание |
-|-----------|----------------------|----------|
-| `pathSave` | (пусто) | Папка для сохранения готовых постов |
-| `typeSave` | `jpg` | Формат сохранения (jpg, png, bmp, gif, tiff) |
-| `qualitySave` | `4` | Качество JPEG (от 0 до 100) |
-| `inputSave` | `0` | Индекс источника изображения |
-
-Настройки можно изменить через интерфейс программы или вручную в `App.config`.
-
----
-
 ## 📄 Лицензия
 
 Проект распространяется под лицензией **CC0 1.0 Universal** (Public Domain Dedication).
@@ -247,4 +230,4 @@ Media Social Networks/
 
 ---
 
-© 2026. Все права посвящены общественному достоянию (CC0 1.0).
+© 2023 - 2026. Все права посвящены общественному достоянию (CC0 1.0).

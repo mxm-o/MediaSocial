@@ -1,4 +1,4 @@
-﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+﻿// Copyright © 2026 Maxim Otrokhov. All rights reserved.
 
 using System;
 using System.Drawing;
@@ -481,12 +481,12 @@ namespace PluginKirsanovNewsNewYears
             // На фон помещаем размытую фотографию если формат не квадрат
             if (comboBoxFormat.SelectedIndex > 0)
             {
-                mergeImage.sourceBottom = imageOut;
-                mergeImage.sourceTop = ImageBlur;
+                mergeImage.SourceBottom = imageOut;
+                mergeImage.SourceTop = ImageBlur;
                 imageOut = mergeImage.MergeImage();
                 // Помещаем прозрачный синий фон
-                mergeImage.sourceBottom = imageOut;
-                mergeImage.sourceTop = imageBack;
+                mergeImage.SourceBottom = imageOut;
+                mergeImage.SourceTop = imageBack;
                 imageOut = mergeImage.MergeImage();
             }
 
@@ -495,38 +495,38 @@ namespace PluginKirsanovNewsNewYears
             switch (comboBoxFormat.SelectedIndex)
             {
                 case 0:
-                    mergeImage.left = 0;
-                    mergeImage.top = 0;
+                    mergeImage.Left = 0;
+                    mergeImage.Top = 0;
                     break;
                 case 1:
-                    mergeImage.left = 0;
+                    mergeImage.Left = 0;
                     if (imageTitle != null && textBoxT1.Text != "")
                     {
-                        mergeImage.top = 178;
+                        mergeImage.Top = 178;
                     } else
                     {
-                        mergeImage.top = 282;
+                        mergeImage.Top = 282;
                     }
                     break;
                 case 2:
-                    mergeImage.left = 239;
-                    mergeImage.top = 0;
+                    mergeImage.Left = 239;
+                    mergeImage.Top = 0;
                     break;
                 default:
-                    mergeImage.left = 0;
-                    mergeImage.top = 0;
+                    mergeImage.Left = 0;
+                    mergeImage.Top = 0;
                     break;
             }
 
-            mergeImage.sourceBottom = imageOut;
-            mergeImage.sourceTop = ImageSouser;
+            mergeImage.SourceBottom = imageOut;
+            mergeImage.SourceTop = ImageSouser;
             imageOut = mergeImage.MergeImage();
-            mergeImage.left = 0;
-            mergeImage.top = 0;
+            mergeImage.Left = 0;
+            mergeImage.Top = 0;
 
             // Помещаем оформление
-            mergeImage.sourceBottom = imageOut;
-            mergeImage.sourceTop = imageMain;
+            mergeImage.SourceBottom = imageOut;
+            mergeImage.SourceTop = imageMain;
             imageOut = mergeImage.MergeImage();
 
 
@@ -534,17 +534,17 @@ namespace PluginKirsanovNewsNewYears
             if (imageTitle != null && textBoxT1.Text != "") {
 
                 // Помещаем  оформление фона
-                mergeImage.sourceBottom = imageOut;
-                mergeImage.sourceTop = imageTitle;
+                mergeImage.SourceBottom = imageOut;
+                mergeImage.SourceTop = imageTitle;
                 imageOut = mergeImage.MergeImage();
 
                 // Рисуем иконку новости
                 try
                 {
-                    mergeImage.sourceBottom = imageOut;
-                    mergeImage.sourceTop = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "images", comboBoxImages.SelectedItem.ToString() + ".png"))));
-                    mergeImage.top = 1385;
-                    mergeImage.left = 85;
+                    mergeImage.SourceBottom = imageOut;
+                    mergeImage.SourceTop = Image.FromStream(new MemoryStream(File.ReadAllBytes(Path.Combine(path, "images", comboBoxImages.SelectedItem.ToString() + ".png"))));
+                    mergeImage.Top = 1385;
+                    mergeImage.Left = 85;
                     imageOut = mergeImage.MergeImage();
                 }
                 catch

@@ -1,4 +1,4 @@
-﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+﻿// Copyright © 2026 Maxim Otrokhov. All rights reserved.
 
 using System;
 using System.Drawing;
@@ -223,23 +223,12 @@ namespace MediaSocial
 
         public Image[] SendImages()
         {
-            //Проверка на null (M1.2): если коллекция почему-то не инициализирована — возвращаем пустой массив
-            if (Global.imagesRender == null)
+            //M2.2: доступ к коллекции — только через методы Global; пустая коллекция → пустой массив
+            Image[] img = new Image[Global.RenderImagesCount];
+            for (var i = 0; i < img.Length; i++)
             {
-                return new Image[0];
-            }
-
-            Image[] img = new Image[Global.imagesRender.Count];
-            for (var i = 0; i < Global.imagesRender.Count; i++)
-            {
-                if (Global.imagesRender[i].Exist)
-                {
-                    img[i] = Global.imagesRender[i].Pictures;
-                }
-                else
-                {
-                    img[i] = null;
-                }
+                var renderImg = Global.GetRenderImage(i);
+                img[i] = renderImg != null && renderImg.Exist ? renderImg.Pictures : null;
             }
             return img;
         }

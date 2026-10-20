@@ -1,4 +1,4 @@
-﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+﻿// Copyright © 2026 Maxim Otrokhov. All rights reserved.
 
 using System;
 using System.Drawing;
@@ -386,13 +386,13 @@ namespace PluginKirsanovCalendar
             Image imageOut = photo.Fill();
             // Раскладываем по слоям
             Merge mergeImage = new Merge();
-            mergeImage.sourceBottom = imageOut;
-            mergeImage.sourceTop = ImageSouser;
-            mergeImage.top = 300;
+            mergeImage.SourceBottom = imageOut;
+            mergeImage.SourceTop = ImageSouser;
+            mergeImage.Top = 300;
             imageOut = mergeImage.MergeImage(); // На фон помещаем фотографию
-            mergeImage.sourceBottom = imageOut;
-            mergeImage.sourceTop = imageMain;
-            mergeImage.top = 0;
+            mergeImage.SourceBottom = imageOut;
+            mergeImage.SourceTop = imageMain;
+            mergeImage.Top = 0;
             imageOut = mergeImage.MergeImage(); // Помещаем оформление
             
             // Пишем дату

@@ -1,4 +1,4 @@
-﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+﻿// Copyright © 2026 Maxim Otrokhov. All rights reserved.
 
 using System;
 using System.Drawing;
@@ -535,12 +535,12 @@ namespace PluginKirsanovNews
                     ImageBlur = blurImage.Blur(ImageBlur, 25);
 
                     Merge mergeImage = new Merge();
-                    mergeImage.sourceBottom = imageOut;
-                    mergeImage.sourceTop = ImageBlur;
+                    mergeImage.SourceBottom = imageOut;
+                    mergeImage.SourceTop = ImageBlur;
                     imageOut = mergeImage.MergeImage();
 
-                    mergeImage.sourceBottom = imageOut;
-                    mergeImage.sourceTop = imageBack;
+                    mergeImage.SourceBottom = imageOut;
+                    mergeImage.SourceTop = imageBack;
                     imageOut = mergeImage.MergeImage();
                 }
                 totalProgress = 30;
@@ -551,27 +551,27 @@ namespace PluginKirsanovNews
                 switch (parameters.FormatIndex)
                 {
                     case 0:
-                        mergeMain.left = 0;
-                        mergeMain.top = 0;
+                        mergeMain.Left = 0;
+                        mergeMain.Top = 0;
                         break;
                     case 1:
-                        mergeMain.left = 0;
-                        mergeMain.top = imageTitle != null ? 178 : 282;
+                        mergeMain.Left = 0;
+                        mergeMain.Top = imageTitle != null ? 178 : 282;
                         break;
                     case 2:
-                        mergeMain.left = 239;
-                        mergeMain.top = 0;
+                        mergeMain.Left = 239;
+                        mergeMain.Top = 0;
                         break;
                 }
 
-                mergeMain.sourceBottom = imageOut;
-                mergeMain.sourceTop = parameters.SourceImage;
+                mergeMain.SourceBottom = imageOut;
+                mergeMain.SourceTop = parameters.SourceImage;
                 imageOut = mergeMain.MergeImage();
-                mergeMain.left = 0;
-                mergeMain.top = 0;
+                mergeMain.Left = 0;
+                mergeMain.Top = 0;
 
-                mergeMain.sourceBottom = imageOut;
-                mergeMain.sourceTop = imageMain;
+                mergeMain.SourceBottom = imageOut;
+                mergeMain.SourceTop = imageMain;
                 imageOut = mergeMain.MergeImage();
                 totalProgress += 10;
                 myHost.Progress(totalProgress);
@@ -580,8 +580,8 @@ namespace PluginKirsanovNews
                 if (imageTitle != null && !string.IsNullOrEmpty(parameters.TitleText))
                 {
                     // Наложение фона заголовка (5%)
-                    mergeMain.sourceBottom = imageOut;
-                    mergeMain.sourceTop = imageTitle;
+                    mergeMain.SourceBottom = imageOut;
+                    mergeMain.SourceTop = imageTitle;
                     imageOut = mergeMain.MergeImage();
                     totalProgress += 5;
                     myHost.Progress(totalProgress);
@@ -590,10 +590,10 @@ namespace PluginKirsanovNews
                     try
                     {
                         var iconPath = Path.Combine(parameters.Path, "images", parameters.SelectedImage + ".png");
-                        mergeMain.sourceBottom = imageOut;
-                        mergeMain.sourceTop = LoadImageSafe(iconPath);
-                        mergeMain.top = 1385;
-                        mergeMain.left = 85;
+                        mergeMain.SourceBottom = imageOut;
+                        mergeMain.SourceTop = LoadImageSafe(iconPath);
+                        mergeMain.Top = 1385;
+                        mergeMain.Left = 85;
                         imageOut = mergeMain.MergeImage();
                     }
                     catch { /* Обработка ошибок уже есть выше */ }
@@ -651,10 +651,10 @@ namespace PluginKirsanovNews
                 if (parameters.LayersEnabled)
                 {
                     var layerPath = Path.Combine(parameters.Path, "layers", parameters.SelectedLayer + ".png");
-                    mergeMain.sourceBottom = imageOut;
-                    mergeMain.sourceTop = LoadImageSafe(layerPath);
-                    mergeMain.top = 0;
-                    mergeMain.left = 0;
+                    mergeMain.SourceBottom = imageOut;
+                    mergeMain.SourceTop = LoadImageSafe(layerPath);
+                    mergeMain.Top = 0;
+                    mergeMain.Left = 0;
                     imageOut = mergeMain.MergeImage();
                 }
                 totalProgress += 10;

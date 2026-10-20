@@ -1,4 +1,4 @@
-﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+﻿// Copyright © 2026 Maxim Otrokhov. All rights reserved.
 
 using PhotoEdit;
 using System;
@@ -39,13 +39,13 @@ namespace PluginKirsanovDemography
             }
             // Объединяем слои
             Merge mergeImage = new Merge();
-            mergeImage.sourceBottom = imageOut;
-            mergeImage.sourceTop = image1;
+            mergeImage.SourceBottom = imageOut;
+            mergeImage.SourceTop = image1;
             imageOut = mergeImage.MergeImage(); // На фон помещаем размытую фотографию
             if (value2 != 0)
             {
-                mergeImage.sourceBottom = imageOut;
-                mergeImage.sourceTop = image2;
+                mergeImage.SourceBottom = imageOut;
+                mergeImage.SourceTop = image2;
                 imageOut = mergeImage.MergeImage(); // На фон помещаем размытую фотографию
             }
             // Пишем цифры
@@ -138,23 +138,23 @@ namespace PluginKirsanovDemography
             }
             // Объединяем слои
             Merge mergeImage = new Merge();
-            mergeImage.sourceBottom = imageOut;
-            mergeImage.sourceTop = imageGirlNow;
+            mergeImage.SourceBottom = imageOut;
+            mergeImage.SourceTop = imageGirlNow;
             imageOut = mergeImage.MergeImage();
             if (boyOld != 0)
             {
-                mergeImage.sourceBottom = imageOut;
-                mergeImage.sourceTop = imageGirlOld;
+                mergeImage.SourceBottom = imageOut;
+                mergeImage.SourceTop = imageGirlOld;
                 imageOut = mergeImage.MergeImage();
             }
-            mergeImage.sourceBottom = imageOut;
-            mergeImage.top = 70;
-            mergeImage.sourceTop = imageBoyNow;
+            mergeImage.SourceBottom = imageOut;
+            mergeImage.Top = 70;
+            mergeImage.SourceTop = imageBoyNow;
             imageOut = mergeImage.MergeImage();
             if (boyOld != 0)
             {
-                mergeImage.sourceBottom = imageOut;
-                mergeImage.sourceTop = imageBoyOld;
+                mergeImage.SourceBottom = imageOut;
+                mergeImage.SourceTop = imageBoyOld;
                 imageOut = mergeImage.MergeImage();
             }
             // Пишем цифры
@@ -268,13 +268,13 @@ namespace PluginKirsanovDemography
 
             // Объединяем слои
             Merge mergeImage = new Merge();
-            mergeImage.sourceBottom = imageOut;
-            mergeImage.top = 10;
-            mergeImage.sourceTop = image1;
+            mergeImage.SourceBottom = imageOut;
+            mergeImage.Top = 10;
+            mergeImage.SourceTop = image1;
             imageOut = mergeImage.MergeImage(); // На фон помещаем размытую фотографию
-            mergeImage.sourceBottom = imageOut;
-            mergeImage.sourceTop = image2;
-            mergeImage.top = 80;
+            mergeImage.SourceBottom = imageOut;
+            mergeImage.SourceTop = image2;
+            mergeImage.Top = 80;
             imageOut = mergeImage.MergeImage(); // На фон помещаем размытую фотографию
 
             // Пишем цифры знчениие 1

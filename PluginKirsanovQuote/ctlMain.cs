@@ -1,4 +1,4 @@
-﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+﻿// Copyright © 2026 Maxim Otrokhov. All rights reserved.
 
 using System;
 using System.Drawing;
@@ -355,15 +355,15 @@ namespace PluginKirsanovQuote
             Image ImageSouser = myHost.SendImages()[0];
             // Раскладываем по слоям
             Merge mergeImage = new Merge();
-            mergeImage.sourceBottom = imageOut;
-            mergeImage.sourceTop = ImageSouser;
-            mergeImage.top = 1285;
-            mergeImage.left = 125;
+            mergeImage.SourceBottom = imageOut;
+            mergeImage.SourceTop = ImageSouser;
+            mergeImage.Top = 1285;
+            mergeImage.Left = 125;
             imageOut = mergeImage.MergeImage(); // На фон помещаем фотографию
-            mergeImage.sourceBottom = imageOut;
-            mergeImage.sourceTop = imageMain;
-            mergeImage.top = 0;
-            mergeImage.left = 0;
+            mergeImage.SourceBottom = imageOut;
+            mergeImage.SourceTop = imageMain;
+            mergeImage.Top = 0;
+            mergeImage.Left = 0;
             imageOut = mergeImage.MergeImage(); // Помещаем оформление
             // Пишем имя
             TextGenerate textE = new TextGenerate();

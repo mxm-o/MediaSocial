@@ -1,4 +1,4 @@
-﻿// Copyright © 2023 Maxim Otrokhov. All rights reserved.
+﻿// Copyright © 2026 Maxim Otrokhov. All rights reserved.
 
 using System;
 using System.Drawing;
@@ -308,10 +308,10 @@ namespace PluginKirsanovDemography
             Image imageOut = photo.Fill();
             // Раскладываем по слоям
             Merge mergeImage = new Merge();
-            mergeImage.sourceBottom = imageOut;
-            mergeImage.sourceTop = imageMain;
-            mergeImage.top = 0;
-            mergeImage.left = 0;
+            mergeImage.SourceBottom = imageOut;
+            mergeImage.SourceTop = imageMain;
+            mergeImage.Top = 0;
+            mergeImage.Left = 0;
             imageOut = mergeImage.MergeImage(); // Помещаем оформление
             // Пишем дату
             TextGenerate textE = new TextGenerate();
@@ -362,37 +362,37 @@ namespace PluginKirsanovDemography
             Image imageGraphBorn = graphBorn.RenderGraphYears(Convert.ToInt32(dataGridViewDemography[1, 1].Value), Convert.ToInt32(dataGridViewDemography[2, 1].Value), dateTimePicker.Value.Year);
             // Раскладываем по слоям
             Merge mergeImageGraph = new Merge();
-            mergeImageGraph.sourceBottom = imageOut;
-            mergeImageGraph.sourceTop = imageGraphBorn;
-            mergeImageGraph.top = 500;
-            mergeImageGraph.left = 280;
+            mergeImageGraph.SourceBottom = imageOut;
+            mergeImageGraph.SourceTop = imageGraphBorn;
+            mergeImageGraph.Top = 500;
+            mergeImageGraph.Left = 280;
             imageOut = mergeImageGraph.MergeImage(); // Помещаем оформление
             // Смертность
             Graph graph = new Graph();
             Image imageGraph = graph.RenderGraphYears(Convert.ToInt16(dataGridViewDemography[1, 2].Value), Convert.ToInt16(dataGridViewDemography[2, 2].Value), dateTimePicker.Value.Year);
             // Раскладываем по слоям
-            mergeImageGraph.sourceBottom = imageOut;
-            mergeImageGraph.sourceTop = imageGraph;
-            mergeImageGraph.top = 500;
-            mergeImageGraph.left = 1150;
+            mergeImageGraph.SourceBottom = imageOut;
+            mergeImageGraph.SourceTop = imageGraph;
+            mergeImageGraph.Top = 500;
+            mergeImageGraph.Left = 1150;
             imageOut = mergeImageGraph.MergeImage(); // Помещаем оформление
             // Браки
             Graph graphWedding = new Graph();
             Image imageGraphWedding = graphWedding.RenderGraphYears(Convert.ToInt16(dataGridViewDemography[1, 3].Value), Convert.ToInt16(dataGridViewDemography[2, 3].Value), dateTimePicker.Value.Year);
             // Раскладываем по слоям
-            mergeImageGraph.sourceBottom = imageOut;
-            mergeImageGraph.sourceTop = imageGraphWedding;
-            mergeImageGraph.top = 900;
-            mergeImageGraph.left = 280;
+            mergeImageGraph.SourceBottom = imageOut;
+            mergeImageGraph.SourceTop = imageGraphWedding;
+            mergeImageGraph.Top = 900;
+            mergeImageGraph.Left = 280;
             imageOut = mergeImageGraph.MergeImage(); // Помещаем оформление
             // Разводы
             Graph graphDivorce = new Graph();
             Image imageGraphDivorce = graphDivorce.RenderGraphYears(Convert.ToInt16(dataGridViewDemography[1, 4].Value), Convert.ToInt16(dataGridViewDemography[2, 4].Value), dateTimePicker.Value.Year);
             // Раскладываем по слоям
-            mergeImageGraph.sourceBottom = imageOut;
-            mergeImageGraph.sourceTop = imageGraphDivorce;
-            mergeImageGraph.top = 900;
-            mergeImageGraph.left = 1150;
+            mergeImageGraph.SourceBottom = imageOut;
+            mergeImageGraph.SourceTop = imageGraphDivorce;
+            mergeImageGraph.Top = 900;
+            mergeImageGraph.Left = 1150;
             imageOut = mergeImageGraph.MergeImage(); // Помещаем оформление
 
             myHost.ReciveImage(imageOut);

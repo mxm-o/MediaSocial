@@ -1,4 +1,4 @@
-﻿// Copyright © 2025 Maxim Otrokhov. All rights reserved.
+﻿// Copyright © 2026 Maxim Otrokhov. All rights reserved.
 
 using MediaSocial.Classes;
 using PhotoEdit;
@@ -72,7 +72,7 @@ namespace MediaSocial
                 toolStripCmbPlugin.SelectedIndex = 0;
             }
             // Проверяем кнопку сохранения
-            buttonImgSaveQuick.Enabled = textBoxSaveNameFile.Text == "" ? false : true;
+            buttonImgSaveQuick.Enabled = textBoxSaveNameFile.Text != "";
             // Устанавливаем таймер срабатыванися обработки картинки
             delayTimer.Interval = 500;
             delayTimer.Tick += new EventHandler(delayTimer_Tick);
@@ -106,10 +106,11 @@ namespace MediaSocial
         private void buttonSavePath_Click(object sender, EventArgs e)
         {
             // Выбираем папку сохранения
-            FolderBrowserDialog ofd = new FolderBrowserDialog();
-
-            //openFileDialog1.InitialDirectory = "c:\\";
-            ofd.Description = "Укажите папку сохранения результата";
+            FolderBrowserDialog ofd = new FolderBrowserDialog
+            {
+                //openFileDialog1.InitialDirectory = "c:\\";
+                Description = "Укажите папку сохранения результата"
+            };
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
@@ -195,9 +196,7 @@ namespace MediaSocial
 
                     // Заполняем Комбобокс со списком картинок
                     comboBoxImg.Items.Clear();
-                    Global.imagesSouser.Clear();
-                    Global.imagesRender.Clear();
-                    Global.imagesSettings.Clear();
+                    Global.ClearImages();
                     Global.ImageOut = Properties.Resources.PhotoNotExist;
 
                     panelEditor.Enabled = selectedPlugin.Instance.Editor;
@@ -210,8 +209,8 @@ namespace MediaSocial
                         item.Value = i;
 
                         comboBoxImg.Items.Add(item);
-                        Global.imagesSouser.Add(new Images { Id = i, Pictures = Properties.Resources.PhotoNotExist, Exist = false });
-                        Global.imagesRender.Add(new Images { Id = i, Pictures = Properties.Resources.PhotoNotExist, Exist = false });
+                        Global.AddSourceImage(new Images { Id = i, Pictures = Properties.Resources.PhotoNotExist, Exist = false });
+                        Global.AddRenderImage(new Images { Id = i, Pictures = Properties.Resources.PhotoNotExist, Exist = false });
                     }
 
                     if (selectedPlugin.Instance.SizesList.Count == 0)
@@ -349,8 +348,10 @@ namespace MediaSocial
             Image image = null;
             try
             {
-                if (cmbBoxImgType.SelectedIndex == 0 && Global.imagesSouser[comboBoxImg.SelectedIndex].Exist) image = Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures;
-                if (cmbBoxImgType.SelectedIndex == 1 && Global.imagesRender[comboBoxImg.SelectedIndex].Exist) image = Global.imagesRender[comboBoxImg.SelectedIndex].Pictures;
+                var sourceImg = Global.GetSourceImage(comboBoxImg.SelectedIndex);
+                var renderImg = Global.GetRenderImage(comboBoxImg.SelectedIndex);
+                if (cmbBoxImgType.SelectedIndex == 0 && sourceImg != null && sourceImg.Exist) image = sourceImg.Pictures;
+                if (cmbBoxImgType.SelectedIndex == 1 && renderImg != null && renderImg.Exist) image = renderImg.Pictures;
                 if (cmbBoxImgType.SelectedIndex == 2) image = Global.ImageOut;
 
                 if (image != null) Clipboard.SetImage(image);
@@ -423,10 +424,14 @@ namespace MediaSocial
         {
             if (image != null && comboBoxImg.Items.Count > 0)
             {
-                Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures = image;
-                Global.imagesSouser[comboBoxImg.SelectedIndex].Exist = true;
+                var sourceImg = Global.GetSourceImage(comboBoxImg.SelectedIndex);
+                if (sourceImg != null)
+                {
+                    sourceImg.Pictures = image;
+                    sourceImg.Exist = true;
+                }
 
-                //Global.imagesRender[Global.ImageIndexNow].Pictures = renderEditor(Global.imagesSouser[Global.ImageIndexNow].Pictures, Global.ImageIndexNow);
+                //Global.GetRenderImage(Global.ImageIndexNow).Pictures = renderEditor(Global.GetSourceImage(Global.ImageIndexNow).Pictures, Global.ImageIndexNow);
                 //EditorOk();
                 
 
@@ -443,7 +448,8 @@ namespace MediaSocial
                 }
                 
                 EditorOk();
-                Global.imagesRender[Global.ImageIndexNow].Exist = true;
+                var renderImg = Global.GetRenderImage(Global.ImageIndexNow);
+                if (renderImg != null) renderImg.Exist = true;
             } else
             {
                 System.Media.SystemSounds.Exclamation.Play();
@@ -454,17 +460,25 @@ namespace MediaSocial
         {
             if (comboBoxImg.Items.Count > 0)
             {
-                Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures = Properties.Resources.PhotoNotExist;
-                Global.imagesSouser[comboBoxImg.SelectedIndex].Exist = false;
+                var sourceImg = Global.GetSourceImage(comboBoxImg.SelectedIndex);
+                if (sourceImg != null)
+                {
+                    sourceImg.Pictures = Properties.Resources.PhotoNotExist;
+                    sourceImg.Exist = false;
+                }
 
-                Global.imagesRender[comboBoxImg.SelectedIndex].Pictures = Properties.Resources.PhotoNotExist;
-                Global.imagesRender[comboBoxImg.SelectedIndex].Exist = false;
+                var renderImg = Global.GetRenderImage(comboBoxImg.SelectedIndex);
+                if (renderImg != null)
+                {
+                    renderImg.Pictures = Properties.Resources.PhotoNotExist;
+                    renderImg.Exist = false;
+                }
 
                 Global.ImageOut = Properties.Resources.PhotoNotExist;
 
                 pictureBox.Image = Properties.Resources.PhotoNotExist;
 
-                Global.imagesSettings.Clear();
+                Global.ClearSettings();
             }
         }
 
@@ -511,7 +525,7 @@ namespace MediaSocial
 
         private void textBoxSaveNameFile_TextChanged(object sender, EventArgs e)
         {
-            buttonImgSaveQuick.Enabled = textBoxSaveNameFile.Text == "" ? false : true;
+            buttonImgSaveQuick.Enabled = textBoxSaveNameFile.Text != "";
         }
 
         private void textBoxSaveNameFile_Leave(object sender, EventArgs e)
@@ -580,11 +594,13 @@ namespace MediaSocial
         {
             try
             {
-                if (Global.imagesSouser[Global.ImageIndexNow].Exist)
+                var sourceImg = Global.GetSourceImage(Global.ImageIndexNow);
+                var renderImg = Global.GetRenderImage(Global.ImageIndexNow);
+                if (sourceImg != null && sourceImg.Exist && renderImg != null)
                 {
                     if (!checkBoxAuto.Checked) btnEditorOk.Enabled = false;
-                    Global.imagesRender[Global.ImageIndexNow].Pictures = renderEditor(Global.imagesSouser[Global.ImageIndexNow].Pictures, Global.ImageIndexNow);
-                    pictureBox.Image = Global.imagesRender[Global.ImageIndexNow].Pictures;
+                    renderImg.Pictures = renderEditor(sourceImg.Pictures, Global.ImageIndexNow);
+                    pictureBox.Image = renderImg.Pictures;
                     if (!checkBoxAuto.Checked) btnEditorOk.Enabled = true;
                 }
             } catch
@@ -599,25 +615,27 @@ namespace MediaSocial
             toolStripStatusLabel1.Text = "Идет обработка...";
             Application.DoEvents();
 
-            SettingImage item = new SettingImage();
-            item.Id = Id;
-            item.Brightness = (trackBarBrightness.Value + 100) / 100f;
-            item.Shadows = (trackBarShadows.Value + 100) / 100f;
-            item.Midtones = (trackBarMidtones.Value + 100) / 100f;
-            item.Highlights = (trackBarHighlights.Value + 100) / 100f;
-            item.Contrast = (trackBarContrast.Value + 100) / 100f;
-            item.Saturation = (trackBarSaturation.Value / 100f) * 2 + 1;
-            item.Tone = trackBarTone.Value;
-            item.Temperature = trackBarTemperature.Value / 100f;
-            item.Rotate = Convert.ToInt16(numericUpDownRotate.Value < 0 ? (360 + numericUpDownRotate.Value) : numericUpDownRotate.Value);
-            item.Zoom = trackBarZoom.Value;
-            item.Horizontal = trackBarHorisontal.Value;
-            item.Vertical = trackBarVertical.Value;
-            item.canvasHeight = Global.Plugins.AvailablePlugins.Find(toolStripCmbPlugin.Text).Instance.SizesList[Id].SizeX;
-            item.canvasWidth = Global.Plugins.AvailablePlugins.Find(toolStripCmbPlugin.Text).Instance.SizesList[Id].SizeY;
+            SettingImage item = new SettingImage
+            {
+                Id = Id,
+                Brightness = (trackBarBrightness.Value + 100) / 100f,
+                Shadows = (trackBarShadows.Value + 100) / 100f,
+                Midtones = (trackBarMidtones.Value + 100) / 100f,
+                Highlights = (trackBarHighlights.Value + 100) / 100f,
+                Contrast = (trackBarContrast.Value + 100) / 100f,
+                Saturation = (trackBarSaturation.Value / 100f) * 2 + 1,
+                Tone = trackBarTone.Value,
+                Temperature = trackBarTemperature.Value / 100f,
+                Rotate = Convert.ToInt16(numericUpDownRotate.Value < 0 ? (360 + numericUpDownRotate.Value) : numericUpDownRotate.Value),
+                Zoom = trackBarZoom.Value,
+                Horizontal = trackBarHorisontal.Value,
+                Vertical = trackBarVertical.Value,
+                canvasHeight = Global.Plugins.AvailablePlugins.Find(toolStripCmbPlugin.Text).Instance.SizesList[Id].SizeX,
+                canvasWidth = Global.Plugins.AvailablePlugins.Find(toolStripCmbPlugin.Text).Instance.SizesList[Id].SizeY
+            };
             // Поиск максимальнного значения Step для указанного id
             var maxStep = 0;
-            var filteredList = Global.imagesSettings.Where(img => img.Id == Id);
+            var filteredList = Global.GetSettings(Id);
             if (filteredList.Any())
             {
                 maxStep = filteredList.Max(img => img.Step);
@@ -626,7 +644,7 @@ namespace MediaSocial
             item.Step = maxStep + 1;
 
             // Добавляем в историю параметры изображения
-            Global.imagesSettings.Add(item);
+            Global.AddSetting(item);
 
             // Вращение с обрезкой черных областей
             if (item.Rotate != 0)
@@ -667,12 +685,14 @@ namespace MediaSocial
             // Изменяем цвета, яркость и т.п.
             toolStripStatusLabel1.Text = "Меняю цвета изображения...";
             Application.DoEvents();
-            ModifyImage mi = new ModifyImage();
-            mi.Brightness = item.Brightness;
-            mi.Contrast = item.Contrast;
-            mi.Hue = item.Tone;
-            mi.Saturation = item.Saturation;
-            mi.Temperature = item.Temperature;
+            ModifyImage mi = new ModifyImage
+            {
+                Brightness = item.Brightness,
+                Contrast = item.Contrast,
+                Hue = item.Tone,
+                Saturation = item.Saturation,
+                Temperature = item.Temperature
+            };
 
 
             toolStripStatusLabel1.Text = "Меняю яркость изображения...";
@@ -739,7 +759,9 @@ namespace MediaSocial
 
             try
             {
-                if (Global.imagesSouser[Global.ImageIndexNow].Exist)
+                var sourceImg = Global.GetSourceImage(Global.ImageIndexNow);
+                var renderImg = Global.GetRenderImage(Global.ImageIndexNow);
+                if (sourceImg != null && sourceImg.Exist && renderImg != null)
                 {
                     // 1. Собираем параметры в UI-потоке
                     var parameters = PrepareRenderParameters();
@@ -756,16 +778,20 @@ namespace MediaSocial
                     );
 
                     // 4. Обновляем UI с результатом
-                    Global.imagesRender[Global.ImageIndexNow].Pictures = renderedImage;
-                    Global.imagesRender[Global.ImageIndexNow].Exist = true;
+                    renderImg.Pictures = renderedImage;
+                    renderImg.Exist = true;
                     pictureBox.Image = renderedImage;
                 }
             }
             catch
             {
                 pictureBox.Image = Properties.Resources.PhotoNotExist;
-                Global.imagesRender[Global.ImageIndexNow].Exist = false;
-                Global.imagesRender[Global.ImageIndexNow].Pictures = Properties.Resources.PhotoNotExist;
+                var renderImg = Global.GetRenderImage(Global.ImageIndexNow);
+                if (renderImg != null)
+                {
+                    renderImg.Exist = false;
+                    renderImg.Pictures = Properties.Resources.PhotoNotExist;
+                }
             }
             finally
             {
@@ -779,7 +805,7 @@ namespace MediaSocial
         {
             var item = new RenderParameters
             {
-                Image = Global.imagesSouser[Global.ImageIndexNow].Pictures,
+                Image = Global.GetSourceImage(Global.ImageIndexNow)?.Pictures,
                 Id = Global.ImageIndexNow,
                 Brightness = (trackBarBrightness.Value + 100) / 100f,
                 Shadows = (trackBarShadows.Value + 100) / 100f,
@@ -802,12 +828,11 @@ namespace MediaSocial
             item.CanvasWidth = plugin.SizesList[item.Id].SizeY;
 
             // Добавляем в историю параметров
-            item.Step = Global.imagesSettings
-                .Where(img => img.Id == item.Id)
+            item.Step = Global.GetSettings(item.Id)
                 .DefaultIfEmpty()
                 .Max(img => img?.Step ?? 0) + 1;
 
-            Global.imagesSettings.Add(new SettingImage
+            Global.AddSetting(new SettingImage
             {
                 Id = item.Id,
                 Brightness = item.Brightness,
@@ -958,7 +983,7 @@ namespace MediaSocial
         private void LoadEditorSetting(int id)
         {
             // Фильтруем последний шаг для картинки с нужным id
-            var filteredImages = Global.imagesSettings.Where(img => img.Id == id)
+            var filteredImages = Global.GetSettings(id)
                                     .OrderByDescending(img => img.Step);
 
             if (filteredImages.Any())
@@ -1015,9 +1040,10 @@ namespace MediaSocial
         // Кнопка автояркости
         private void btnAutoBr_Click(object sender, EventArgs e)
         {
-            if (Global.imagesSouser[Global.ImageIndexNow].Exist == false) return;
+            var sourceImg = Global.GetSourceImage(Global.ImageIndexNow);
+            if (sourceImg == null || sourceImg.Exist == false) return;
             ModifyImage mi = new ModifyImage();
-            var br = mi.CalcBrightness(Global.imagesSouser[Global.ImageIndexNow].Pictures);
+            var br = mi.CalcBrightness(sourceImg.Pictures);
             if (br > 2) br = 2;
             trackBarBrightness.Value = Convert.ToInt16(br * 100 - 100);
             if (checkBoxAuto.Checked) EditorOk();
@@ -1026,9 +1052,10 @@ namespace MediaSocial
         // Кнопка автоконтрастности
         private void btnAutoContr_Click(object sender, EventArgs e)
         {
-            if (Global.imagesSouser[Global.ImageIndexNow].Exist == false) return;
+            var sourceImg = Global.GetSourceImage(Global.ImageIndexNow);
+            if (sourceImg == null || sourceImg.Exist == false) return;
             ModifyImage mi = new ModifyImage();
-            var br = mi.CalcContrast(Global.imagesSouser[Global.ImageIndexNow].Pictures);
+            var br = mi.CalcContrast(sourceImg.Pictures);
             if (br > 2) br = 2;
             trackBarContrast.Value = Convert.ToInt16(br * 100 - 100);
             if (checkBoxAuto.Checked) EditorOk();
@@ -1043,11 +1070,13 @@ namespace MediaSocial
         //Сохранение файла
         private void saveFile(string filename, bool quick=true)
         {
-            SaveImageFile saveImageFile = new SaveImageFile();
-            saveImageFile.image = null;
+            SaveImageFile saveImageFile = new SaveImageFile
+            {
+                image = null
+            };
             if (Properties.Settings.Default.inputSave == 2) saveImageFile.image = Global.ImageOut;
-            if (Properties.Settings.Default.inputSave == 1) saveImageFile.image = Global.imagesRender[Global.ImageIndexNow].Pictures;
-            if (Properties.Settings.Default.inputSave == 0) saveImageFile.image = Global.imagesSouser[Global.ImageIndexNow].Pictures;
+            if (Properties.Settings.Default.inputSave == 1) saveImageFile.image = Global.GetRenderImage(Global.ImageIndexNow)?.Pictures;
+            if (Properties.Settings.Default.inputSave == 0) saveImageFile.image = Global.GetSourceImage(Global.ImageIndexNow)?.Pictures;
             saveImageFile.saveFormat = Properties.Settings.Default.typeSave;
             saveImageFile.quality = (int)(Properties.Settings.Default.qualitySave / 4.0 * 100);
 
@@ -1206,15 +1235,17 @@ namespace MediaSocial
                 switch (cmbBoxImgType.SelectedIndex)
                 {
                     case 0:
-                        if (Global.imagesSouser[comboBoxImg.SelectedIndex].Exist)
+                        var sourceImg = Global.GetSourceImage(comboBoxImg.SelectedIndex);
+                        if (sourceImg != null && sourceImg.Exist)
                         {
-                            pictureBox.Image = Global.imagesSouser[comboBoxImg.SelectedIndex].Pictures;
+                            pictureBox.Image = sourceImg.Pictures;
                         }
                         break;
                     case 1:
-                        if (Global.imagesRender[comboBoxImg.SelectedIndex].Exist)
+                        var renderImg = Global.GetRenderImage(comboBoxImg.SelectedIndex);
+                        if (renderImg != null && renderImg.Exist)
                         {
-                            pictureBox.Image = Global.imagesRender[comboBoxImg.SelectedIndex].Pictures;
+                            pictureBox.Image = renderImg.Pictures;
                         }
                         break;
                     case 2:
